@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LiveControlForm));
-            this.vlc1 = new AxAXVLC.AxVLCPlugin2();
             this.button1 = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -70,20 +69,12 @@
             this.tim_loadsc = new System.Windows.Forms.Timer(this.components);
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.vlc1)).BeginInit();
+            this.vlc1 = new AxAXVLC.AxVLCPlugin2();
             this.groupBox1.SuspendLayout();
             this.obs_grp.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.obs_grid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.vlc1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // vlc1
-            // 
-            this.vlc1.Enabled = true;
-            this.vlc1.Location = new System.Drawing.Point(15, 28);
-            this.vlc1.Name = "vlc1";
-            this.vlc1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("vlc1.OcxState")));
-            this.vlc1.Size = new System.Drawing.Size(392, 237);
-            this.vlc1.TabIndex = 2;
             // 
             // button1
             // 
@@ -248,6 +239,7 @@
             this.obs_grp.TabIndex = 16;
             this.obs_grp.TabStop = false;
             this.obs_grp.Text = "Remote OBS";
+            this.obs_grp.Enter += new System.EventHandler(this.obs_grp_Enter);
             // 
             // label6
             // 
@@ -471,6 +463,15 @@
             this.button9.UseVisualStyleBackColor = true;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
+            // vlc1
+            // 
+            this.vlc1.Enabled = true;
+            this.vlc1.Location = new System.Drawing.Point(15, 28);
+            this.vlc1.Name = "vlc1";
+            this.vlc1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("vlc1.OcxState")));
+            this.vlc1.Size = new System.Drawing.Size(392, 237);
+            this.vlc1.TabIndex = 2;
+            // 
             // LiveControlForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -501,12 +502,12 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LiveControlForm_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Shown += new System.EventHandler(this.Form1_Shown);
-            ((System.ComponentModel.ISupportInitialize)(this.vlc1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.obs_grp.ResumeLayout(false);
             this.obs_grp.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.obs_grid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.vlc1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

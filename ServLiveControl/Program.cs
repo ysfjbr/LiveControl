@@ -46,19 +46,21 @@ namespace ServLiveControl
                     string tuser = user;
                     if (!clientsList.Contains(tuser))
                     {
-                        clientsList.Add(tuser, clientSocket);
-
-                        handleClinet client = new handleClinet();
-                        client.startClient(clientSocket, tuser, clientsList);
-
-                        if (!userCanAccess(dataFromClient))
+                        if (userCanAccess(dataFromClient))
                         {
-                            client.stopClient();
-                            clientsList.Remove(tuser);
+                            clientsList.Add(tuser, clientSocket);
+
+                            handleClinet client = new handleClinet();
+                            client.startClient(clientSocket, tuser, clientsList);
+                            broadcast(tuser + " Connected successfully!", user, false);
+                            Console.WriteLine(tuser + " Joined ");
+                        }
+                        else
+                        {
+                            broadcast(tuser + " password is wrong!", user, false);
                         }
 
-                        broadcast(tuser + " Connected successfully!", user, false);
-                        Console.WriteLine(tuser + " Joined ");
+
                     }
                     else
                     {
@@ -69,179 +71,179 @@ namespace ServLiveControl
                 }
                 catch (Exception ex)
                 {
-                    try
-                    {
-                        clientSocket.Close();
-                    }
-                    catch (Exception exx) { }
-                    //Console.WriteLine("Error: " + ex.Message);
+                try
+                {
+                    clientSocket.Close();
                 }
+                catch (Exception exx) { }
+                //Console.WriteLine("Error: " + ex.Message);
             }
+        }
 
-            clientSocket.Close();
+        clientSocket.Close();
             serverSocket.Stop();
             Console.WriteLine("exit");
             Console.ReadLine();
         }
 
-        public static bool userCanAccess(string luser)
+    public static bool userCanAccess(string luser)
+    {
+        readPasswords();
+        string[] user = luser.Split('&');
+        return (usersps.Exists(new Predicate<string> { user[1] });
+    }
+
+    public static string getAvaKey(string key, Hashtable table)
+    {
+        string res = key;
+        while (table.ContainsKey(res))
         {
-            readPasswords();
-            string[] user = luser.Split('&');
-            return (usersps.Contains(user[1]));
+            res = res + "*";
         }
 
-        public static string getAvaKey(string key, Hashtable table)
+        return res;
+    }
+
+    public static void readPasswords()
+    {
+        try
         {
-            string res = key;
-            while (table.ContainsKey(res))
+            foreach (string line in File.ReadLines("/var/www/netcoreapp3.1/ps.txt", Encoding.UTF8))
             {
-                res = res + "*";
+                usersps.Add(line);
             }
+        }
+        catch (Exception ex)
+        { Console.WriteLine("Error: " + ex.Message); }
+    }
 
-            return res;
+    public static string getclientsListString(Hashtable table)
+    {
+        string res = "";
+        foreach (DictionaryEntry Item in table)
+        {
+            res += Item.Key + "^";
         }
 
-        public static void readPasswords()
+        return res;
+    }
+
+    public static void doCommand(string str, string clNo)
+    {
+        if (str.StartsWith("ch_Conn"))
+        {
+            broadcast("CON__" + getclientsListString(clientsList), clNo, false);
+        }
+        else if (str.StartsWith("OBS"))
+        {
+            broadcast(str, clNo, false);
+        }
+        else
+        {
+            broadcast(str, clNo, false);
+        }
+    }
+
+    public static void broadcast(string msg, string uName, bool flag)
+    {
+        foreach (DictionaryEntry Item in clientsList)
+        {
+
+            try
+            {
+                TcpClient broadcastSocket;
+                broadcastSocket = (TcpClient)Item.Value;
+                NetworkStream broadcastStream = broadcastSocket.GetStream();
+                Byte[] broadcastBytes = null;
+
+                if (flag == true)
+                {
+                    broadcastBytes = Encoding.ASCII.GetBytes(uName + " says : " + msg);
+                }
+                else
+                {
+                    broadcastBytes = Encoding.ASCII.GetBytes(msg);
+                }
+
+                broadcastStream.Write(broadcastBytes, 0, broadcastBytes.Length);
+                broadcastStream.Flush();
+            }
+            catch (Exception ex)
+            {
+                //broadcastSocket.Close();
+                //clientsList.Remove(Item);
+                Console.WriteLine("Error BB: " + ex);
+                //Thread.Sleep(500);
+
+            }
+        }
+
+    }
+}
+
+
+public class handleClinet
+{
+    TcpClient clientSocket;
+    string clNo;
+    //Hashtable clientsList;
+    Thread ctThread;
+
+    public void startClient(TcpClient inClientSocket, string clineNo, Hashtable cList)
+    {
+        this.clientSocket = inClientSocket;
+        this.clNo = clineNo;
+        //this.clientsList = cList;
+        ctThread = new Thread(doWork);
+        ctThread.Start();
+    }
+
+    public void stopClient()
+    {
+        this.clientSocket.Close();
+        ctThread.Abort();
+        Console.WriteLine("client - " + clNo + " STOPPED ");
+    }
+
+    private void doWork()
+    {
+        //int requestCount = 0;
+        byte[] bytesFrom = new byte[10025];
+        string dataFromClient = null;
+        Byte[] sendBytes = null;
+        string serverResponse = null;
+        //string rCount = null;
+        //requestCount = 0;
+        Program.doCommand("ch_Conn", clNo);
+        bool conn = true;
+        while (conn)
         {
             try
             {
-                foreach (string line in File.ReadLines("/var/www/netcoreapp3.1/ps.txt", Encoding.UTF8))
-                {
-                    usersps.Add(line);
-                }
+                //requestCount = requestCount + 1;
+                NetworkStream networkStream = clientSocket.GetStream();
+                networkStream.Read(bytesFrom, 0, (int)bytesFrom.Length);
+                dataFromClient = Encoding.ASCII.GetString(bytesFrom);
+                dataFromClient = dataFromClient.Substring(0, dataFromClient.IndexOf("$"));
+                Console.WriteLine("From client - " + clNo + " : " + dataFromClient);
+                //rCount = Convert.ToString(requestCount);
+                //doCommand(dataFromClient);
+                Program.doCommand(dataFromClient, clNo);
+
             }
             catch (Exception ex)
-            { Console.WriteLine("Error: " + ex.Message); }
-        }
-
-        public static string getclientsListString(Hashtable table)
-        {
-            string res = "";
-            foreach (DictionaryEntry Item in table)
             {
-                res += Item.Key + "^";
-            }
-
-            return res;
-        }
-
-        public static void doCommand(string str, string clNo)
-        {
-            if (str.StartsWith("ch_Conn"))
-            {
-                broadcast("CON__" + getclientsListString(clientsList), clNo, false);
-            }
-            else if (str.StartsWith("OBS"))
-            {
-                broadcast(str, clNo, false);
-            }
-            else
-            {
-                broadcast(str, clNo, false);
-            }
-        }
-
-        public static void broadcast(string msg, string uName, bool flag)
-        {
-            foreach (DictionaryEntry Item in clientsList)
-            {
-
-                try
-                {
-                    TcpClient broadcastSocket;
-                    broadcastSocket = (TcpClient)Item.Value;
-                    NetworkStream broadcastStream = broadcastSocket.GetStream();
-                    Byte[] broadcastBytes = null;
-
-                    if (flag == true)
-                    {
-                        broadcastBytes = Encoding.ASCII.GetBytes(uName + " says : " + msg);
-                    }
-                    else
-                    {
-                        broadcastBytes = Encoding.ASCII.GetBytes(msg);
-                    }
-
-                    broadcastStream.Write(broadcastBytes, 0, broadcastBytes.Length);
-                    broadcastStream.Flush();
-                }
-                catch (Exception ex)
-                {
-                    //broadcastSocket.Close();
-                    //clientsList.Remove(Item);
-                    Console.WriteLine("Error BB: " + ex);
-                    //Thread.Sleep(500);
-
-                }
-            }
-
-        }
-    }
-
-
-    public class handleClinet
-    {
-        TcpClient clientSocket;
-        string clNo;
-        //Hashtable clientsList;
-        Thread ctThread;
-
-        public void startClient(TcpClient inClientSocket, string clineNo, Hashtable cList)
-        {
-            this.clientSocket = inClientSocket;
-            this.clNo = clineNo;
-            //this.clientsList = cList;
-            ctThread = new Thread(doWork);
-            ctThread.Start();
-        }
-
-        public void stopClient()
-        {
-            this.clientSocket.Close();
-            ctThread.Abort();
-            Console.WriteLine("client - " + clNo + " STOPPED ");
-        }
-
-        private void doWork()
-        {
-            //int requestCount = 0;
-            byte[] bytesFrom = new byte[10025];
-            string dataFromClient = null;
-            Byte[] sendBytes = null;
-            string serverResponse = null;
-            //string rCount = null;
-            //requestCount = 0;
-            Program.doCommand("ch_Conn", clNo);
-            bool conn = true;
-            while (conn)
-            {
-                try
-                {
-                    //requestCount = requestCount + 1;
-                    NetworkStream networkStream = clientSocket.GetStream();
-                    networkStream.Read(bytesFrom, 0, (int)bytesFrom.Length);
-                    dataFromClient = Encoding.ASCII.GetString(bytesFrom);
-                    dataFromClient = dataFromClient.Substring(0, dataFromClient.IndexOf("$"));
-                    Console.WriteLine("From client - " + clNo + " : " + dataFromClient);
-                    //rCount = Convert.ToString(requestCount);
-                    //doCommand(dataFromClient);
-                    Program.doCommand(dataFromClient, clNo);
-
-                }
-                catch (Exception ex)
-                {
-                    conn = false;
-                    //clientsList.Remove(clNo);
-                    Program.clientsList.Remove(clNo);
-                    //doCommand("ch_Conn");
-                    //Program.doCommand("ch_Conn", clNo);
-                    //this.clientSocket.Dispose();
-                    Console.WriteLine(clNo + " disconncted...");
-                    //Console.WriteLine(ex.ToString());
-                }
+                conn = false;
+                //clientsList.Remove(clNo);
+                Program.clientsList.Remove(clNo);
+                //doCommand("ch_Conn");
+                //Program.doCommand("ch_Conn", clNo);
+                //this.clientSocket.Dispose();
+                Console.WriteLine(clNo + " disconncted...");
+                //Console.WriteLine(ex.ToString());
             }
         }
     }
+}
 }
 

@@ -20,6 +20,7 @@ namespace LiveControl
         string readData = null;
         Thread ctThread;
         string selectedOBS = "";
+        int selectedOBSIndex = -1;
         
         //string[] inputJson;
         bool Connected = false;
@@ -258,7 +259,8 @@ namespace LiveControl
             if (obsserver.Count > 0)
             {
                 OBSGridUpdate();
-                sendData("OBSC_/command=GetStreamingStatus");
+                Thread.Sleep(1000);
+                sendCommand("command=GetStreamingStatus");
             }
             else
                 obs_grid.Rows.Clear();
@@ -275,6 +277,8 @@ namespace LiveControl
                     obs_grid.Rows.Add(os.Value.getRow());
                 }
                 obs_grp.Enabled = obs_grid.Rows.Count > 0;
+
+                obs_grid.Rows[selectedOBSIndex].Selected = true;
             }
         }
 
@@ -306,7 +310,7 @@ namespace LiveControl
                 Connected = true;
                 conn_btn.Text = "Disonnect !";
                 
-                saveSettings();
+                //saveSettings();
             }
             catch (Exception ex)
             {
@@ -529,6 +533,12 @@ namespace LiveControl
         private void obs_grid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             sendCommand("command=GetSceneList", true);
+            selectedOBSIndex = obs_grid.SelectedRows[0].Index;
+        }
+
+        private void obs_grp_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }
