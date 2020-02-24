@@ -328,9 +328,7 @@ namespace LiveControl
             }
             catch(Exception ex)
             {
-
             }
-            
         }
 
         private void saveSettings()

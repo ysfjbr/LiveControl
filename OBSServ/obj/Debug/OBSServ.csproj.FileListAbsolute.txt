@@ -24,3 +24,12 @@ E:\FUAD\zam\zaher\ServLiveControl\ServLiveControl\OBSServ\obj\Debug\OBSServ.Prop
 E:\FUAD\zam\zaher\ServLiveControl\ServLiveControl\OBSServ\obj\Debug\OBSServ.csproj.GenerateResource.Cache
 E:\FUAD\zam\zaher\ServLiveControl\ServLiveControl\OBSServ\obj\Debug\OBSServ.exe
 E:\FUAD\zam\zaher\ServLiveControl\ServLiveControl\OBSServ\obj\Debug\OBSServ.pdb
+C:\Users\ysf_j\source\repos\LiveControl\OBSServ\bin\Debug\OBSServ.exe.config
+C:\Users\ysf_j\source\repos\LiveControl\OBSServ\bin\Debug\OBSServ.exe
+C:\Users\ysf_j\source\repos\LiveControl\OBSServ\bin\Debug\OBSServ.pdb
+C:\Users\ysf_j\source\repos\LiveControl\OBSServ\obj\Debug\OBSServ.csprojAssemblyReference.cache
+C:\Users\ysf_j\source\repos\LiveControl\OBSServ\obj\Debug\OBSServ.OBSserv.resources
+C:\Users\ysf_j\source\repos\LiveControl\OBSServ\obj\Debug\OBSServ.Properties.Resources.resources
+C:\Users\ysf_j\source\repos\LiveControl\OBSServ\obj\Debug\OBSServ.csproj.GenerateResource.cache
+C:\Users\ysf_j\source\repos\LiveControl\OBSServ\obj\Debug\OBSServ.exe
+C:\Users\ysf_j\source\repos\LiveControl\OBSServ\obj\Debug\OBSServ.pdb

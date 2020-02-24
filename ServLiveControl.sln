@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveControl", "..\..\LiveControl2\LiveControl\LiveControl\LiveControl.csproj", "{4B25C3AB-56C4-4677-8ED3-44D2BEA3124B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBSServ", "OBSServ\OBSServ.csproj", "{AE6C00FC-3B04-4B76-80E0-9C31933F9FE4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServLiveControl", "ServLiveControl\ServLiveControl.csproj", "{961E74F1-D24C-4549-8FA4-832D81A198FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveControl", "LiveControl\LiveControl.csproj", "{4B25C3AB-56C4-4677-8ED3-44D2BEA3124B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4B25C3AB-56C4-4677-8ED3-44D2BEA3124B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4B25C3AB-56C4-4677-8ED3-44D2BEA3124B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4B25C3AB-56C4-4677-8ED3-44D2BEA3124B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4B25C3AB-56C4-4677-8ED3-44D2BEA3124B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AE6C00FC-3B04-4B76-80E0-9C31933F9FE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AE6C00FC-3B04-4B76-80E0-9C31933F9FE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE6C00FC-3B04-4B76-80E0-9C31933F9FE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +23,10 @@ Global
 		{961E74F1-D24C-4549-8FA4-832D81A198FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{961E74F1-D24C-4549-8FA4-832D81A198FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{961E74F1-D24C-4549-8FA4-832D81A198FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B25C3AB-56C4-4677-8ED3-44D2BEA3124B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B25C3AB-56C4-4677-8ED3-44D2BEA3124B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B25C3AB-56C4-4677-8ED3-44D2BEA3124B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B25C3AB-56C4-4677-8ED3-44D2BEA3124B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

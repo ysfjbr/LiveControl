@@ -39,3 +39,17 @@ E:\FUAD\zam\zaher\LiveControl2\LiveControl\LiveControl\obj\Debug\LiveControl.Liv
 E:\FUAD\zam\zaher\LiveControl2\LiveControl\LiveControl\obj\Debug\LiveControl.Properties.Resources.resources
 E:\FUAD\zam\zaher\LiveControl2\LiveControl\LiveControl\obj\Debug\LiveControl.csproj.GenerateResource.Cache
 D:\zaher\LiveControl2\LiveControl\LiveControl\obj\Debug\LiveControl.csprojAssemblyReference.cache
+C:\Users\ysf_j\source\repos\LiveControl\LiveControl\bin\Debug\LiveControl.exe.config
+C:\Users\ysf_j\source\repos\LiveControl\LiveControl\bin\Debug\LiveControl.exe
+C:\Users\ysf_j\source\repos\LiveControl\LiveControl\bin\Debug\LiveControl.pdb
+C:\Users\ysf_j\source\repos\LiveControl\LiveControl\bin\Debug\Interop.AXVLC.dll
+C:\Users\ysf_j\source\repos\LiveControl\LiveControl\bin\Debug\AxInterop.AXVLC.dll
+C:\Users\ysf_j\source\repos\LiveControl\LiveControl\obj\Debug\LiveControl.csprojAssemblyReference.cache
+C:\Users\ysf_j\source\repos\LiveControl\LiveControl\obj\Debug\Interop.AXVLC.dll
+C:\Users\ysf_j\source\repos\LiveControl\LiveControl\obj\Debug\AxInterop.AXVLC.dll
+C:\Users\ysf_j\source\repos\LiveControl\LiveControl\obj\Debug\LiveControl.csproj.ResolveComReference.cache
+C:\Users\ysf_j\source\repos\LiveControl\LiveControl\obj\Debug\LiveControl.LiveControlForm.resources
+C:\Users\ysf_j\source\repos\LiveControl\LiveControl\obj\Debug\LiveControl.Properties.Resources.resources
+C:\Users\ysf_j\source\repos\LiveControl\LiveControl\obj\Debug\LiveControl.csproj.GenerateResource.cache
+C:\Users\ysf_j\source\repos\LiveControl\LiveControl\obj\Debug\LiveControl.exe
+C:\Users\ysf_j\source\repos\LiveControl\LiveControl\obj\Debug\LiveControl.pdb

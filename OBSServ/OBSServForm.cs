@@ -28,6 +28,7 @@ namespace OBSServ
         bool Connected = false;
         string comstr = null;
         int connAttemps = 0;
+
         //Thread[] commandThread = new Thread[100];
         //int threadID = 0;
 
@@ -342,6 +343,7 @@ namespace OBSServ
                 data_str.BackColor = Color.Green;
                 conn_btn.Text = "Disonnect !";
                 saveSettings();
+                downloadSceneColl();
             }
             catch (Exception ex)
             {
@@ -399,6 +401,9 @@ namespace OBSServ
                 obsPath_txt.Text = Properties.Settings.Default["obsPath"].ToString();
                 obs_port_txt.Text = Properties.Settings.Default["obsport"].ToString();
             }
+
+            downloadSceneColl();
+
         }
 
         private void obspath_open_FileOk(object sender, CancelEventArgs e)
@@ -440,6 +445,7 @@ namespace OBSServ
 
         private void button2_Click(object sender, EventArgs e)
         {
+            
             /*string t = @"{  'current_scene': 'Main2',  'message_id': 'TBnSWenS3PwW5KHE',  'scenes': [    {      'name': 'Black',      'sources': [        {          'cx': 0.0,          'cy': 0.0,          'id': 5,          'locked': false,          'name': 'VLC Video Source',          'render': true,          'source_cx': 0,          'source_cy': 0,          'type': 'vlc_source',          'volume': 1.0,          'x': 0.0,          'y': -279.0        }      ]    },    {      'name': 'Main',      'sources': [        {          'cx': 1920.0,          'cy': 1134.0,          'id': 6,          'locked': false,          'name': 'Browser',          'render': true,          'source_cx': 1290,          'source_cy': 762,          'type': 'browser_source',          'volume': 0.67712104320526123,          'x': 1.0,          'y': -4.0        }      ]    },    {      'name': 'Main2',      'sources': [        {          'cx': 228.84745788574219,          'cy': 48.0,          'id': 9,          'locked': false,          'name': 'v1 2',          'render': true,          'source_cx': 172,          'source_cy': 36,          'type': 'text_gdiplus',          'volume': 1.0,          'x': 1555.0,          'y': 843.0        },        {          'cx': 157.0,          'cy': 48.0,          'id': 8,          'locked': false,          'name': 'v1',          'render': true,          'source_cx': 118,          'source_cy': 36,          'type': 'text_gdiplus',          'volume': 1.0,          'x': 199.0,          'y': 846.0        },        {          'cx': 382.0,          'cy': 76.0,          'id': 7,          'locked': false,          'name': 'Color Source 2',          'render': true,          'source_cx': 500,          'source_cy': 100,          'type': 'color_source',          'volume': 1.0,          'x': 1538.0,          'y': 832.0        },        {          'cx': 382.0,          'cy': 76.0,          'id': 6,          'locked': false,          'name': 'Color Source 2',          'render': true,          'source_cx': 500,          'source_cy': 100,          'type': 'color_source',          'volume': 1.0,          'x': 0.0,          'y': 832.0        },        {          'cx': 1920.0,          'cy': 1080.0,          'id': 3,          'locked': true,          'name': 'frame',          'render': true,          'source_cx': 1920,          'source_cy': 1080,          'type': 'image_source',          'volume': 1.0,          'x': 0.0,          'y': 0.0        },        {          'cx': 1049.0,          'cy': 612.0,          'id': 5,          'locked': false,          'name': 'vclass',          'render': true,          'source_cx': 1200,          'source_cy': 700,          'type': 'browser_source',          'volume': 0.68775618076324463,          'x': 921.0,          'y': 217.0        },        {          'cx': 1021.0,          'cy': 603.0,          'id': 4,          'locked': false,          'name': 'Browser',          'render': false,          'source_cx': 1290,          'source_cy': 762,          'type': 'browser_source',          'volume': 0.67712104320526123,          'x': -100.0,          'y': 229.0        },        {          'cx': 0.0,          'cy': 0.0,          'id': 12,          'locked': false,          'name': 'VLC Video Source',          'render': false,          'source_cx': 0,          'source_cy': 0,          'type': 'vlc_source',          'volume': 1.0,          'x': 25.0,          'y': 240.0        },        {          'cx': 1920.0,          'cy': 1080.0,          'id': 2,          'locked': true,          'name': 'back',          'render': true,          'source_cx': 640,          'source_cy': 360,          'type': 'image_source',          'volume': 1.0,          'x': 0.0,          'y': 0.0        }      ]    }  ],  'status': 'ok'}";
 
             JavaScriptSerializer js = new JavaScriptSerializer();
@@ -448,6 +454,68 @@ namespace OBSServ
 
             //slist[obsName] = js.Deserialize<scenelist>(str);
             //textBox1.Text = exec_comm("/command=GetSceneList");
+        }
+
+        private void downloadSceneColl()
+        {
+            string[] files = new string[] { "frame.png", "textbar.png", "logo.png" , "back1.jpg" };
+            string obs_scene_coll_url = "http://207.180.219.104/test/content/";
+            WebClient vss = new WebClient();
+
+            string obs_scene_coll_json_folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)) + @"\obs-studio\basic\scenes\";
+            string obs_scene_coll_cont_folder = @"c:\obs_content\";
+
+            string jsonfile = obs_scene_coll_json_folder + "main.json";
+
+            if (!File.Exists(jsonfile))
+            {
+                vss.DownloadFile(new Uri(obs_scene_coll_url + "main.json"), jsonfile);
+                terminateOBS();
+            }
+
+            try
+            {
+                if (!Directory.Exists(obs_scene_coll_cont_folder))
+                    Directory.CreateDirectory(obs_scene_coll_cont_folder);
+
+                foreach (string f in files)
+                {
+                    string contfile = obs_scene_coll_cont_folder + f;
+
+                    if (!File.Exists(contfile))
+                    {
+                        vss.DownloadFile(new Uri(obs_scene_coll_url + f), contfile);
+                    }
+                }
+            }
+            catch (Exception ex) { textBox1.Text += Environment.NewLine + ex.Message; }
+        }
+
+        private void terminateOBS()
+        {
+            try
+            {
+                if (obsPath_txt.Text.Contains("obs"))
+                {
+                    foreach (Process proc in Process.GetProcessesByName(getFilename(obsPath_txt.Text).Split('.')[0]))
+                    {
+                        proc.Kill();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                textBox1.Text = textBox1.Text + Environment.NewLine + " Error OBS Terminatoin : " + ex.Message;
+            }
+        }
+
+        private string getFilename(string hreflink)
+        {
+            Uri uri = new Uri(hreflink);
+
+            string filename = System.IO.Path.GetFileName(uri.LocalPath);
+
+            return filename;
         }
 
         private void OBSserv_FormClosing(object sender, FormClosingEventArgs e)

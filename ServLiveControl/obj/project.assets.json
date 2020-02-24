@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\zaher\\ServLiveControl\\ServLiveControl\\ServLiveControl\\ServLiveControl.csproj",
+      "projectUniqueName": "C:\\Users\\ysf_j\\source\\repos\\LiveControl\\ServLiveControl\\ServLiveControl.csproj",
       "projectName": "ServLiveControl",
-      "projectPath": "D:\\zaher\\ServLiveControl\\ServLiveControl\\ServLiveControl\\ServLiveControl.csproj",
+      "projectPath": "C:\\Users\\ysf_j\\source\\repos\\LiveControl\\ServLiveControl\\ServLiveControl.csproj",
       "packagesPath": "C:\\Users\\ysf_j\\.nuget\\packages\\",
-      "outputPath": "D:\\zaher\\ServLiveControl\\ServLiveControl\\ServLiveControl\\obj\\",
+      "outputPath": "C:\\Users\\ysf_j\\source\\repos\\LiveControl\\ServLiveControl\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"
