@@ -68,6 +68,8 @@
             this.button7 = new System.Windows.Forms.Button();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.tim_loadsc = new System.Windows.Forms.Timer(this.components);
+            this.button8 = new System.Windows.Forms.Button();
+            this.button9 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.vlc1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.obs_grp.SuspendLayout();
@@ -80,22 +82,22 @@
             this.vlc1.Location = new System.Drawing.Point(15, 28);
             this.vlc1.Name = "vlc1";
             this.vlc1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("vlc1.OcxState")));
-            this.vlc1.Size = new System.Drawing.Size(392, 238);
+            this.vlc1.Size = new System.Drawing.Size(392, 237);
             this.vlc1.TabIndex = 2;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(15, 513);
+            this.button1.Location = new System.Drawing.Point(970, 533);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(165, 23);
             this.button1.TabIndex = 3;
-            this.button1.Text = "button1";
+            this.button1.Text = "Send";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(15, 487);
+            this.textBox2.Location = new System.Drawing.Point(572, 536);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(392, 20);
             this.textBox2.TabIndex = 6;
@@ -116,7 +118,7 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.clientName_txt);
             this.groupBox1.Controls.Add(this.conn_btn);
-            this.groupBox1.Location = new System.Drawing.Point(959, 28);
+            this.groupBox1.Location = new System.Drawing.Point(955, 28);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(180, 388);
             this.groupBox1.TabIndex = 15;
@@ -240,9 +242,9 @@
             this.obs_grp.Controls.Add(this.button4);
             this.obs_grp.Controls.Add(this.button2);
             this.obs_grp.Enabled = false;
-            this.obs_grp.Location = new System.Drawing.Point(413, 178);
+            this.obs_grp.Location = new System.Drawing.Point(413, 184);
             this.obs_grp.Name = "obs_grp";
-            this.obs_grp.Size = new System.Drawing.Size(540, 238);
+            this.obs_grp.Size = new System.Drawing.Size(536, 232);
             this.obs_grp.TabIndex = 16;
             this.obs_grp.TabStop = false;
             this.obs_grp.Text = "Remote OBS";
@@ -288,7 +290,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(332, 58);
+            this.button5.Location = new System.Drawing.Point(332, 186);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(180, 31);
             this.button5.TabIndex = 6;
@@ -298,7 +300,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(332, 21);
+            this.button4.Location = new System.Drawing.Point(332, 149);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(180, 31);
             this.button4.TabIndex = 5;
@@ -320,7 +322,7 @@
             // 
             this.button6.Location = new System.Drawing.Point(15, 272);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(106, 43);
+            this.button6.Size = new System.Drawing.Size(140, 43);
             this.button6.TabIndex = 17;
             this.button6.Text = "HTTP Play";
             this.button6.UseVisualStyleBackColor = true;
@@ -329,7 +331,7 @@
             // textBox1
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(416, 431);
+            this.textBox1.Location = new System.Drawing.Point(412, 422);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(723, 105);
@@ -340,16 +342,16 @@
             this.data_str.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.data_str.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.data_str.Location = new System.Drawing.Point(0, 557);
+            this.data_str.Location = new System.Drawing.Point(0, 600);
             this.data_str.Name = "data_str";
-            this.data_str.Size = new System.Drawing.Size(1155, 36);
+            this.data_str.Size = new System.Drawing.Size(1151, 36);
             this.data_str.TabIndex = 28;
             // 
             // button10
             // 
-            this.button10.Location = new System.Drawing.Point(127, 272);
+            this.button10.Location = new System.Drawing.Point(161, 272);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(106, 43);
+            this.button10.Size = new System.Drawing.Size(134, 43);
             this.button10.TabIndex = 30;
             this.button10.Text = "RTMP Play";
             this.button10.UseVisualStyleBackColor = true;
@@ -373,7 +375,7 @@
             this.obs_grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.obs_grid.Size = new System.Drawing.Size(537, 105);
             this.obs_grid.TabIndex = 31;
-            this.obs_grid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.obs_grid_CellContentClick);
+            this.obs_grid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.obs_grid_CellClick);
             this.obs_grid.SelectionChanged += new System.EventHandler(this.obs_grid_SelectionChanged);
             // 
             // OBS_col
@@ -411,13 +413,14 @@
             this.switch_OBS_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.switch_OBS_btn.Image = global::LiveControl.Properties.Resources.onair;
             this.switch_OBS_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.switch_OBS_btn.Location = new System.Drawing.Point(745, 139);
+            this.switch_OBS_btn.Location = new System.Drawing.Point(612, 140);
             this.switch_OBS_btn.Name = "switch_OBS_btn";
             this.switch_OBS_btn.Size = new System.Drawing.Size(205, 39);
             this.switch_OBS_btn.TabIndex = 32;
             this.switch_OBS_btn.Text = "Switch OBS Server to AIR";
             this.switch_OBS_btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.switch_OBS_btn.UseVisualStyleBackColor = true;
+            this.switch_OBS_btn.Click += new System.EventHandler(this.switch_OBS_btn_Click);
             // 
             // timer1
             // 
@@ -427,19 +430,19 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(662, 139);
+            this.button7.Location = new System.Drawing.Point(496, 141);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(77, 38);
+            this.button7.Size = new System.Drawing.Size(108, 38);
             this.button7.TabIndex = 34;
-            this.button7.Text = "Refresh ";
+            this.button7.Text = "Refresh Status";
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click_1);
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(15, 326);
+            this.richTextBox1.Location = new System.Drawing.Point(412, 533);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(45, 143);
+            this.richTextBox1.Size = new System.Drawing.Size(154, 52);
             this.richTextBox1.TabIndex = 35;
             this.richTextBox1.Text = "";
             this.richTextBox1.Visible = false;
@@ -448,12 +451,34 @@
             // 
             this.tim_loadsc.Tick += new System.EventHandler(this.tim_loadsc_Tick);
             // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(301, 271);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(106, 43);
+            this.button8.TabIndex = 36;
+            this.button8.Text = "Stop";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(823, 140);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(126, 38);
+            this.button9.TabIndex = 37;
+            this.button9.Text = "Stop Streamming";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
             // LiveControlForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGray;
-            this.ClientSize = new System.Drawing.Size(1151, 592);
+            this.ClientSize = new System.Drawing.Size(1147, 635);
+            this.Controls.Add(this.button9);
+            this.Controls.Add(this.button8);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.label7);
@@ -527,6 +552,8 @@
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Timer tim_loadsc;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button button9;
     }
 }
 

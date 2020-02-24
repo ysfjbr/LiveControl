@@ -358,33 +358,44 @@ namespace LiveControl
             }
         }
 
+        private void sendCommand(string command, bool onlySelectedOBS = false)
+        {
+            if(onlySelectedOBS)
+            {
+                selectedOBS = obs_grid.SelectedRows[0].Cells["OBS_col"].Value.ToString();
+                sendData("OBS^" + selectedOBS + "^TOOBS^/"+ command);
+            }
+            else
+            {
+                sendData("OBSC_/"+command);
+            }
+            
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
-            selectedOBS = obs_grid.SelectedRows[0].Cells["OBS_col"].Value.ToString();
-            sendData("OBSC_/command=GetSceneList");
+            sendCommand("command=GetSceneList",true);
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            selectedOBS = obs_grid.SelectedRows[0].Cells["OBS_col"].Value.ToString();
-            sendData("OBS^"+ selectedOBS + "^TOOBS^/startstream");
-
+            sendCommand("startstream", true);
+            Thread.Sleep(3000);
             Thread s = new Thread(updateStramStatus);
             s.Start();
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            selectedOBS = obs_grid.SelectedRows[0].Cells["OBS_col"].Value.ToString();
-            sendData("OBS^" + selectedOBS + "^TOOBS^/stopstream");
+            sendCommand("stopstream", true);
+            Thread.Sleep(3000);
             Thread s = new Thread(updateStramStatus);
             s.Start();
         }
 
         private void updateStramStatus()
         {
-            Thread.Sleep(3000);
-            sendData("OBSC_/command=GetStreamingStatus");
+            sendCommand("command=GetStreamingStatus");
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -402,8 +413,9 @@ namespace LiveControl
 
         private void switchScene(string sceneName)
         {
-            sendData("OBSC_/scene=\"" + sceneName+"\"");
-            sendData("OBSC_/command=GetSceneList");
+            sendCommand("scene=\"" + sceneName + "\"", true);
+            Thread.Sleep(500);
+            sendCommand("command=GetSceneList", true);
         }
 
         private void button10_Click(object sender, EventArgs e)
@@ -434,12 +446,6 @@ namespace LiveControl
         {
             if (scene_list.SelectedIndex != -1)
                 switchScene(scene_list.SelectedItem.ToString());
-        }
-
-        private void obs_grid_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            selectedOBS = obs_grid.SelectedRows[0].Cells["OBS_col"].Value.ToString();
-            sendData("OBSC_/command=GetSceneList");
         }
 
         private void obs_grid_SelectionChanged(object sender, EventArgs e)
@@ -485,7 +491,7 @@ namespace LiveControl
         private void button7_Click_1(object sender, EventArgs e)
         {
             OBSGridUpdate();
-            sendData("OBSC_/command=GetStreamingStatus");
+            sendCommand("command=GetStreamingStatus", false);
         }
 
         private void LiveControlForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -496,8 +502,33 @@ namespace LiveControl
 
         private void tim_loadsc_Tick(object sender, EventArgs e)
         {
-            sendData("OBSC_/command=GetSceneList");
+            sendCommand("command=GetSceneList", false);
             tim_loadsc.Enabled = false;
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            vlc1.playlist.stop();
+        }
+
+        private void switch_OBS_btn_Click(object sender, EventArgs e)
+        {
+            sendCommand("stopstream", false);
+            Thread.Sleep(1000);
+            sendCommand("startstream", true);
+            Thread.Sleep(2000);
+            Thread s = new Thread(updateStramStatus);
+            s.Start();
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            sendCommand("stopstream");
+        }
+
+        private void obs_grid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            sendCommand("command=GetSceneList", true);
         }
     }
 }

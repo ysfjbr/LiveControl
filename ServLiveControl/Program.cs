@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -13,13 +14,7 @@ namespace ServLiveControl
     {
         public static Hashtable clientsList = new Hashtable();
 
-        public static Dictionary<string, string> users = new Dictionary<string, string> {
-            { "OBS_OBS1", "mypass" },
-            { "OBS_OBS2", "my2pass" },
-            { "LC_Yousef", "mypass" },
-            { "LC_Ahmed", "my2pass" },
-
-        };
+        public static List<string> usersps = new List<string> { };
 
         static void Main(string[] args)
         {
@@ -45,34 +40,40 @@ namespace ServLiveControl
                     dataFromClient = Encoding.ASCII.GetString(bytesFrom);
                     dataFromClient = dataFromClient.Substring(0, dataFromClient.IndexOf("$"));
 
-                    dataFromClient = getAvaKey(dataFromClient, clientsList);
+                    //dataFromClient = getAvaKey(dataFromClient, clientsList);
                     string user = dataFromClient.Split('&')[0];
 
                     string tuser = user;
-                    while (clientsList.Contains(tuser))
+                    if (!clientsList.Contains(tuser))
                     {
-                        tuser = tuser + "*";
+                        clientsList.Add(tuser, clientSocket);
+
+                        handleClinet client = new handleClinet();
+                        client.startClient(clientSocket, tuser, clientsList);
+
+                        if (!userCanAccess(dataFromClient))
+                        {
+                            client.stopClient();
+                            clientsList.Remove(tuser);
+                        }
+
+                        broadcast(tuser + " Connected successfully!", user, false);
+                        Console.WriteLine(tuser + " Joined ");
                     }
-
-                    clientsList.Add(tuser, clientSocket);
-
-                    broadcast(tuser + " Connected successfully!", user, false);
-
-                    Console.WriteLine(tuser + " Joined ");
-
-                    handleClinet client = new handleClinet();
-                    client.startClient(clientSocket, tuser, clientsList);
-
-                    if (!userCanAccess(dataFromClient))
+                    else
                     {
-                        client.stopClient();
+                        broadcast(tuser + " already logged in!", user, false);
                     }
 
 
                 }
                 catch (Exception ex)
                 {
-                    clientSocket.Close();
+                    try
+                    {
+                        clientSocket.Close();
+                    }
+                    catch (Exception exx) { }
                     //Console.WriteLine("Error: " + ex.Message);
                 }
             }
@@ -85,8 +86,9 @@ namespace ServLiveControl
 
         public static bool userCanAccess(string luser)
         {
+            readPasswords();
             string[] user = luser.Split('&');
-            return (users[user[0]] == user[1]);
+            return (usersps.Contains(user[1]));
         }
 
         public static string getAvaKey(string key, Hashtable table)
@@ -100,10 +102,51 @@ namespace ServLiveControl
             return res;
         }
 
+        public static void readPasswords()
+        {
+            try
+            {
+                foreach (string line in File.ReadLines("/var/www/netcoreapp3.1/ps.txt", Encoding.UTF8))
+                {
+                    usersps.Add(line);
+                }
+            }
+            catch (Exception ex)
+            { Console.WriteLine("Error: " + ex.Message); }
+        }
+
+        public static string getclientsListString(Hashtable table)
+        {
+            string res = "";
+            foreach (DictionaryEntry Item in table)
+            {
+                res += Item.Key + "^";
+            }
+
+            return res;
+        }
+
+        public static void doCommand(string str, string clNo)
+        {
+            if (str.StartsWith("ch_Conn"))
+            {
+                broadcast("CON__" + getclientsListString(clientsList), clNo, false);
+            }
+            else if (str.StartsWith("OBS"))
+            {
+                broadcast(str, clNo, false);
+            }
+            else
+            {
+                broadcast(str, clNo, false);
+            }
+        }
+
         public static void broadcast(string msg, string uName, bool flag)
         {
             foreach (DictionaryEntry Item in clientsList)
             {
+
                 try
                 {
                     TcpClient broadcastSocket;
@@ -125,9 +168,14 @@ namespace ServLiveControl
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Error: " + ex);
+                    //broadcastSocket.Close();
+                    //clientsList.Remove(Item);
+                    Console.WriteLine("Error BB: " + ex);
+                    //Thread.Sleep(500);
+
                 }
             }
+
         }
     }
 
@@ -136,14 +184,14 @@ namespace ServLiveControl
     {
         TcpClient clientSocket;
         string clNo;
-        Hashtable clientsList;
+        //Hashtable clientsList;
         Thread ctThread;
 
         public void startClient(TcpClient inClientSocket, string clineNo, Hashtable cList)
         {
             this.clientSocket = inClientSocket;
             this.clNo = clineNo;
-            this.clientsList = cList;
+            //this.clientsList = cList;
             ctThread = new Thread(doWork);
             ctThread.Start();
         }
@@ -164,7 +212,7 @@ namespace ServLiveControl
             string serverResponse = null;
             //string rCount = null;
             //requestCount = 0;
-            doCommand("ch_Conn");
+            Program.doCommand("ch_Conn", clNo);
             bool conn = true;
             while (conn)
             {
@@ -177,52 +225,23 @@ namespace ServLiveControl
                     dataFromClient = dataFromClient.Substring(0, dataFromClient.IndexOf("$"));
                     Console.WriteLine("From client - " + clNo + " : " + dataFromClient);
                     //rCount = Convert.ToString(requestCount);
-                    doCommand(dataFromClient);
+                    //doCommand(dataFromClient);
+                    Program.doCommand(dataFromClient, clNo);
 
                 }
                 catch (Exception ex)
                 {
                     conn = false;
-                    clientsList.Remove(clNo);
+                    //clientsList.Remove(clNo);
                     Program.clientsList.Remove(clNo);
-                    doCommand("ch_Conn");
+                    //doCommand("ch_Conn");
+                    //Program.doCommand("ch_Conn", clNo);
                     //this.clientSocket.Dispose();
                     Console.WriteLine(clNo + " disconncted...");
                     //Console.WriteLine(ex.ToString());
                 }
             }
         }
-
-        private void doCommand(string str)
-        {
-            if (str.StartsWith("ch_Conn"))
-            {
-                Program.broadcast("CON__" + getclientsListString(clientsList), clNo, false);
-            }
-            else if (str.StartsWith("OBS"))
-            {
-                Program.broadcast(str, clNo, false);
-            }
-            else
-            {
-                Program.broadcast(str, clNo, false);
-            }
-
-
-        }
-
-        private string getclientsListString(Hashtable table)
-        {
-            string res = "";
-            foreach (DictionaryEntry Item in table)
-            {
-                res += Item.Key + "^";
-            }
-
-            return res;
-        }
-
     }
-
 }
 
