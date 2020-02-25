@@ -150,7 +150,7 @@ namespace OBSServ
         private void getDevices(string command)
         {
             listBox1.Items.Clear();
-            foreach (string s in command.Substring(5).Split('^'))
+            foreach (string s in command.Substring(5).Split('%'))
             {
                 listBox1.Items.Add(s);
             }

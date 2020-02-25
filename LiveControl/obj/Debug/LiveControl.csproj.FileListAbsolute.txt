@@ -53,3 +53,17 @@ C:\Users\ysf_j\source\repos\LiveControl\LiveControl\obj\Debug\LiveControl.Proper
 C:\Users\ysf_j\source\repos\LiveControl\LiveControl\obj\Debug\LiveControl.csproj.GenerateResource.cache
 C:\Users\ysf_j\source\repos\LiveControl\LiveControl\obj\Debug\LiveControl.exe
 C:\Users\ysf_j\source\repos\LiveControl\LiveControl\obj\Debug\LiveControl.pdb
+C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\bin\Debug\LiveControl.exe.config
+C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\obj\Debug\Interop.AXVLC.dll
+C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\obj\Debug\AxInterop.AXVLC.dll
+C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\obj\Debug\LiveControl.csproj.ResolveComReference.cache
+C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\obj\Debug\LiveControl.exe
+C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\obj\Debug\LiveControl.pdb
+C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\bin\Debug\LiveControl.exe
+C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\bin\Debug\LiveControl.pdb
+C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\bin\Debug\Interop.AXVLC.dll
+C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\bin\Debug\AxInterop.AXVLC.dll
+C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\obj\Debug\LiveControl.csprojResolveAssemblyReference.cache
+C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\obj\Debug\LiveControl.LiveControlForm.resources
+C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\obj\Debug\LiveControl.Properties.Resources.resources
+C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\obj\Debug\LiveControl.csproj.GenerateResource.Cache
