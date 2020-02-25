@@ -40,16 +40,25 @@ namespace LiveControl
             sendData(textBox2.Text);
         }
 
-        private void sendData(string Str)
+        private void sendData(string Str, bool toConnect = false)
         {
-            if (Connected)
+            try
             {
-                byte[] outStream = Encoding.ASCII.GetBytes(Str + "$");
-                serverStream.Write(outStream, 0, outStream.Length);
-                serverStream.Flush();
+                if (Connected || toConnect)
+                {
+                    byte[] outStream = Encoding.ASCII.GetBytes(Str + "$");
+                    serverStream.Write(outStream, 0, outStream.Length);
+                    serverStream.Flush();
+                }
+
+                else
+                {
+                    data_str.Text = "Not Connected!";
+                }
             }
-            else
+            catch(Exception ex)
             {
+                disconnetServer();
                 data_str.Text = "Not Connected!";
             }
         }
@@ -130,12 +139,12 @@ namespace LiveControl
             else
             {
                 data_str.Text = str;
-                if (data_str.Text == "")
+                /*if (data_str.Text == "")
                 {
                     data_str.Text = "Connection Failed! check your name and password";
                     textBox1.Text = textBox1.Text + Environment.NewLine + " >> " + data_str.Text;
                     disconnetServer();
-                }
+                }*/
                 textBox1.Text = textBox1.Text + Environment.NewLine + " >> " + data_str.Text;
             }
         }
@@ -248,7 +257,7 @@ namespace LiveControl
         {
             listBox1.Items.Clear();
             obsserver.Clear();
-            foreach (string s in command.Substring(5).Split('^'))
+            foreach (string s in command.Substring(5).Split('%'))
             {
                 listBox1.Items.Add(s);
                 if(s.StartsWith("OBS_"))
@@ -269,17 +278,21 @@ namespace LiveControl
 
         private void OBSGridUpdate()
         {
-            if (Connected)
+            try
             {
-                obs_grid.Rows.Clear();
-                foreach (var os in obsserver)
+                if (Connected)
                 {
-                    obs_grid.Rows.Add(os.Value.getRow());
-                }
-                obs_grp.Enabled = obs_grid.Rows.Count > 0;
+                    obs_grid.Rows.Clear();
+                    foreach (var os in obsserver)
+                    {
+                        obs_grid.Rows.Add(os.Value.getRow());
+                    }
+                    obs_grp.Enabled = obs_grid.Rows.Count > 0;
 
-                obs_grid.Rows[selectedOBSIndex].Selected = true;
+                    obs_grid.Rows[selectedOBSIndex].Selected = true;
+                }
             }
+            catch (Exception ex) { }
         }
 
         private void conn_btn_Click(object sender, EventArgs e)
@@ -291,7 +304,7 @@ namespace LiveControl
         }
         private void connectServer()
         {
-            readData = "Conected to Stream Server ...";
+            readData = "Conecting to Stream Server ...";
             msg();
             try
             {
@@ -300,17 +313,16 @@ namespace LiveControl
                 clientSocket.Connect(ip_txt.Text, int.Parse(port_txt.Text));
                 serverStream = clientSocket.GetStream();
 
-                byte[] outStream = Encoding.ASCII.GetBytes("LC_" + clientName_txt.Text + "&" + pass_txt.Text + "$");
-                serverStream.Write(outStream, 0, outStream.Length);
-                serverStream.Flush();
+                sendData("LC_" + clientName_txt.Text + "&" + pass_txt.Text, true);
                 
                 ctThread = new Thread(getMessage);
                 ctThread.Start();
-                data_str.BackColor = Color.Green;
+
+                //command_timer.Enabled = false;
                 Connected = true;
+                data_str.BackColor = Color.Green;
                 conn_btn.Text = "Disonnect !";
-                
-                //saveSettings();
+                saveSettings();
             }
             catch (Exception ex)
             {
@@ -320,6 +332,13 @@ namespace LiveControl
 
         private void disconnetServer()
         {
+            try
+            {
+                listBox1.Items.Clear();
+                obs_grid.Rows.Clear();
+            }
+            catch (Exception ex2){}
+
             try
             {
                 conn_btn.Text = "Connect !";
@@ -337,12 +356,18 @@ namespace LiveControl
 
         private void saveSettings()
         {
-            Properties.Settings.Default["ip"]           = ip_txt.Text;
-            Properties.Settings.Default["port"]         = port_txt.Text;
-            Properties.Settings.Default["clientName"]   = clientName_txt.Text;
-            Properties.Settings.Default["clientPass"]   = pass_txt.Text;
+            try
+            {
+                Properties.Settings.Default["ip"] = ip_txt.Text;
+                Properties.Settings.Default["port"] = port_txt.Text;
+                Properties.Settings.Default["clientName"] = clientName_txt.Text;
+                Properties.Settings.Default["clientPass"] = pass_txt.Text;
 
-            Properties.Settings.Default.Save();
+                Properties.Settings.Default.Save();
+            }catch(Exception ex)
+            {
+
+            }
         }
 
         private void loadSettings()
@@ -364,15 +389,19 @@ namespace LiveControl
 
         private void sendCommand(string command, bool onlySelectedOBS = false)
         {
-            if(onlySelectedOBS)
+            try
             {
-                selectedOBS = obs_grid.SelectedRows[0].Cells["OBS_col"].Value.ToString();
-                sendData("OBS^" + selectedOBS + "^TOOBS^/"+ command);
+                if (onlySelectedOBS)
+                {
+                    selectedOBS = obs_grid.SelectedRows[0].Cells["OBS_col"].Value.ToString();
+                    sendData("OBS^" + selectedOBS + "^TOOBS^/" + command);
+                }
+                else
+                {
+                    sendData("OBSC_/" + command);
+                }
             }
-            else
-            {
-                sendData("OBSC_/"+command);
-            }
+            catch (Exception ex) { disconnetServer(); }
             
         }
 

@@ -33,3 +33,12 @@ C:\Users\ysf_j\source\repos\LiveControl\OBSServ\obj\Debug\OBSServ.Properties.Res
 C:\Users\ysf_j\source\repos\LiveControl\OBSServ\obj\Debug\OBSServ.csproj.GenerateResource.cache
 C:\Users\ysf_j\source\repos\LiveControl\OBSServ\obj\Debug\OBSServ.exe
 C:\Users\ysf_j\source\repos\LiveControl\OBSServ\obj\Debug\OBSServ.pdb
+C:\Users\yjaber\Source\Repos\LiveControl2\OBSServ\bin\Debug\OBSServ.exe.config
+C:\Users\yjaber\Source\Repos\LiveControl2\OBSServ\obj\Debug\OBSServ.exe
+C:\Users\yjaber\Source\Repos\LiveControl2\OBSServ\obj\Debug\OBSServ.pdb
+C:\Users\yjaber\Source\Repos\LiveControl2\OBSServ\bin\Debug\OBSServ.exe
+C:\Users\yjaber\Source\Repos\LiveControl2\OBSServ\bin\Debug\OBSServ.pdb
+C:\Users\yjaber\Source\Repos\LiveControl2\OBSServ\obj\Debug\OBSServ.csprojResolveAssemblyReference.cache
+C:\Users\yjaber\Source\Repos\LiveControl2\OBSServ\obj\Debug\OBSServ.OBSserv.resources
+C:\Users\yjaber\Source\Repos\LiveControl2\OBSServ\obj\Debug\OBSServ.Properties.Resources.resources
+C:\Users\yjaber\Source\Repos\LiveControl2\OBSServ\obj\Debug\OBSServ.csproj.GenerateResource.Cache
