@@ -70,6 +70,9 @@
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.vlc1 = new AxAXVLC.AxVLCPlugin2();
+            this.txt_sourcesettings = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.button11 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.obs_grp.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.obs_grid)).BeginInit();
@@ -78,7 +81,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(970, 533);
+            this.button1.Location = new System.Drawing.Point(970, 562);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(165, 23);
             this.button1.TabIndex = 3;
@@ -88,7 +91,7 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(572, 536);
+            this.textBox2.Location = new System.Drawing.Point(572, 565);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(392, 20);
             this.textBox2.TabIndex = 6;
@@ -168,6 +171,7 @@
             this.pass_txt.PasswordChar = '*';
             this.pass_txt.Size = new System.Drawing.Size(89, 20);
             this.pass_txt.TabIndex = 3;
+            this.pass_txt.Text = "mypass";
             // 
             // listBox1
             // 
@@ -225,6 +229,9 @@
             // 
             this.obs_grp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.obs_grp.Controls.Add(this.button11);
+            this.obs_grp.Controls.Add(this.label8);
+            this.obs_grp.Controls.Add(this.txt_sourcesettings);
             this.obs_grp.Controls.Add(this.label6);
             this.obs_grp.Controls.Add(this.source_list);
             this.obs_grp.Controls.Add(this.scene_list);
@@ -235,7 +242,7 @@
             this.obs_grp.Enabled = false;
             this.obs_grp.Location = new System.Drawing.Point(413, 184);
             this.obs_grp.Name = "obs_grp";
-            this.obs_grp.Size = new System.Drawing.Size(536, 232);
+            this.obs_grp.Size = new System.Drawing.Size(536, 278);
             this.obs_grp.TabIndex = 16;
             this.obs_grp.TabStop = false;
             this.obs_grp.Text = "Remote OBS";
@@ -244,19 +251,22 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(169, 39);
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(159, 35);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(82, 13);
+            this.label6.Size = new System.Drawing.Size(106, 17);
             this.label6.TabIndex = 11;
             this.label6.Text = "Scene contents";
             // 
             // source_list
             // 
             this.source_list.FormattingEnabled = true;
-            this.source_list.Location = new System.Drawing.Point(169, 58);
+            this.source_list.Location = new System.Drawing.Point(159, 58);
             this.source_list.Name = "source_list";
-            this.source_list.Size = new System.Drawing.Size(157, 160);
+            this.source_list.Size = new System.Drawing.Size(135, 212);
             this.source_list.TabIndex = 10;
+            this.source_list.SelectedIndexChanged += new System.EventHandler(this.source_list_SelectedIndexChanged);
+            this.source_list.DoubleClick += new System.EventHandler(this.source_list_DoubleClick);
             // 
             // scene_list
             // 
@@ -264,7 +274,7 @@
             this.scene_list.FormattingEnabled = true;
             this.scene_list.Location = new System.Drawing.Point(6, 58);
             this.scene_list.Name = "scene_list";
-            this.scene_list.Size = new System.Drawing.Size(157, 121);
+            this.scene_list.Size = new System.Drawing.Size(147, 173);
             this.scene_list.TabIndex = 9;
             this.scene_list.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.scene_list_DrawItem);
             this.scene_list.SelectedIndexChanged += new System.EventHandler(this.scene_list_SelectedIndexChanged);
@@ -272,9 +282,9 @@
             // 
             // swich_scene_btn
             // 
-            this.swich_scene_btn.Location = new System.Drawing.Point(6, 186);
+            this.swich_scene_btn.Location = new System.Drawing.Point(6, 238);
             this.swich_scene_btn.Name = "swich_scene_btn";
-            this.swich_scene_btn.Size = new System.Drawing.Size(157, 32);
+            this.swich_scene_btn.Size = new System.Drawing.Size(147, 32);
             this.swich_scene_btn.TabIndex = 7;
             this.swich_scene_btn.Text = "Switch Scene";
             this.swich_scene_btn.UseVisualStyleBackColor = true;
@@ -282,29 +292,31 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(332, 186);
+            this.button5.Location = new System.Drawing.Point(288, 15);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(180, 31);
+            this.button5.Size = new System.Drawing.Size(27, 31);
             this.button5.TabIndex = 6;
             this.button5.Text = "Stop Stream";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Visible = false;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(332, 149);
+            this.button4.Location = new System.Drawing.Point(257, 15);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(180, 31);
+            this.button4.Size = new System.Drawing.Size(25, 31);
             this.button4.TabIndex = 5;
             this.button4.Text = "Start Stream";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Visible = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(6, 19);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(157, 33);
+            this.button2.Size = new System.Drawing.Size(147, 33);
             this.button2.TabIndex = 4;
             this.button2.Text = "Load Scenes";
             this.button2.UseVisualStyleBackColor = true;
@@ -323,10 +335,10 @@
             // textBox1
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(412, 422);
+            this.textBox1.Location = new System.Drawing.Point(412, 476);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(723, 105);
+            this.textBox1.Size = new System.Drawing.Size(723, 80);
             this.textBox1.TabIndex = 27;
             // 
             // data_str
@@ -432,9 +444,9 @@
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(412, 533);
+            this.richTextBox1.Location = new System.Drawing.Point(412, 551);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(154, 52);
+            this.richTextBox1.Size = new System.Drawing.Size(154, 34);
             this.richTextBox1.TabIndex = 35;
             this.richTextBox1.Text = "";
             this.richTextBox1.Visible = false;
@@ -469,8 +481,35 @@
             this.vlc1.Location = new System.Drawing.Point(15, 28);
             this.vlc1.Name = "vlc1";
             this.vlc1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("vlc1.OcxState")));
-            this.vlc1.Size = new System.Drawing.Size(392, 237);
+            this.vlc1.Size = new System.Drawing.Size(392, 238);
             this.vlc1.TabIndex = 2;
+            // 
+            // txt_sourcesettings
+            // 
+            this.txt_sourcesettings.Location = new System.Drawing.Point(300, 58);
+            this.txt_sourcesettings.Multiline = true;
+            this.txt_sourcesettings.Name = "txt_sourcesettings";
+            this.txt_sourcesettings.Size = new System.Drawing.Size(230, 174);
+            this.txt_sourcesettings.TabIndex = 12;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(298, 35);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(35, 17);
+            this.label8.TabIndex = 13;
+            this.label8.Text = "Text";
+            // 
+            // button11
+            // 
+            this.button11.Location = new System.Drawing.Point(300, 238);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(230, 32);
+            this.button11.TabIndex = 14;
+            this.button11.Text = "Send Changes";
+            this.button11.UseVisualStyleBackColor = true;
             // 
             // LiveControlForm
             // 
@@ -555,6 +594,9 @@
         private System.Windows.Forms.Timer tim_loadsc;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox txt_sourcesettings;
+        private System.Windows.Forms.Button button11;
     }
 }
 

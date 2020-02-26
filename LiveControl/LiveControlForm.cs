@@ -205,6 +205,8 @@ namespace LiveControl
                 getSceneList(str, obsName);
             else if (type == "StreamingStatus")
                 getStreamingStatus(str, obsName);
+            else if (type == "SourceSettings")
+                getSourceSettings(str, obsName);
         }
 
         private bool getSceneList(string str, string obsName = "")
@@ -247,6 +249,26 @@ namespace LiveControl
             catch (Exception ex)
             {
                 
+                res = false;
+            }
+            data_str.Text = "";
+            return res;
+        }
+
+        private bool getSourceSettings(string str, string obsName = "")
+        {
+            bool res = false;
+            data_str.Text = str;
+            try
+            {
+                JavaScriptSerializer js = new JavaScriptSerializer();
+                Source source = js.Deserialize<Source>(data_str.Text);
+                showSourceSettings(source);
+                
+                res = true;
+            }
+            catch (Exception ex)
+            {
                 res = false;
             }
             data_str.Text = "";
@@ -568,6 +590,28 @@ namespace LiveControl
         private void obs_grp_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void source_list_DoubleClick(object sender, EventArgs e)
+        {
+            if (source_list.SelectedIndex != -1)
+                getSourceSettings(source_list.SelectedItem.ToString());
+        }
+
+        private void getSourceSettings(string sourceName)
+        {
+            sendCommand("command=GetSourceSettings,sourceName=\"" + sourceName+"\"", true);
+        }
+        private void showSourceSettings(Source source)
+        {
+            if (source.sourceType == "text_gdiplus")
+                txt_sourcesettings.Text = source.sourceSettings.text;
+        }
+
+        private void source_list_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (source_list.SelectedIndex != -1)
+                getSourceSettings(source_list.SelectedItem.ToString());
         }
     }
 }

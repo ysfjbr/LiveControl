@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OBSServ
 {
-    class scenelist
+    class Scenelist
     {
         public string current_scene { get; set; }
         public string message_id { get; set; }
@@ -30,7 +30,7 @@ namespace OBSServ
             {
                 if (s.Name == sceneName)
                 {
-                    foreach (source sr in s.sources)
+                    foreach (Source sr in s.sources)
                     {
                         strs.Add(sr.Name);
                     }
@@ -47,7 +47,7 @@ namespace OBSServ
         public SceneNames[] scenes { get; set; }
         public string status { get; set; }
 
-        public SceneListNames(scenelist sl)
+        public SceneListNames(Scenelist sl)
         {
             SceneNames[] sn = new SceneNames[sl.scenes.Length];
             for (int i = 0; i < sn.Length; i++)
@@ -66,7 +66,6 @@ namespace OBSServ
             current_scene = sl.current_scene;
             scenes = sn;
             status = sl.status;
-
         }
     }
 
