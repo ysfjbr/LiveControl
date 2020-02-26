@@ -233,7 +233,6 @@
             // 
             // command_timer
             // 
-            this.command_timer.Enabled = true;
             this.command_timer.Interval = 5000;
             this.command_timer.Tick += new System.EventHandler(this.timer1_Tick);
             // 

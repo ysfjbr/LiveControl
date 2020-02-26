@@ -99,6 +99,12 @@ namespace OBSServ
 
         private void doCommand(string str)
         {
+            data_str.Text = str;
+
+            str = data_str.Text;
+
+            data_str.Text = "";
+
             if (str.StartsWith("CON__"))
             {
                 getDevices(str);
@@ -129,9 +135,51 @@ namespace OBSServ
                         commThread.Start();
                     }
                 }
-                
-                /*string[] obsResult = str.Split('^');
-                textBox1.Text = textBox1.Text + Environment.NewLine + " " + obsResult[1] + obsResult[2];*/
+            }
+            else if (str.StartsWith("OBSText^"))
+            {
+                string[] obsResult = str.Split('^');
+
+                comstr = "/command=GetSourceSettings,sourceName=\"" + obsResult[1] + "\"";
+                data_str.Text = getCommandOutput();
+                bool inFile = false;
+                SSource source = new SSource();
+                try
+                {
+                    JavaScriptSerializer js = new JavaScriptSerializer();
+                    source = js.Deserialize<SSource>(correctJSON(data_str.Text));
+                    try
+                    {
+                        inFile = source.sourceSettings.read_from_file;
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                }catch (Exception ex1)
+                {
+                    textBox1.Text = textBox1.Text + Environment.NewLine + "ErrorJSON :  " + ex1.Message + Environment.NewLine + data_str.Text;
+                }
+
+                if(inFile)
+                {
+                    try
+                    {
+                        File.WriteAllText(source.sourceSettings.file, decodeString(obsResult[2]));
+                    }
+                    catch(Exception ex)
+                    {
+                        textBox1.Text = textBox1.Text + Environment.NewLine + "Error :  " + ex.Message;
+                    }
+                }
+                else
+                {
+                    comstr = "/command=SetSourceSettings,sourceName=\"" + obsResult[1] + "\",sourceSettings=text=\"" + decodeString(obsResult[2]) + "\"";
+                    Thread commThread = new Thread(exec_comm);
+                    commThread.Start();
+                }
+
+                   
             }
             else
             {
@@ -169,9 +217,9 @@ namespace OBSServ
             
         }
 
-        public void exec_comm()
+        public string getCommandOutput()
         {
-            string output= "";
+            string output = "";
 
             bool obs_run = false;
             using (TcpClient tcpClient = new TcpClient())
@@ -195,11 +243,11 @@ namespace OBSServ
                             //Thread.Sleep(300);
                         }
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         obs_run = false;
                     }
-                    
+
                 }
             }
             if (obs_run)
@@ -233,8 +281,14 @@ namespace OBSServ
                     textBox1.Text = ex.Message;
                 }
             }
-            textBox1.Text += "COMMAND >>> " + comstr;
-            sendCommandOutput(clName, comstr, output);
+
+            return output;
+        }
+
+        public void exec_comm()
+        {
+            //textBox1.Text += "COMMAND >>> " + comstr;
+            sendCommandOutput(clName, comstr, getCommandOutput());
             /*
             List<string> outmsg = Split(output, 1000);
             int oid = new Random().Next(1000);
@@ -291,13 +345,20 @@ namespace OBSServ
                     SSource source = js.Deserialize<SSource>(correctJSON(output));
                     if (source.sourceType == "text_gdiplus")
                     {
-                        source.sourceSettings.text = decodeString(encodeString(File.ReadAllText(@"c:\obs_content\text.txt")));
+                        try
+                        {
+                            source.sourceSettings.text = encodeString(File.ReadAllText(source.sourceSettings.file));
+                        }
+                        catch(Exception ex)
+                        {
+                            source.sourceSettings.text = encodeString(source.sourceSettings.text);
+                        }
                     }
                     outRes = js.Serialize(source).ToString();
                 }
                 catch (Exception ex)
                 {
-
+                    textBox1.Text += ex.Message;
                 }
             }
             else if (comstr.Contains("GetStreamingStatus"))
@@ -323,38 +384,26 @@ namespace OBSServ
 
         static string encodeString(string str)
         {
-            Encoding unicode = Encoding.Unicode;
-            Encoding utf8 = Encoding.UTF8;
+            var sb = new StringBuilder();
 
-            byte[] unicodeBytes = unicode.GetBytes(str);
-
-            byte[] utf8Bytes = Encoding.Convert(unicode,
-                                                 utf8,
-                                                 unicodeBytes);
-
-          
-            StringBuilder sb = new StringBuilder();
-            foreach (byte b in utf8Bytes)
+            var bytes = Encoding.Unicode.GetBytes(str);
+            foreach (var t in bytes)
             {
-                sb.Append(b).Append(":");
+                sb.Append(t.ToString("X2"));
             }
 
             return sb.ToString();
         }
 
-        static string decodeString(string str)
+        static string decodeString(string c)
         {
-            string[] chn = str.Split(':');
-            string c = "";
-            foreach(string snum in chn)
+            var bytes = new byte[c.Length / 2];
+            for (var i = 0; i < bytes.Length; i++)
             {
-                int num;
-                Int32.TryParse(snum, out num);
-                c += (char)num;
+                bytes[i] = Convert.ToByte(c.Substring(i * 2, 2), 16);
             }
-            
 
-            return c;
+            return Encoding.Unicode.GetString(bytes);
         }
 
         private string correctJSON(string str)
@@ -501,7 +550,7 @@ namespace OBSServ
 
         private void button2_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(decodeString(encodeString(File.ReadAllText(@"c:\obs_content\text.txt"))));
+            MessageBox.Show(encodeString(File.ReadAllText(@"c:\obs_content\text.txt")));
             /*string t = @"{  'current_scene': 'Main2',  'message_id': 'TBnSWenS3PwW5KHE',  'scenes': [    {      'name': 'Black',      'sources': [        {          'cx': 0.0,          'cy': 0.0,          'id': 5,          'locked': false,          'name': 'VLC Video Source',          'render': true,          'source_cx': 0,          'source_cy': 0,          'type': 'vlc_source',          'volume': 1.0,          'x': 0.0,          'y': -279.0        }      ]    },    {      'name': 'Main',      'sources': [        {          'cx': 1920.0,          'cy': 1134.0,          'id': 6,          'locked': false,          'name': 'Browser',          'render': true,          'source_cx': 1290,          'source_cy': 762,          'type': 'browser_source',          'volume': 0.67712104320526123,          'x': 1.0,          'y': -4.0        }      ]    },    {      'name': 'Main2',      'sources': [        {          'cx': 228.84745788574219,          'cy': 48.0,          'id': 9,          'locked': false,          'name': 'v1 2',          'render': true,          'source_cx': 172,          'source_cy': 36,          'type': 'text_gdiplus',          'volume': 1.0,          'x': 1555.0,          'y': 843.0        },        {          'cx': 157.0,          'cy': 48.0,          'id': 8,          'locked': false,          'name': 'v1',          'render': true,          'source_cx': 118,          'source_cy': 36,          'type': 'text_gdiplus',          'volume': 1.0,          'x': 199.0,          'y': 846.0        },        {          'cx': 382.0,          'cy': 76.0,          'id': 7,          'locked': false,          'name': 'Color Source 2',          'render': true,          'source_cx': 500,          'source_cy': 100,          'type': 'color_source',          'volume': 1.0,          'x': 1538.0,          'y': 832.0        },        {          'cx': 382.0,          'cy': 76.0,          'id': 6,          'locked': false,          'name': 'Color Source 2',          'render': true,          'source_cx': 500,          'source_cy': 100,          'type': 'color_source',          'volume': 1.0,          'x': 0.0,          'y': 832.0        },        {          'cx': 1920.0,          'cy': 1080.0,          'id': 3,          'locked': true,          'name': 'frame',          'render': true,          'source_cx': 1920,          'source_cy': 1080,          'type': 'image_source',          'volume': 1.0,          'x': 0.0,          'y': 0.0        },        {          'cx': 1049.0,          'cy': 612.0,          'id': 5,          'locked': false,          'name': 'vclass',          'render': true,          'source_cx': 1200,          'source_cy': 700,          'type': 'browser_source',          'volume': 0.68775618076324463,          'x': 921.0,          'y': 217.0        },        {          'cx': 1021.0,          'cy': 603.0,          'id': 4,          'locked': false,          'name': 'Browser',          'render': false,          'source_cx': 1290,          'source_cy': 762,          'type': 'browser_source',          'volume': 0.67712104320526123,          'x': -100.0,          'y': 229.0        },        {          'cx': 0.0,          'cy': 0.0,          'id': 12,          'locked': false,          'name': 'VLC Video Source',          'render': false,          'source_cx': 0,          'source_cy': 0,          'type': 'vlc_source',          'volume': 1.0,          'x': 25.0,          'y': 240.0        },        {          'cx': 1920.0,          'cy': 1080.0,          'id': 2,          'locked': true,          'name': 'back',          'render': true,          'source_cx': 640,          'source_cy': 360,          'type': 'image_source',          'volume': 1.0,          'x': 0.0,          'y': 0.0        }      ]    }  ],  'status': 'ok'}";
 
             JavaScriptSerializer js = new JavaScriptSerializer();

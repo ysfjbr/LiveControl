@@ -49,6 +49,7 @@ namespace OBSServ
     class SourceSettings
     {
         public string file { get; set; }
+        public bool read_from_file { get; set; }
         public Int64 color { get; set; }
         public SFont font { get; set; }
         public string text { get; set; }

@@ -302,16 +302,22 @@ namespace LiveControl
         {
             try
             {
+                obs_grid.Rows.Clear();
                 if (Connected)
                 {
-                    obs_grid.Rows.Clear();
+                    
                     foreach (var os in obsserver)
                     {
                         obs_grid.Rows.Add(os.Value.getRow());
                     }
                     obs_grp.Enabled = obs_grid.Rows.Count > 0;
-
+                    switch_OBS_btn.Enabled = obs_grp.Enabled;
                     obs_grid.Rows[selectedOBSIndex].Selected = true;
+                }
+                else
+                {
+                    obs_grp.Enabled = false;
+                    switch_OBS_btn.Enabled = false;
                 }
             }
             catch (Exception ex) { }
@@ -370,9 +376,11 @@ namespace LiveControl
                 ctThread.Abort();
                 clientSocket.Close();
                 serverStream.Close();
+                OBSGridUpdate();
             }
             catch(Exception ex)
             {
+
             }
         }
 
@@ -605,13 +613,55 @@ namespace LiveControl
         private void showSourceSettings(Source source)
         {
             if (source.sourceType == "text_gdiplus")
-                txt_sourcesettings.Text = source.sourceSettings.text;
+            {
+                txt_sourcesettings.Text = decodeString(source.sourceSettings.text);
+                txt_sourcesettings.Visible = true;
+            }
+            else
+            {
+                txt_sourcesettings.Text = "";
+                txt_sourcesettings.Visible = false;
+            }
+                
         }
 
         private void source_list_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (source_list.SelectedIndex != -1)
                 getSourceSettings(source_list.SelectedItem.ToString());
+        }
+
+        static string encodeString(string str)
+        {
+            var sb = new StringBuilder();
+
+            var bytes = Encoding.Unicode.GetBytes(str);
+            foreach (var t in bytes)
+            {
+                sb.Append(t.ToString("X2"));
+            }
+
+            return sb.ToString();
+        }
+
+        static string decodeString(string c)
+        {
+            var bytes = new byte[c.Length / 2];
+            for (var i = 0; i < bytes.Length; i++)
+            {
+                bytes[i] = Convert.ToByte(c.Substring(i * 2, 2), 16);
+            }
+            
+            return Encoding.Unicode.GetString(bytes);
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            if (source_list.SelectedIndex != -1)
+            {
+                string sname = source_list.SelectedItem.ToString();
+                sendData("OBSText^"+sname +"^"+ encodeString(txt_sourcesettings.Text));
+            }
         }
     }
 }
