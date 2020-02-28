@@ -46,9 +46,10 @@
             this.clientName_txt = new System.Windows.Forms.TextBox();
             this.conn_btn = new System.Windows.Forms.Button();
             this.obs_grp = new System.Windows.Forms.GroupBox();
+            this.pnl_ChangeText = new System.Windows.Forms.Panel();
+            this.txt_sourcesettings = new System.Windows.Forms.TextBox();
             this.btn_sendTextChanges = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
-            this.txt_sourcesettings = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.source_list = new System.Windows.Forms.ListBox();
             this.scene_list = new System.Windows.Forms.ListBox();
@@ -73,12 +74,18 @@
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.vlc1 = new AxAXVLC.AxVLCPlugin2();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.pnl_plist = new System.Windows.Forms.Panel();
+            this.grd_pList = new System.Windows.Forms.DataGridView();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.clNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clVideo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             this.obs_grp.SuspendLayout();
+            this.pnl_ChangeText.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.obs_grid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.vlc1)).BeginInit();
-            this.panel1.SuspendLayout();
+            this.pnl_plist.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grd_pList)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -232,7 +239,7 @@
             // 
             this.obs_grp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.obs_grp.Controls.Add(this.panel1);
+            this.obs_grp.Controls.Add(this.pnl_ChangeText);
             this.obs_grp.Controls.Add(this.label6);
             this.obs_grp.Controls.Add(this.source_list);
             this.obs_grp.Controls.Add(this.scene_list);
@@ -248,6 +255,28 @@
             this.obs_grp.TabStop = false;
             this.obs_grp.Text = "Remote OBS";
             this.obs_grp.Enter += new System.EventHandler(this.obs_grp_Enter);
+            // 
+            // pnl_ChangeText
+            // 
+            this.pnl_ChangeText.BackColor = System.Drawing.Color.Transparent;
+            this.pnl_ChangeText.Controls.Add(this.txt_sourcesettings);
+            this.pnl_ChangeText.Controls.Add(this.btn_sendTextChanges);
+            this.pnl_ChangeText.Controls.Add(this.label8);
+            this.pnl_ChangeText.Location = new System.Drawing.Point(300, 35);
+            this.pnl_ChangeText.Name = "pnl_ChangeText";
+            this.pnl_ChangeText.Size = new System.Drawing.Size(230, 237);
+            this.pnl_ChangeText.TabIndex = 15;
+            this.pnl_ChangeText.Visible = false;
+            // 
+            // txt_sourcesettings
+            // 
+            this.txt_sourcesettings.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_sourcesettings.Location = new System.Drawing.Point(6, 24);
+            this.txt_sourcesettings.MaxLength = 350;
+            this.txt_sourcesettings.Multiline = true;
+            this.txt_sourcesettings.Name = "txt_sourcesettings";
+            this.txt_sourcesettings.Size = new System.Drawing.Size(211, 174);
+            this.txt_sourcesettings.TabIndex = 12;
             // 
             // btn_sendTextChanges
             // 
@@ -268,16 +297,6 @@
             this.label8.Size = new System.Drawing.Size(30, 15);
             this.label8.TabIndex = 13;
             this.label8.Text = "Text";
-            // 
-            // txt_sourcesettings
-            // 
-            this.txt_sourcesettings.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_sourcesettings.Location = new System.Drawing.Point(6, 24);
-            this.txt_sourcesettings.MaxLength = 350;
-            this.txt_sourcesettings.Multiline = true;
-            this.txt_sourcesettings.Name = "txt_sourcesettings";
-            this.txt_sourcesettings.Size = new System.Drawing.Size(211, 174);
-            this.txt_sourcesettings.TabIndex = 12;
             // 
             // label6
             // 
@@ -513,19 +532,48 @@
             this.vlc1.Location = new System.Drawing.Point(15, 28);
             this.vlc1.Name = "vlc1";
             this.vlc1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("vlc1.OcxState")));
-            this.vlc1.Size = new System.Drawing.Size(392, 237);
+            this.vlc1.Size = new System.Drawing.Size(392, 238);
             this.vlc1.TabIndex = 2;
             // 
-            // panel1
+            // pnl_plist
             // 
-            this.panel1.BackColor = System.Drawing.Color.Transparent;
-            this.panel1.Controls.Add(this.txt_sourcesettings);
-            this.panel1.Controls.Add(this.btn_sendTextChanges);
-            this.panel1.Controls.Add(this.label8);
-            this.panel1.Location = new System.Drawing.Point(300, 35);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(230, 237);
-            this.panel1.TabIndex = 15;
+            this.pnl_plist.Controls.Add(this.comboBox1);
+            this.pnl_plist.Controls.Add(this.grd_pList);
+            this.pnl_plist.Location = new System.Drawing.Point(15, 321);
+            this.pnl_plist.Name = "pnl_plist";
+            this.pnl_plist.Size = new System.Drawing.Size(391, 250);
+            this.pnl_plist.TabIndex = 38;
+            // 
+            // grd_pList
+            // 
+            this.grd_pList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grd_pList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.clNum,
+            this.clVideo});
+            this.grd_pList.Location = new System.Drawing.Point(3, 30);
+            this.grd_pList.Name = "grd_pList";
+            this.grd_pList.Size = new System.Drawing.Size(385, 206);
+            this.grd_pList.TabIndex = 0;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(3, 3);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(263, 21);
+            this.comboBox1.TabIndex = 1;
+            // 
+            // clNum
+            // 
+            this.clNum.HeaderText = "#";
+            this.clNum.Name = "clNum";
+            this.clNum.Width = 50;
+            // 
+            // clVideo
+            // 
+            this.clVideo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clVideo.HeaderText = "Video";
+            this.clVideo.Name = "clVideo";
             // 
             // LiveControlForm
             // 
@@ -533,6 +581,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGray;
             this.ClientSize = new System.Drawing.Size(1147, 635);
+            this.Controls.Add(this.pnl_plist);
             this.Controls.Add(this.button9);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.richTextBox1);
@@ -561,10 +610,12 @@
             this.groupBox1.PerformLayout();
             this.obs_grp.ResumeLayout(false);
             this.obs_grp.PerformLayout();
+            this.pnl_ChangeText.ResumeLayout(false);
+            this.pnl_ChangeText.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.obs_grid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.vlc1)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.pnl_plist.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.grd_pList)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -615,7 +666,12 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txt_sourcesettings;
         private System.Windows.Forms.Button btn_sendTextChanges;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pnl_ChangeText;
+        private System.Windows.Forms.Panel pnl_plist;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.DataGridView grd_pList;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clNum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn clVideo;
     }
 }
 

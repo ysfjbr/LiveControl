@@ -597,7 +597,10 @@ namespace LiveControl
 
         private void obs_grp_Enter(object sender, EventArgs e)
         {
-
+            /*
+            to record ffmpeg.exe - y - i rtmp://207.180.219.104:1936/stream/final /var/www/html/test/content/rec1.mp4
+            to stream ffmpeg -re - i /var/www/html/test/content/rec1.mp4 - c copy - f flv rtmp://207.180.219.104:1936/stream/v1
+            */
         }
 
         private void source_list_DoubleClick(object sender, EventArgs e)
@@ -610,19 +613,36 @@ namespace LiveControl
         {
             sendCommand("command=GetSourceSettings,sourceName=\"" + sourceName+"\"", true);
         }
+
         private void showSourceSettings(Source source)
         {
             if (source.sourceType == "text_gdiplus")
             {
                 txt_sourcesettings.Text = decodeString(source.sourceSettings.text);
-                txt_sourcesettings.Visible = true;
+                pnl_ChangeText.Visible = true;
             }
             else
             {
                 txt_sourcesettings.Text = "";
-                txt_sourcesettings.Visible = false;
+                pnl_ChangeText.Visible = false;
             }
+
+            if (source.sourceType == "vlc_source")
+            {
+                int n = 1;
+                foreach(Playlist p in source.sourceSettings.playlist)
+                {
+                    grd_pList.Rows.Add(n.ToString(), p.value);
+                    n++;
+                }
                 
+                pnl_plist.Visible = true;
+            }
+            else
+            {
+                grd_pList.Rows.Clear();
+                pnl_plist.Visible = false;
+            }
         }
 
         private void source_list_SelectedIndexChanged(object sender, EventArgs e)

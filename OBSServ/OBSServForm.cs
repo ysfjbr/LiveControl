@@ -47,9 +47,15 @@ namespace OBSServ
         {
             if (Connected || toConnect)
             {
-                byte[] outStream = Encoding.ASCII.GetBytes(Str + "$");
-                serverStream.Write(outStream, 0, outStream.Length);
-                serverStream.Flush();
+                try
+                {
+                    byte[] outStream = Encoding.ASCII.GetBytes(Str + "$");
+                    serverStream.Write(outStream, 0, outStream.Length);
+                    serverStream.Flush();
+                }catch(Exception ex)
+                {
+                    textBox1.Text = textBox1.Text + Environment.NewLine + "Send Error :  " + ex.Message + Environment.NewLine;
+                }
             }
         }
 
@@ -343,6 +349,7 @@ namespace OBSServ
                     outType = "SourceSettings";
                     JavaScriptSerializer js = new JavaScriptSerializer();
                     SSource source = js.Deserialize<SSource>(correctJSON(output));
+
                     if (source.sourceType == "text_gdiplus")
                     {
                         try
@@ -354,6 +361,7 @@ namespace OBSServ
                             source.sourceSettings.text = encodeString(source.sourceSettings.text);
                         }
                     }
+                    
                     outRes = js.Serialize(source).ToString();
                 }
                 catch (Exception ex)
@@ -458,6 +466,7 @@ namespace OBSServ
 
         private void button3_Click(object sender, EventArgs e)
         {
+            textBox1.Text += " status: " + clientSocket.Connected.ToString();
             sendData("ch_Conn");
         }
         
@@ -519,23 +528,24 @@ namespace OBSServ
 
         private void disconnetServer()
         {
+            Connected = false;
+            clName = "";
             data_str.BackColor = Color.Gray;
             
             serverStream.Close();
             clientSocket.Close();
 
-            Connected = false;
-            clName = "";
+            
             try
             {
                 conn_btn.Text = "Connect !";
                 listBox1.Items.Clear();
             }
-            catch(Exception ex) { }
+            catch(Exception ex) { textBox1.Text += " **** " + ex.Message; }
             try
             {
                 ctThread.Abort();
-            } catch (Exception ex) { }
+            } catch (Exception ex) { textBox1.Text += " *ctThread *** " + ex.Message; }
         }
 
         private void data_str_Click(object sender, EventArgs e)
