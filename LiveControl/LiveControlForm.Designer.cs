@@ -47,6 +47,12 @@
             this.conn_btn = new System.Windows.Forms.Button();
             this.obs_grp = new System.Windows.Forms.GroupBox();
             this.pnl_ChangeText = new System.Windows.Forms.Panel();
+            this.pnl_plist = new System.Windows.Forms.Panel();
+            this.label9 = new System.Windows.Forms.Label();
+            this.button11 = new System.Windows.Forms.Button();
+            this.grd_pList = new System.Windows.Forms.DataGridView();
+            this.clNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clVideo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txt_sourcesettings = new System.Windows.Forms.TextBox();
             this.btn_sendTextChanges = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
@@ -74,18 +80,14 @@
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.vlc1 = new AxAXVLC.AxVLCPlugin2();
-            this.pnl_plist = new System.Windows.Forms.Panel();
-            this.grd_pList = new System.Windows.Forms.DataGridView();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.clNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clVideo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button12 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.obs_grp.SuspendLayout();
             this.pnl_ChangeText.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.obs_grid)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.vlc1)).BeginInit();
             this.pnl_plist.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grd_pList)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.obs_grid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.vlc1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -121,7 +123,7 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.clientName_txt);
             this.groupBox1.Controls.Add(this.conn_btn);
-            this.groupBox1.Location = new System.Drawing.Point(955, 28);
+            this.groupBox1.Location = new System.Drawing.Point(1092, 28);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(180, 434);
             this.groupBox1.TabIndex = 15;
@@ -250,7 +252,7 @@
             this.obs_grp.Enabled = false;
             this.obs_grp.Location = new System.Drawing.Point(413, 184);
             this.obs_grp.Name = "obs_grp";
-            this.obs_grp.Size = new System.Drawing.Size(536, 278);
+            this.obs_grp.Size = new System.Drawing.Size(673, 278);
             this.obs_grp.TabIndex = 16;
             this.obs_grp.TabStop = false;
             this.obs_grp.Text = "Remote OBS";
@@ -259,14 +261,69 @@
             // pnl_ChangeText
             // 
             this.pnl_ChangeText.BackColor = System.Drawing.Color.Transparent;
+            this.pnl_ChangeText.Controls.Add(this.pnl_plist);
             this.pnl_ChangeText.Controls.Add(this.txt_sourcesettings);
             this.pnl_ChangeText.Controls.Add(this.btn_sendTextChanges);
             this.pnl_ChangeText.Controls.Add(this.label8);
             this.pnl_ChangeText.Location = new System.Drawing.Point(300, 35);
             this.pnl_ChangeText.Name = "pnl_ChangeText";
-            this.pnl_ChangeText.Size = new System.Drawing.Size(230, 237);
+            this.pnl_ChangeText.Size = new System.Drawing.Size(367, 237);
             this.pnl_ChangeText.TabIndex = 15;
             this.pnl_ChangeText.Visible = false;
+            // 
+            // pnl_plist
+            // 
+            this.pnl_plist.Controls.Add(this.label9);
+            this.pnl_plist.Controls.Add(this.button11);
+            this.pnl_plist.Controls.Add(this.grd_pList);
+            this.pnl_plist.Location = new System.Drawing.Point(0, 0);
+            this.pnl_plist.Name = "pnl_plist";
+            this.pnl_plist.Size = new System.Drawing.Size(367, 237);
+            this.pnl_plist.TabIndex = 38;
+            this.pnl_plist.Visible = false;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(6, 6);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(52, 15);
+            this.label9.TabIndex = 16;
+            this.label9.Text = "Play List";
+            // 
+            // button11
+            // 
+            this.button11.Location = new System.Drawing.Point(6, 203);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(211, 31);
+            this.button11.TabIndex = 15;
+            this.button11.Text = "Send Changes";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click_1);
+            // 
+            // grd_pList
+            // 
+            this.grd_pList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grd_pList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.clNum,
+            this.clVideo});
+            this.grd_pList.Location = new System.Drawing.Point(3, 30);
+            this.grd_pList.Name = "grd_pList";
+            this.grd_pList.Size = new System.Drawing.Size(361, 167);
+            this.grd_pList.TabIndex = 0;
+            // 
+            // clNum
+            // 
+            this.clNum.HeaderText = "#";
+            this.clNum.Name = "clNum";
+            this.clNum.Width = 50;
+            // 
+            // clVideo
+            // 
+            this.clVideo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.clVideo.HeaderText = "Video";
+            this.clVideo.Name = "clVideo";
             // 
             // txt_sourcesettings
             // 
@@ -275,7 +332,7 @@
             this.txt_sourcesettings.MaxLength = 350;
             this.txt_sourcesettings.Multiline = true;
             this.txt_sourcesettings.Name = "txt_sourcesettings";
-            this.txt_sourcesettings.Size = new System.Drawing.Size(211, 174);
+            this.txt_sourcesettings.Size = new System.Drawing.Size(358, 174);
             this.txt_sourcesettings.TabIndex = 12;
             // 
             // btn_sendTextChanges
@@ -385,10 +442,10 @@
             // textBox1
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(412, 476);
+            this.textBox1.Location = new System.Drawing.Point(413, 468);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(723, 80);
+            this.textBox1.Size = new System.Drawing.Size(859, 80);
             this.textBox1.TabIndex = 27;
             // 
             // data_str
@@ -396,9 +453,9 @@
             this.data_str.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.data_str.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.data_str.Location = new System.Drawing.Point(0, 600);
+            this.data_str.Location = new System.Drawing.Point(0, 677);
             this.data_str.Name = "data_str";
-            this.data_str.Size = new System.Drawing.Size(1151, 36);
+            this.data_str.Size = new System.Drawing.Size(1288, 36);
             this.data_str.TabIndex = 28;
             // 
             // button10
@@ -535,53 +592,23 @@
             this.vlc1.Size = new System.Drawing.Size(392, 238);
             this.vlc1.TabIndex = 2;
             // 
-            // pnl_plist
+            // button12
             // 
-            this.pnl_plist.Controls.Add(this.comboBox1);
-            this.pnl_plist.Controls.Add(this.grd_pList);
-            this.pnl_plist.Location = new System.Drawing.Point(15, 321);
-            this.pnl_plist.Name = "pnl_plist";
-            this.pnl_plist.Size = new System.Drawing.Size(391, 250);
-            this.pnl_plist.TabIndex = 38;
-            // 
-            // grd_pList
-            // 
-            this.grd_pList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grd_pList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.clNum,
-            this.clVideo});
-            this.grd_pList.Location = new System.Drawing.Point(3, 30);
-            this.grd_pList.Name = "grd_pList";
-            this.grd_pList.Size = new System.Drawing.Size(385, 206);
-            this.grd_pList.TabIndex = 0;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(3, 3);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(263, 21);
-            this.comboBox1.TabIndex = 1;
-            // 
-            // clNum
-            // 
-            this.clNum.HeaderText = "#";
-            this.clNum.Name = "clNum";
-            this.clNum.Width = 50;
-            // 
-            // clVideo
-            // 
-            this.clVideo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.clVideo.HeaderText = "Video";
-            this.clVideo.Name = "clVideo";
+            this.button12.Location = new System.Drawing.Point(223, 371);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(101, 45);
+            this.button12.TabIndex = 38;
+            this.button12.Text = "button12";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // LiveControlForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGray;
-            this.ClientSize = new System.Drawing.Size(1147, 635);
-            this.Controls.Add(this.pnl_plist);
+            this.ClientSize = new System.Drawing.Size(1284, 712);
+            this.Controls.Add(this.button12);
             this.Controls.Add(this.button9);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.richTextBox1);
@@ -612,10 +639,11 @@
             this.obs_grp.PerformLayout();
             this.pnl_ChangeText.ResumeLayout(false);
             this.pnl_ChangeText.PerformLayout();
+            this.pnl_plist.ResumeLayout(false);
+            this.pnl_plist.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grd_pList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.obs_grid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.vlc1)).EndInit();
-            this.pnl_plist.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.grd_pList)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -668,10 +696,12 @@
         private System.Windows.Forms.Button btn_sendTextChanges;
         private System.Windows.Forms.Panel pnl_ChangeText;
         private System.Windows.Forms.Panel pnl_plist;
-        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.DataGridView grd_pList;
         private System.Windows.Forms.DataGridViewTextBoxColumn clNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn clVideo;
+        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button button12;
     }
 }
 

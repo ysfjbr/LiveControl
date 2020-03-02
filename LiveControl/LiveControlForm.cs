@@ -115,6 +115,7 @@ namespace LiveControl
 
         private void doCommand(string str)
         {
+            //textBox1.Text += Environment.NewLine + str;
             if (str.StartsWith("CON__"))
             {
                 getDevices(str);
@@ -194,9 +195,6 @@ namespace LiveControl
             }*/
 
             //textBox1.Text = " >333>>>> " + Environment.NewLine + inputJson + Environment.NewLine + " ********* " + Environment.NewLine;
-
-
-
         }
 
         private void getJson(string str,string type, string obsName)
@@ -251,7 +249,7 @@ namespace LiveControl
                 
                 res = false;
             }
-            data_str.Text = "";
+            //data_str.Text = "";
             return res;
         }
 
@@ -291,7 +289,7 @@ namespace LiveControl
             {
                 OBSGridUpdate();
                 Thread.Sleep(1000);
-                sendCommand("command=GetStreamingStatus");
+                sendCommand("GetStreamingStatus");
             }
             else
                 obs_grid.Rows.Clear();
@@ -424,11 +422,11 @@ namespace LiveControl
                 if (onlySelectedOBS)
                 {
                     selectedOBS = obs_grid.SelectedRows[0].Cells["OBS_col"].Value.ToString();
-                    sendData("OBS^" + selectedOBS + "^TOOBS^/" + command);
+                    sendData("OBS^" + selectedOBS + "^TOOBS^" + command);
                 }
                 else
                 {
-                    sendData("OBSC_/" + command);
+                    sendData("OBSC_" + command);
                 }
             }
             catch (Exception ex) { disconnetServer(); }
@@ -437,30 +435,31 @@ namespace LiveControl
 
         private void button2_Click(object sender, EventArgs e)
         {
-            sendCommand("command=GetSceneList",true);
+            sendCommand("GetSceneList",true);
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            sendCommand("startstream", true);
+            /*sendCommand("startstream", true);
             Thread.Sleep(3000);
             Thread s = new Thread(updateStramStatus);
-            s.Start();
+            s.Start();*/
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            sendCommand("stopstream", true);
+           /* sendCommand("stopstream", true);
             Thread.Sleep(3000);
             Thread s = new Thread(updateStramStatus);
-            s.Start();
+            s.Start();*/
         }
 
         private void updateStramStatus()
         {
-            sendCommand("command=GetStreamingStatus");
+            sendCommand("GetStreamingStatus");
         }
 
+        
         private void button6_Click(object sender, EventArgs e)
         {
             vlc1.playlist.stop();
@@ -476,9 +475,9 @@ namespace LiveControl
 
         private void switchScene(string sceneName)
         {
-            sendCommand("scene=\"" + sceneName + "\"", true);
+            sendCommand(@"SetCurrentScene&"+ sceneName , true);
             Thread.Sleep(500);
-            sendCommand("command=GetSceneList", true);
+            sendCommand("GetSceneList", true);
         }
 
         private void button10_Click(object sender, EventArgs e)
@@ -554,7 +553,7 @@ namespace LiveControl
         private void button7_Click_1(object sender, EventArgs e)
         {
             OBSGridUpdate();
-            sendCommand("command=GetStreamingStatus", false);
+            sendCommand("GetStreamingStatus", false);
         }
 
         private void LiveControlForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -565,20 +564,21 @@ namespace LiveControl
 
         private void tim_loadsc_Tick(object sender, EventArgs e)
         {
-            sendCommand("command=GetSceneList", false);
+            sendCommand("GetSceneList", false);
             tim_loadsc.Enabled = false;
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
+            sendData("StopRec");
             vlc1.playlist.stop();
         }
 
         private void switch_OBS_btn_Click(object sender, EventArgs e)
         {
-            sendCommand("stopstream", false);
+            sendCommand("StopStreaming", false);
             Thread.Sleep(1000);
-            sendCommand("startstream", true);
+            sendCommand("StartStreaming", true);
             Thread.Sleep(2000);
             Thread s = new Thread(updateStramStatus);
             s.Start();
@@ -586,12 +586,12 @@ namespace LiveControl
 
         private void button9_Click(object sender, EventArgs e)
         {
-            sendCommand("stopstream");
+            sendCommand("StopStreaming");
         }
 
         private void obs_grid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            sendCommand("command=GetSceneList", true);
+            sendCommand("GetSceneList", true);
             selectedOBSIndex = obs_grid.SelectedRows[0].Index;
         }
 
@@ -611,7 +611,7 @@ namespace LiveControl
 
         private void getSourceSettings(string sourceName)
         {
-            sendCommand("command=GetSourceSettings,sourceName=\"" + sourceName+"\"", true);
+            sendCommand("GetSourceSettings&" + sourceName, true);
         }
 
         private void showSourceSettings(Source source)
@@ -619,6 +619,11 @@ namespace LiveControl
             if (source.sourceType == "text_gdiplus")
             {
                 txt_sourcesettings.Text = decodeString(source.sourceSettings.text);
+                pnl_ChangeText.Visible = true;
+            }
+            else if (source.sourceType == "browser_source")
+            {
+                txt_sourcesettings.Text = decodeString(source.sourceSettings.url);
                 pnl_ChangeText.Visible = true;
             }
             else
@@ -630,7 +635,8 @@ namespace LiveControl
             if (source.sourceType == "vlc_source")
             {
                 int n = 1;
-                foreach(Playlist p in source.sourceSettings.playlist)
+                grd_pList.Rows.Clear();
+                foreach (Playlist p in source.sourceSettings.playlist)
                 {
                     grd_pList.Rows.Add(n.ToString(), p.value);
                     n++;
@@ -682,6 +688,40 @@ namespace LiveControl
                 string sname = source_list.SelectedItem.ToString();
                 sendData("OBSText^"+sname +"^"+ encodeString(txt_sourcesettings.Text));
             }
+        }
+
+        private void button11_Click_1(object sender, EventArgs e)
+        {
+            if (source_list.SelectedIndex != -1)
+            {
+                string sname = source_list.SelectedItem.ToString();
+                string pl = "";
+                int i = 0;
+                foreach(DataGridViewRow row in grd_pList.Rows)
+                {
+                    if (row.Cells["clVideo"].Value != null)
+                    {
+                        sendData("OBSPList^" + sname + "^" + (grd_pList.Rows.Count-1).ToString() + "^" + i.ToString() + "^" + encodeString(row.Cells["clVideo"].Value.ToString()));
+                        i++;
+                        Thread.Sleep(200);
+                    }
+                        //pl += "{\"hidden\":false,\"selected\":false,\"value\":\"" + row.Cells["clVideo"].Value.ToString() + "\"},"; //"[{\"v\":\"" + row.Cells["clVideo"].Value.ToString() + "\"}],";
+                }
+
+                //sendData("OBSPList^" + sname + "^[" + pl + "]");
+            }
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            sendData("StartRec");
+            /*YoutubeVideo yt = new YoutubeVideo().Parse(textBox2.Text);
+     
+            if (yt != null)
+                MessageBox.Show(yt.getDuration().ToString());
+            else
+                MessageBox.Show("Not Youtube");
+            */
         }
     }
 }

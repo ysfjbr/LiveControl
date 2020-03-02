@@ -44,7 +44,6 @@ C:\Users\ysf_j\source\repos\LiveControl\LiveControl\bin\Debug\LiveControl.exe
 C:\Users\ysf_j\source\repos\LiveControl\LiveControl\bin\Debug\LiveControl.pdb
 C:\Users\ysf_j\source\repos\LiveControl\LiveControl\bin\Debug\Interop.AXVLC.dll
 C:\Users\ysf_j\source\repos\LiveControl\LiveControl\bin\Debug\AxInterop.AXVLC.dll
-C:\Users\ysf_j\source\repos\LiveControl\LiveControl\obj\Debug\LiveControl.csprojAssemblyReference.cache
 C:\Users\ysf_j\source\repos\LiveControl\LiveControl\obj\Debug\Interop.AXVLC.dll
 C:\Users\ysf_j\source\repos\LiveControl\LiveControl\obj\Debug\AxInterop.AXVLC.dll
 C:\Users\ysf_j\source\repos\LiveControl\LiveControl\obj\Debug\LiveControl.csproj.ResolveComReference.cache
@@ -67,3 +66,7 @@ C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\obj\Debug\LiveControl.cspr
 C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\obj\Debug\LiveControl.exe
 C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\obj\Debug\LiveControl.pdb
 C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\obj\Debug\LiveControl.csprojResolveAssemblyReference.cache
+C:\Users\ysf_j\source\repos\LiveControl\LiveControl\obj\Debug\LiveControl.csprojAssemblyReference.cache
+C:\Users\ysf_j\source\repos\LiveControl\LiveControl\bin\Debug\System.Net.Http.dll
+C:\Users\ysf_j\source\repos\LiveControl\LiveControl\bin\Debug\System.Net.Http.xml
+C:\Users\ysf_j\source\repos\LiveControl\LiveControl\obj\Debug\LiveControl.csproj.CopyComplete
