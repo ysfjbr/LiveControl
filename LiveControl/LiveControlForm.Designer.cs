@@ -92,7 +92,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(970, 562);
+            this.button1.Location = new System.Drawing.Point(814, 639);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(165, 23);
             this.button1.TabIndex = 3;
@@ -102,7 +102,7 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(572, 565);
+            this.textBox2.Location = new System.Drawing.Point(413, 642);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(392, 20);
             this.textBox2.TabIndex = 6;
@@ -445,7 +445,7 @@
             this.textBox1.Location = new System.Drawing.Point(413, 468);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(859, 80);
+            this.textBox1.Size = new System.Drawing.Size(859, 168);
             this.textBox1.TabIndex = 27;
             // 
             // data_str
@@ -453,9 +453,9 @@
             this.data_str.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.data_str.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.data_str.Location = new System.Drawing.Point(0, 677);
+            this.data_str.Location = new System.Drawing.Point(0, 690);
             this.data_str.Name = "data_str";
-            this.data_str.Size = new System.Drawing.Size(1288, 36);
+            this.data_str.Size = new System.Drawing.Size(1288, 23);
             this.data_str.TabIndex = 28;
             // 
             // button10
@@ -552,7 +552,7 @@
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(412, 551);
+            this.richTextBox1.Location = new System.Drawing.Point(223, 642);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(154, 34);
             this.richTextBox1.TabIndex = 35;
@@ -589,7 +589,7 @@
             this.vlc1.Location = new System.Drawing.Point(15, 28);
             this.vlc1.Name = "vlc1";
             this.vlc1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("vlc1.OcxState")));
-            this.vlc1.Size = new System.Drawing.Size(392, 238);
+            this.vlc1.Size = new System.Drawing.Size(392, 237);
             this.vlc1.TabIndex = 2;
             // 
             // button12

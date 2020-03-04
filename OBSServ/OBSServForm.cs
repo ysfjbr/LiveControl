@@ -515,7 +515,7 @@ namespace OBSServ
             str = str.Replace("recording-paused", "recording_paused");
             str = str.Replace("stream-timecode", "stream_timecode");
             str = str.Replace("rec-timecode", "rec_timecode");
-            //str = str.Substring(0, str.IndexOf("}Ok") + 1);
+            str = str.Substring(0, str.LastIndexOf("}") + 1);
 
             return str;
         }
@@ -628,7 +628,6 @@ namespace OBSServ
             serverStream.Close();
             clientSocket.Close();
 
-            
             try
             {
                 conn_btn.Text = "Connect !";

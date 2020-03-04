@@ -210,8 +210,8 @@ namespace LiveControl
         private bool getSceneList(string str, string obsName = "")
         {
 
-            data_str.Text = str;
-            
+            data_str.Text = correctJSON(str);
+
             bool res = false;
             try
             {
@@ -230,10 +230,23 @@ namespace LiveControl
             return res;
         }
 
+        private string correctJSON(string str)
+        {
+            str = str.Replace("current-scene", "current_scene");
+            str = str.Replace("preview-only", "preview_only");
+            str = str.Replace("message-id", "message_id");
+            str = str.Replace("recording-paused", "recording_paused");
+            str = str.Replace("stream-timecode", "stream_timecode");
+            str = str.Replace("rec-timecode", "rec_timecode");
+            str = str.Substring(0, str.LastIndexOf("}") + 1);
+
+            return str;
+        }
+
         private bool getStreamingStatus(string str, string obsName = "")
         {
             bool res = false;
-            data_str.Text = str;
+            data_str.Text = correctJSON(str);
             try
             {
                 JavaScriptSerializer js = new JavaScriptSerializer();
@@ -256,7 +269,7 @@ namespace LiveControl
         private bool getSourceSettings(string str, string obsName = "")
         {
             bool res = false;
-            data_str.Text = str;
+            data_str.Text = correctJSON(str);
             try
             {
                 JavaScriptSerializer js = new JavaScriptSerializer();

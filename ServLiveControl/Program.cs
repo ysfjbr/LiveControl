@@ -103,28 +103,25 @@ namespace ServLiveControl
         public static void ffmpegRecStream()
         {
             commandFile = "ffmpeg";
-            commandArgs = "-y -i rtmp://207.180.219.104:1936/stream/final  -c copy /var/www/html/test/content/rec3.mp4";
+            //rtmp://207.180.219.104:1936/stream/final
+            commandArgs = "-y -i rtmp://207.180.219.104:1936/stream/final -vcodec copy -acodec copy /var/www/html/test/content/rec3.mp4";
             runCommThread = new Thread(runCommand);
             runCommThread.Start();
         }
         public static void runCommand()
         {
-            process = new Process
-            {
-                StartInfo = new ProcessStartInfo
+            /*
+                process = new Process
                 {
-                    FileName = commandFile,
-                    Arguments = commandArgs,
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    CreateNoWindow = true,
-                    
+                    StartInfo = new ProcessStartInfo
+                    {
+                        FileName = commandFile,
+                        Arguments = commandArgs,
+                    }
+                };
+    */
+            Process.Start(commandFile, commandArgs);
 
-                }
-            };
-
-            process.Start();
-            
             //process.WaitForExit();
         }
 
@@ -174,33 +171,32 @@ namespace ServLiveControl
             {
                 broadcast(str, clNo, false);
             }
-            else if(str.StartsWith("StartRec"))
+            else if (str.StartsWith("StartRec"))
             {
                 ffmpegRecStream();
             }
             else if (str.StartsWith("StopRec"))
             {
-                process.Kill();
+                Process.Start("pkill", "ffmpeg");
                 runCommThread.Abort();
             }
             else
             {
                 broadcast(str, clNo, false);
             }
+            Thread.Sleep(200);
         }
 
         public static void broadcast(string msg, string uName, bool flag)
         {
             foreach (DictionaryEntry Item in clientsList)
             {
-
+                TcpClient broadcastSocket = (TcpClient)Item.Value;
                 try
                 {
-                    TcpClient broadcastSocket;
-                    broadcastSocket = (TcpClient)Item.Value;
                     NetworkStream broadcastStream = broadcastSocket.GetStream();
                     Byte[] broadcastBytes = null;
-
+                    //Console.WriteLine("ConnSTATUS : " + broadcastSocket.Connected.ToString());
                     if (flag == true)
                     {
                         broadcastBytes = Encoding.ASCII.GetBytes(uName + " says : " + msg);
@@ -215,8 +211,12 @@ namespace ServLiveControl
                 }
                 catch (Exception ex)
                 {
-                    //broadcastSocket.Close();
-                    //clientsList.Remove(Item);
+                    try
+                    {
+                        broadcastSocket.Close();
+                    }
+                    catch (Exception ex1) { }
+                    clientsList.Remove(Item);
                     Console.WriteLine("Error BB: " + ex);
                     //Thread.Sleep(500);
 
@@ -270,7 +270,7 @@ namespace ServLiveControl
                     networkStream.Read(bytesFrom, 0, (int)bytesFrom.Length);
                     dataFromClient = Encoding.ASCII.GetString(bytesFrom);
                     dataFromClient = dataFromClient.Substring(0, dataFromClient.IndexOf("$"));
-                    Console.WriteLine("From client - " + clNo + " : " + dataFromClient);
+                    Console.WriteLine("From client - " + clNo + " : " + dataFromClient + networkStream.DataAvailable.ToString()+" - "+ clientSocket.Connected.ToString());
                     //rCount = Convert.ToString(requestCount);
                     //doCommand(dataFromClient);
                     Program.doCommand(dataFromClient, clNo);
