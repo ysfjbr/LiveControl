@@ -601,12 +601,12 @@ namespace OBSServ
         {
             if (Properties.Settings.Default["ip"].ToString() != "")
             {
-                ip_txt.Text = Properties.Settings.Default["ip"].ToString();
-                port_txt.Text = Properties.Settings.Default["port"].ToString();
+                ip_txt.Text         = Properties.Settings.Default["ip"].ToString();
+                port_txt.Text       = Properties.Settings.Default["port"].ToString();
                 clientName_txt.Text = Properties.Settings.Default["clientName"].ToString();
-                pass_txt.Text = Properties.Settings.Default["clientPass"].ToString();
-                obsPath_txt.Text = Properties.Settings.Default["obsPath"].ToString();
-                obs_port_txt.Text = Properties.Settings.Default["obsport"].ToString();
+                pass_txt.Text       = Properties.Settings.Default["clientPass"].ToString();
+                obsPath_txt.Text    = Properties.Settings.Default["obsPath"].ToString();
+                obs_port_txt.Text   = Properties.Settings.Default["obsport"].ToString();
             }
 
             downloadSceneColl();

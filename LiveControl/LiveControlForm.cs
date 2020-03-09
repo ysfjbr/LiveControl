@@ -21,7 +21,9 @@ namespace LiveControl
         Thread ctThread;
         string selectedOBS = "";
         int selectedOBSIndex = -1;
-        
+        string recPath = @"http://207.180.219.104/test/content/";
+        string[,] recFileslist;
+
         //string[] inputJson;
         bool Connected = false;
 
@@ -124,6 +126,10 @@ namespace LiveControl
             {
                 textBox1.Text = textBox1.Text + Environment.NewLine + " >> obs command " + str.Substring(5);
             }
+            else if (str.StartsWith("RFS__"))
+            {
+                loadRecFiles(str.Substring(5));
+            }
             else if (str.StartsWith("OBS^"))
             {
                 /*commandThread.Add(new Thread(() => getOBSOutput(str.Split('^'))));//  new Thread(new ParameterizedThreadStart(getOBSOutput)));
@@ -148,6 +154,39 @@ namespace LiveControl
                 }*/
                 textBox1.Text = textBox1.Text + Environment.NewLine + " >> " + data_str.Text;
             }
+        }
+
+        void loadRecFiles(string command)
+        {
+            string[] obsResult = command.Split('^');
+            int vnum = int.Parse(obsResult[0]);
+            int vi = int.Parse(obsResult[1]);
+
+            data_str.Text = obsResult[2] ;
+            if (vi == 0)
+                recFileslist = new string[vnum,2] ;
+            recFileslist[vi,0] = data_str.Text;
+            try
+            {
+                recFileslist[vi, 1] = new TimeSpan(0, 0, 0, (int)(double.Parse(obsResult[3])/1000000)).ToString();
+            }
+            catch (Exception ex2) { }
+
+            try
+            {
+                if (vnum - 1 == vi)
+                {
+                    grd_Rec_Files.Rows.Clear();
+
+                    for (int i = 0; i < recFileslist.GetLength(0); i++)
+                    {
+                        
+                            grd_Rec_Files.Rows.Add((i + 1).ToString(), recFileslist[i, 0], recFileslist[i, 1]);
+                        
+                    }
+                }
+            }
+            catch (Exception ex) { textBox1.Text = textBox1.Text + Environment.NewLine + " loadRecFiles Error: " + ex.Message;  }
         }
 
         private void getOBSOutput(string[] obsResult)
@@ -399,10 +438,10 @@ namespace LiveControl
         {
             try
             {
-                Properties.Settings.Default["ip"] = ip_txt.Text;
-                Properties.Settings.Default["port"] = port_txt.Text;
-                Properties.Settings.Default["clientName"] = clientName_txt.Text;
-                Properties.Settings.Default["clientPass"] = pass_txt.Text;
+                Properties.Settings.Default["ip"]           = ip_txt.Text;
+                Properties.Settings.Default["port"]         = port_txt.Text;
+                Properties.Settings.Default["clientName"]   = clientName_txt.Text;
+                Properties.Settings.Default["clientPass"]   = pass_txt.Text;
 
                 Properties.Settings.Default.Save();
             }catch(Exception ex)
@@ -583,7 +622,6 @@ namespace LiveControl
 
         private void button8_Click(object sender, EventArgs e)
         {
-            sendData("StopRec");
             vlc1.playlist.stop();
         }
 
@@ -728,13 +766,79 @@ namespace LiveControl
         private void button12_Click(object sender, EventArgs e)
         {
             sendData("StartRec");
-            /*YoutubeVideo yt = new YoutubeVideo().Parse(textBox2.Text);
-     
-            if (yt != null)
-                MessageBox.Show(yt.getDuration().ToString());
-            else
-                MessageBox.Show("Not Youtube");
-            */
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            sendData("ch_Rec");
+        }
+
+        private void grd_Rec_Files_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            
+            if (e.RowIndex != -1)
+            {
+                string f = grd_Rec_Files.Rows[e.RowIndex].Cells["vFile"].Value.ToString();
+
+                vlc1.playlist.stop();
+                vlc1.playlist.items.clear();
+                vlc1.playlist.add(recPath+f);
+                vlc1.playlist.play();
+            }
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            sendData("StopRec");
+        }
+
+        private void grd_pList_MouseMove(object sender, MouseEventArgs e)
+        {
+        }
+
+        private void grd_pList_MouseDown(object sender, MouseEventArgs e)
+        {
+            
+        }
+
+        private void grd_Rec_Files_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                DataGridView.HitTestInfo info = grd_Rec_Files.HitTest(e.X, e.Y);
+                if (info.RowIndex >= 0)
+                {
+                    if (info.RowIndex >= 0 && info.ColumnIndex >= 0)
+                    {
+                        string text = (String)
+                                grd_Rec_Files.Rows[info.RowIndex].Cells["vFile"].Value;
+                        if (text != null)
+                        {
+                            //Need to put braces here  CHANGE
+                            grd_Rec_Files.DoDragDrop(text, DragDropEffects.Copy);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void grd_pList_DragDrop(object sender, DragEventArgs e)
+        {
+            string cellvalue = e.Data.GetData(typeof(string)) as string;
+            Point cursorLocation = this.PointToClient(new Point(e.X, e.Y));
+            grd_pList.Rows.Add(grd_pList.Rows.Count.ToString(), recPath+cellvalue);
+
+            /*System.Windows.Forms.DataGridView.HitTestInfo hittest = grd_pList.HitTest(cursorLocation.X, cursorLocation.Y);
+            if (hittest.ColumnIndex != -1
+                && hittest.RowIndex != -1)
+            {  //CHANGE
+                grd_pList[hittest.ColumnIndex, hittest.RowIndex].Value = cellvalue;
+            }*/
+        }
+
+        private void grd_pList_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Copy;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Security.Permissions;
@@ -18,8 +19,8 @@ namespace ServLiveControl
         public static List<string> usersps = new List<string> { };
 
         public static string commandFile, commandArgs;
-        public static Process process;
         public static Thread runCommThread;
+        public static string recPath = "/var/www/html/test/content/";
 
         static void Main(string[] args)
         {
@@ -104,26 +105,42 @@ namespace ServLiveControl
         {
             commandFile = "ffmpeg";
             //rtmp://207.180.219.104:1936/stream/final
-            commandArgs = "-y -i rtmp://207.180.219.104:1936/stream/final -vcodec copy -acodec copy /var/www/html/test/content/rec3.mp4";
-            runCommThread = new Thread(runCommand);
+            string ftime = DateTime.Now.ToString("yyyyMMdd_Hmmss");
+
+            commandArgs = "-y -i rtmp://207.180.219.104:1936/stream/final -vcodec copy -acodec copy /var/www/html/test/content/"+ ftime + ".mp4";
+            runCommThread = new Thread(startRecCommand);
             runCommThread.Start();
         }
-        public static void runCommand()
-        {
-            /*
-                process = new Process
-                {
-                    StartInfo = new ProcessStartInfo
-                    {
-                        FileName = commandFile,
-                        Arguments = commandArgs,
-                    }
-                };
-    */
-            Process.Start(commandFile, commandArgs);
 
-            //process.WaitForExit();
+        public static void startRecCommand()
+        {
+            Process.Start(commandFile, commandArgs);
         }
+        public static string runCommand(string command, string args)
+        {
+            string output;
+            using (Process process = new Process())
+            {
+                process.StartInfo.FileName = command;
+                process.StartInfo.Arguments = args;
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.Start();
+
+                // Synchronously read the standard output of the spawned process. 
+                StreamReader reader = process.StandardOutput;
+                output = reader.ReadToEnd();
+
+                // Write the redirected output to this application's window.
+                Console.WriteLine(output);
+
+                process.WaitForExit();
+            }
+
+            return output;
+        }
+
+
 
         public static string getAvaKey(string key, Hashtable table)
         {
@@ -167,6 +184,10 @@ namespace ServLiveControl
             {
                 broadcast("CON__" + getclientsListString(clientsList), clNo, false);
             }
+            else if(str.StartsWith("ch_Rec"))
+            {
+                get_recorded_files();
+            }
             else if (str.StartsWith("OBS"))
             {
                 broadcast(str, clNo, false);
@@ -178,6 +199,7 @@ namespace ServLiveControl
             else if (str.StartsWith("StopRec"))
             {
                 Process.Start("pkill", "ffmpeg");
+                get_recorded_files();
                 runCommThread.Abort();
             }
             else
@@ -223,6 +245,31 @@ namespace ServLiveControl
                 }
             }
 
+        }
+
+        public static void get_recorded_files()
+        {
+            List<string> fs = new List<string>();
+
+            DirectoryInfo info = new DirectoryInfo(recPath);
+            FileInfo[] files = info.GetFiles().OrderByDescending(p => p.CreationTime).ToArray();
+            foreach (FileInfo file in files)
+            {
+                if (file.Extension == ".mp4")
+                {
+                    fs.Add(file.FullName);
+                }
+            }
+            int i = 0;
+            foreach(string f in fs)
+            {
+                string args = @" -v error -show_entries format=duration \-of default=noprint_wrappers=1:nokey=1 " + f;
+                string dur = runCommand("ffprobe", args);
+                broadcast("RFS__"+ fs.Count+"^" + i.ToString() + "^" +  Path.GetFileName(f) + "^" + dur, "Server", false);
+                
+                Thread.Sleep(100);
+                i++;
+            }
         }
     }
 
@@ -270,7 +317,7 @@ namespace ServLiveControl
                     networkStream.Read(bytesFrom, 0, (int)bytesFrom.Length);
                     dataFromClient = Encoding.ASCII.GetString(bytesFrom);
                     dataFromClient = dataFromClient.Substring(0, dataFromClient.IndexOf("$"));
-                    Console.WriteLine("From client - " + clNo + " : " + dataFromClient + networkStream.DataAvailable.ToString()+" - "+ clientSocket.Connected.ToString());
+                    Console.WriteLine("From client - " + clNo + " : " + dataFromClient + networkStream.DataAvailable.ToString() + " - " + clientSocket.Connected.ToString());
                     //rCount = Convert.ToString(requestCount);
                     //doCommand(dataFromClient);
                     Program.doCommand(dataFromClient, clNo);
