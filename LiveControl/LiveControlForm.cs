@@ -23,6 +23,7 @@ namespace LiveControl
         int selectedOBSIndex = -1;
         string recPath = @"http://207.180.219.104/test/content/";
         string[,] recFileslist;
+        ListViewItem[] deflvItems;
 
         //string[] inputJson;
         bool Connected = false;
@@ -73,6 +74,14 @@ namespace LiveControl
         private void Form1_Load(object sender, EventArgs e)
         {
             loadSettings();
+
+            deflvItems = new ListViewItem[listv_Scenes.Items.Count];
+
+            for (int i = 0; i< listv_Scenes.Items.Count; i++)
+            {
+                deflvItems[i] = listv_Scenes.Items[i];
+            }
+            listv_Scenes.Items.Clear();
         }
 
 
@@ -154,6 +163,7 @@ namespace LiveControl
                 }*/
                 textBox1.Text = textBox1.Text + Environment.NewLine + " >> " + data_str.Text;
             }
+            Thread.Sleep(200);
         }
 
         void loadRecFiles(string command)
@@ -166,9 +176,10 @@ namespace LiveControl
             if (vi == 0)
                 recFileslist = new string[vnum,2] ;
             recFileslist[vi,0] = data_str.Text;
+            data_str.Text = "";
             try
             {
-                recFileslist[vi, 1] = new TimeSpan(0, 0, 0, (int)(double.Parse(obsResult[3])/1000000)).ToString();
+                recFileslist[vi, 1] = new TimeSpan(0, 0, 0, (int)(double.Parse(obsResult[3].Replace(".","")) /1000000)).ToString();
             }
             catch (Exception ex2) { }
 
@@ -265,7 +276,7 @@ namespace LiveControl
                 //MessageBox.Show(ex.Message);
                 res = false;
             }
-            //data_str.Text = "";
+            data_str.Text = "";
             return res;
         }
 
@@ -301,7 +312,7 @@ namespace LiveControl
                 
                 res = false;
             }
-            //data_str.Text = "";
+            data_str.Text = "";
             return res;
         }
 
@@ -360,13 +371,13 @@ namespace LiveControl
                     {
                         obs_grid.Rows.Add(os.Value.getRow());
                     }
-                    obs_grp.Enabled = obs_grid.Rows.Count > 0;
-                    switch_OBS_btn.Enabled = obs_grp.Enabled;
+                    obs_grp_tabs.Enabled = obs_grid.Rows.Count > 0;
+                    switch_OBS_btn.Enabled = obs_grp_tabs.Enabled;
                     obs_grid.Rows[selectedOBSIndex].Selected = true;
                 }
                 else
                 {
-                    obs_grp.Enabled = false;
+                    obs_grp_tabs.Enabled = false;
                     switch_OBS_btn.Enabled = false;
                 }
             }
@@ -466,7 +477,7 @@ namespace LiveControl
 
             }
         }
-
+        
         private void sendCommand(string command, bool onlySelectedOBS = false)
         {
             try
@@ -570,8 +581,26 @@ namespace LiveControl
 
         private void loadScene(string obsName)
         {
-            scene_list.DataSource = slist[obsName].getScenes();
+            List<string> scenes = slist[obsName].getScenes();
+
+            scene_list.DataSource = scenes;
             scene_list.SelectedIndex = scene_list.FindString(slist[obsName].current_scene);
+
+            //********* Load Scenes
+            listv_Scenes.Items.Clear();
+            foreach (ListViewItem lv in deflvItems)
+            {
+                if(scenes.Contains(lv.Tag))
+                {
+                    if ((string)slist[obsName].current_scene == (string)lv.Tag)
+                        lv.ForeColor = Color.Red;
+                    else
+                        lv.ForeColor = Color.Black;
+
+                    listv_Scenes.Items.Add(lv);
+                }
+            }
+            
         }
 
         private void scene_list_DrawItem(object sender, DrawItemEventArgs e)
@@ -670,12 +699,33 @@ namespace LiveControl
             if (source.sourceType == "text_gdiplus")
             {
                 txt_sourcesettings.Text = decodeString(source.sourceSettings.text);
+                if(source.sourceName == "textbar_text")
+                    txt_textbar.Text = decodeString(source.sourceSettings.text);
                 pnl_ChangeText.Visible = true;
             }
             else if (source.sourceType == "browser_source")
             {
                 txt_sourcesettings.Text = decodeString(source.sourceSettings.url);
                 pnl_ChangeText.Visible = true;
+
+                if (source.sourceName == "browser1_url")
+                {
+                    txt_Browser1.Text = decodeString(source.sourceSettings.url);
+                }
+                if (source.sourceName == "browser2_url")
+                {
+                    txt_Browser2.Text = decodeString(source.sourceSettings.url);
+                }
+                if (source.sourceName == "youtube1_url")
+                {
+                    txt_Youtube1.Text = decodeString(source.sourceSettings.url);
+                }
+                if (source.sourceName == "youtube2_url")
+                {
+                    txt_Youtube2.Text = decodeString(source.sourceSettings.url);
+                }
+
+
             }
             else
             {
@@ -692,7 +742,18 @@ namespace LiveControl
                     grd_pList.Rows.Add(n.ToString(), p.value);
                     n++;
                 }
-                
+
+                if (source.sourceName == "PList")
+                {
+                    n = 1;
+                    dgv_Plist.Rows.Clear();
+                    foreach (Playlist p in source.sourceSettings.playlist)
+                    {
+                        dgv_Plist.Rows.Add(n.ToString(), p.value);
+                        n++;
+                    }
+                }
+
                 pnl_plist.Visible = true;
             }
             else
@@ -775,7 +836,6 @@ namespace LiveControl
 
         private void grd_Rec_Files_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            
             if (e.RowIndex != -1)
             {
                 string f = grd_Rec_Files.Rows[e.RowIndex].Cells["vFile"].Value.ToString();
@@ -839,6 +899,58 @@ namespace LiveControl
         private void grd_pList_DragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Copy;
+        }
+
+        private void prevVideo_Click(object sender, EventArgs e)
+        {
+            if (grd_Rec_Files.SelectedRows[0].Index != -1)
+            {
+                string f = grd_Rec_Files.Rows[grd_Rec_Files.SelectedRows[0].Index].Cells["vFile"].Value.ToString();
+
+                vlc1.playlist.stop();
+                vlc1.playlist.items.clear();
+                vlc1.playlist.add(recPath + f);
+                vlc1.playlist.play();
+            }
+        }
+
+        private void dataGridView2_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+        }
+
+        private void listv_Scenes_DoubleClick(object sender, EventArgs e)
+        {
+            if (listv_Scenes.SelectedItems[0].Tag.ToString() != "")
+                switchScene(listv_Scenes.SelectedItems[0].Tag.ToString());
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            sendData("OBSText^textbar_text^" + encodeString(txt_textbar.Text));
+        }
+
+        private void button21_Click(object sender, EventArgs e)
+        {
+            getSourceSettings("youtube1_url");
+       
+            getSourceSettings("browser1_url");
+        
+            getSourceSettings("browser2_url");
+            getSourceSettings("youtube2_url");
+
+            //******** Get Play List
+            getSourceSettings("PList");
+        }
+
+        private void button22_Click(object sender, EventArgs e)
+        {
+            //******** Get Text of Textbar
+            getSourceSettings("textbar_text");
+        }
+
+        private void button23_Click(object sender, EventArgs e)
+        {
+            sendCommand("GetSceneList", true);
         }
     }
 }

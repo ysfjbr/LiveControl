@@ -30,6 +30,15 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LiveControlForm));
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("Bowser 1", 0);
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Browser 2", 1);
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("Play List", 6);
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("Live 1 - Browser 1", 2);
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("Live 1 - Live 2", 3);
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("Live 1", 4);
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("Live 2", 5);
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("Youtube 1", 7);
+            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("Youtube 2", 8);
             this.button1 = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -45,7 +54,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.clientName_txt = new System.Windows.Forms.TextBox();
             this.conn_btn = new System.Windows.Forms.Button();
-            this.obs_grp = new System.Windows.Forms.GroupBox();
             this.pnl_plist = new System.Windows.Forms.Panel();
             this.label9 = new System.Windows.Forms.Label();
             this.button11 = new System.Windows.Forms.Button();
@@ -82,15 +90,48 @@
             this.vlc1 = new AxAXVLC.AxVLCPlugin2();
             this.button12 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button14 = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.button13 = new System.Windows.Forms.Button();
             this.grd_Rec_Files = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.vFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dur = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.button14 = new System.Windows.Forms.Button();
+            this.menuRecVideos = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.prevVideo = new System.Windows.Forms.ToolStripMenuItem();
+            this.delVideo = new System.Windows.Forms.ToolStripMenuItem();
+            this.obs_grp_tabs = new System.Windows.Forms.TabControl();
+            this.tab_scn = new System.Windows.Forms.TabPage();
+            this.listv_Scenes = new System.Windows.Forms.ListView();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.tab_plist = new System.Windows.Forms.TabPage();
+            this.button21 = new System.Windows.Forms.Button();
+            this.button20 = new System.Windows.Forms.Button();
+            this.button19 = new System.Windows.Forms.Button();
+            this.button18 = new System.Windows.Forms.Button();
+            this.button17 = new System.Windows.Forms.Button();
+            this.button16 = new System.Windows.Forms.Button();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txt_Browser1 = new System.Windows.Forms.TextBox();
+            this.txt_Youtube2 = new System.Windows.Forms.TextBox();
+            this.txt_Youtube1 = new System.Windows.Forms.TextBox();
+            this.txt_Browser2 = new System.Windows.Forms.TextBox();
+            this.dgv_Plist = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tab_logotext = new System.Windows.Forms.TabPage();
+            this.button15 = new System.Windows.Forms.Button();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.txt_textbar = new System.Windows.Forms.TextBox();
+            this.tab_adv = new System.Windows.Forms.TabPage();
+            this.button22 = new System.Windows.Forms.Button();
+            this.button23 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
-            this.obs_grp.SuspendLayout();
             this.pnl_plist.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grd_pList)).BeginInit();
             this.pnl_ChangeText.SuspendLayout();
@@ -98,6 +139,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.vlc1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grd_Rec_Files)).BeginInit();
+            this.menuRecVideos.SuspendLayout();
+            this.obs_grp_tabs.SuspendLayout();
+            this.tab_scn.SuspendLayout();
+            this.tab_plist.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_Plist)).BeginInit();
+            this.tab_logotext.SuspendLayout();
+            this.tab_adv.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -247,34 +295,12 @@
             this.conn_btn.UseVisualStyleBackColor = true;
             this.conn_btn.Click += new System.EventHandler(this.conn_btn_Click);
             // 
-            // obs_grp
-            // 
-            this.obs_grp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.obs_grp.Controls.Add(this.pnl_plist);
-            this.obs_grp.Controls.Add(this.pnl_ChangeText);
-            this.obs_grp.Controls.Add(this.label6);
-            this.obs_grp.Controls.Add(this.source_list);
-            this.obs_grp.Controls.Add(this.scene_list);
-            this.obs_grp.Controls.Add(this.swich_scene_btn);
-            this.obs_grp.Controls.Add(this.button5);
-            this.obs_grp.Controls.Add(this.button4);
-            this.obs_grp.Controls.Add(this.button2);
-            this.obs_grp.Enabled = false;
-            this.obs_grp.Location = new System.Drawing.Point(413, 184);
-            this.obs_grp.Name = "obs_grp";
-            this.obs_grp.Size = new System.Drawing.Size(673, 278);
-            this.obs_grp.TabIndex = 16;
-            this.obs_grp.TabStop = false;
-            this.obs_grp.Text = "Remote OBS";
-            this.obs_grp.Enter += new System.EventHandler(this.obs_grp_Enter);
-            // 
             // pnl_plist
             // 
             this.pnl_plist.Controls.Add(this.label9);
             this.pnl_plist.Controls.Add(this.button11);
             this.pnl_plist.Controls.Add(this.grd_pList);
-            this.pnl_plist.Location = new System.Drawing.Point(301, 34);
+            this.pnl_plist.Location = new System.Drawing.Point(301, 53);
             this.pnl_plist.Name = "pnl_plist";
             this.pnl_plist.Size = new System.Drawing.Size(367, 237);
             this.pnl_plist.TabIndex = 38;
@@ -334,7 +360,7 @@
             this.pnl_ChangeText.Controls.Add(this.txt_sourcesettings);
             this.pnl_ChangeText.Controls.Add(this.btn_sendTextChanges);
             this.pnl_ChangeText.Controls.Add(this.label8);
-            this.pnl_ChangeText.Location = new System.Drawing.Point(300, 35);
+            this.pnl_ChangeText.Location = new System.Drawing.Point(301, 49);
             this.pnl_ChangeText.Name = "pnl_ChangeText";
             this.pnl_ChangeText.Size = new System.Drawing.Size(367, 237);
             this.pnl_ChangeText.TabIndex = 15;
@@ -374,7 +400,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(159, 35);
+            this.label6.Location = new System.Drawing.Point(159, 54);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(91, 15);
             this.label6.TabIndex = 11;
@@ -383,7 +409,7 @@
             // source_list
             // 
             this.source_list.FormattingEnabled = true;
-            this.source_list.Location = new System.Drawing.Point(159, 58);
+            this.source_list.Location = new System.Drawing.Point(159, 77);
             this.source_list.Name = "source_list";
             this.source_list.Size = new System.Drawing.Size(135, 212);
             this.source_list.TabIndex = 10;
@@ -394,7 +420,7 @@
             // 
             this.scene_list.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.scene_list.FormattingEnabled = true;
-            this.scene_list.Location = new System.Drawing.Point(6, 58);
+            this.scene_list.Location = new System.Drawing.Point(6, 77);
             this.scene_list.Name = "scene_list";
             this.scene_list.Size = new System.Drawing.Size(147, 173);
             this.scene_list.TabIndex = 9;
@@ -404,7 +430,7 @@
             // 
             // swich_scene_btn
             // 
-            this.swich_scene_btn.Location = new System.Drawing.Point(6, 238);
+            this.swich_scene_btn.Location = new System.Drawing.Point(6, 257);
             this.swich_scene_btn.Name = "swich_scene_btn";
             this.swich_scene_btn.Size = new System.Drawing.Size(147, 32);
             this.swich_scene_btn.TabIndex = 7;
@@ -414,7 +440,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(288, 15);
+            this.button5.Location = new System.Drawing.Point(64, 310);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(27, 31);
             this.button5.TabIndex = 6;
@@ -425,7 +451,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(257, 15);
+            this.button4.Location = new System.Drawing.Point(33, 310);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(25, 31);
             this.button4.TabIndex = 5;
@@ -436,7 +462,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(6, 19);
+            this.button2.Location = new System.Drawing.Point(6, 38);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(147, 33);
             this.button2.TabIndex = 4;
@@ -450,17 +476,17 @@
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(140, 43);
             this.button6.TabIndex = 17;
-            this.button6.Text = "HTTP Play";
+            this.button6.Text = "View HTTP Live";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // textBox1
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(413, 468);
+            this.textBox1.Location = new System.Drawing.Point(413, 590);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(859, 187);
+            this.textBox1.Size = new System.Drawing.Size(859, 65);
             this.textBox1.TabIndex = 27;
             // 
             // data_str
@@ -479,7 +505,7 @@
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(134, 43);
             this.button10.TabIndex = 30;
-            this.button10.Text = "RTMP Play";
+            this.button10.Text = "View RTMP Live";
             this.button10.UseVisualStyleBackColor = true;
             this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
@@ -499,7 +525,7 @@
             this.obs_grid.Name = "obs_grid";
             this.obs_grid.ReadOnly = true;
             this.obs_grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.obs_grid.Size = new System.Drawing.Size(537, 105);
+            this.obs_grid.Size = new System.Drawing.Size(666, 105);
             this.obs_grid.TabIndex = 31;
             this.obs_grid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.obs_grid_CellClick);
             this.obs_grid.SelectionChanged += new System.EventHandler(this.obs_grid_SelectionChanged);
@@ -516,6 +542,7 @@
             this.OBS_ready_col.HeaderText = "Ready";
             this.OBS_ready_col.Name = "OBS_ready_col";
             this.OBS_ready_col.ReadOnly = true;
+            this.OBS_ready_col.Visible = false;
             // 
             // OBS_onair_col
             // 
@@ -542,7 +569,7 @@
             this.switch_OBS_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.switch_OBS_btn.Location = new System.Drawing.Point(413, 139);
             this.switch_OBS_btn.Name = "switch_OBS_btn";
-            this.switch_OBS_btn.Size = new System.Drawing.Size(250, 38);
+            this.switch_OBS_btn.Size = new System.Drawing.Size(278, 38);
             this.switch_OBS_btn.TabIndex = 32;
             this.switch_OBS_btn.Text = "Start Streamming from this OBS";
             this.switch_OBS_btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -557,9 +584,9 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(814, 139);
+            this.button7.Location = new System.Drawing.Point(902, 139);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(135, 38);
+            this.button7.Size = new System.Drawing.Size(177, 38);
             this.button7.TabIndex = 34;
             this.button7.Text = "Refresh OBS\'s Status";
             this.button7.UseVisualStyleBackColor = true;
@@ -590,9 +617,9 @@
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(669, 139);
+            this.button9.Location = new System.Drawing.Point(697, 139);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(139, 38);
+            this.button9.Size = new System.Drawing.Size(199, 38);
             this.button9.TabIndex = 37;
             this.button9.Text = "Stop Streamming";
             this.button9.UseVisualStyleBackColor = true;
@@ -604,7 +631,7 @@
             this.vlc1.Location = new System.Drawing.Point(15, 28);
             this.vlc1.Name = "vlc1";
             this.vlc1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("vlc1.OcxState")));
-            this.vlc1.Size = new System.Drawing.Size(392, 237);
+            this.vlc1.Size = new System.Drawing.Size(392, 238);
             this.vlc1.TabIndex = 2;
             // 
             // button12
@@ -628,6 +655,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(387, 350);
             this.panel1.TabIndex = 39;
+            // 
+            // button14
+            // 
+            this.button14.Location = new System.Drawing.Point(110, 3);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(101, 36);
+            this.button14.TabIndex = 39;
+            this.button14.Text = "Stop Record";
+            this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.button14_Click);
             // 
             // label10
             // 
@@ -658,6 +695,7 @@
             this.dataGridViewTextBoxColumn1,
             this.vFile,
             this.dur});
+            this.grd_Rec_Files.ContextMenuStrip = this.menuRecVideos;
             this.grd_Rec_Files.Location = new System.Drawing.Point(6, 70);
             this.grd_Rec_Files.MultiSelect = false;
             this.grd_Rec_Files.Name = "grd_Rec_Files";
@@ -688,15 +726,374 @@
             this.dur.Name = "dur";
             this.dur.ReadOnly = true;
             // 
-            // button14
+            // menuRecVideos
             // 
-            this.button14.Location = new System.Drawing.Point(110, 3);
-            this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(101, 36);
-            this.button14.TabIndex = 39;
-            this.button14.Text = "Stop Record";
-            this.button14.UseVisualStyleBackColor = true;
-            this.button14.Click += new System.EventHandler(this.button14_Click);
+            this.menuRecVideos.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.prevVideo,
+            this.delVideo});
+            this.menuRecVideos.Name = "menuRecVideos";
+            this.menuRecVideos.Size = new System.Drawing.Size(119, 48);
+            // 
+            // prevVideo
+            // 
+            this.prevVideo.Name = "prevVideo";
+            this.prevVideo.Size = new System.Drawing.Size(118, 22);
+            this.prevVideo.Text = "Preview ";
+            this.prevVideo.Click += new System.EventHandler(this.prevVideo_Click);
+            // 
+            // delVideo
+            // 
+            this.delVideo.Name = "delVideo";
+            this.delVideo.Size = new System.Drawing.Size(118, 22);
+            this.delVideo.Text = "Delete!";
+            // 
+            // obs_grp_tabs
+            // 
+            this.obs_grp_tabs.Controls.Add(this.tab_scn);
+            this.obs_grp_tabs.Controls.Add(this.tab_plist);
+            this.obs_grp_tabs.Controls.Add(this.tab_logotext);
+            this.obs_grp_tabs.Controls.Add(this.tab_adv);
+            this.obs_grp_tabs.Location = new System.Drawing.Point(413, 183);
+            this.obs_grp_tabs.Name = "obs_grp_tabs";
+            this.obs_grp_tabs.SelectedIndex = 0;
+            this.obs_grp_tabs.Size = new System.Drawing.Size(673, 401);
+            this.obs_grp_tabs.TabIndex = 41;
+            // 
+            // tab_scn
+            // 
+            this.tab_scn.Controls.Add(this.button23);
+            this.tab_scn.Controls.Add(this.listv_Scenes);
+            this.tab_scn.Location = new System.Drawing.Point(4, 22);
+            this.tab_scn.Name = "tab_scn";
+            this.tab_scn.Padding = new System.Windows.Forms.Padding(3);
+            this.tab_scn.Size = new System.Drawing.Size(665, 375);
+            this.tab_scn.TabIndex = 1;
+            this.tab_scn.Text = "Scenes";
+            this.tab_scn.UseVisualStyleBackColor = true;
+            // 
+            // listv_Scenes
+            // 
+            this.listv_Scenes.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.listv_Scenes.HideSelection = false;
+            listViewItem1.Checked = true;
+            listViewItem1.StateImageIndex = 1;
+            listViewItem1.Tag = "Browser1";
+            listViewItem2.Tag = "Browser2";
+            listViewItem3.Tag = "Playlist";
+            listViewItem4.Tag = "Live1-Browser2";
+            listViewItem5.Tag = "Live1-Live2";
+            listViewItem6.Tag = "Live1";
+            listViewItem7.Tag = "Live2";
+            listViewItem8.Tag = "Youtube1";
+            listViewItem9.Tag = "Youtube2";
+            this.listv_Scenes.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4,
+            listViewItem5,
+            listViewItem6,
+            listViewItem7,
+            listViewItem8,
+            listViewItem9});
+            this.listv_Scenes.LabelWrap = false;
+            this.listv_Scenes.LargeImageList = this.imageList1;
+            this.listv_Scenes.Location = new System.Drawing.Point(3, 39);
+            this.listv_Scenes.MultiSelect = false;
+            this.listv_Scenes.Name = "listv_Scenes";
+            this.listv_Scenes.Size = new System.Drawing.Size(659, 333);
+            this.listv_Scenes.TabIndex = 0;
+            this.listv_Scenes.UseCompatibleStateImageBehavior = false;
+            this.listv_Scenes.DoubleClick += new System.EventHandler(this.listv_Scenes_DoubleClick);
+            // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "br1.jpg");
+            this.imageList1.Images.SetKeyName(1, "br2.jpg");
+            this.imageList1.Images.SetKeyName(2, "l1-b1.jpg");
+            this.imageList1.Images.SetKeyName(3, "l1-l2.jpg");
+            this.imageList1.Images.SetKeyName(4, "lv1.jpg");
+            this.imageList1.Images.SetKeyName(5, "lv2.jpg");
+            this.imageList1.Images.SetKeyName(6, "pl.jpg");
+            this.imageList1.Images.SetKeyName(7, "yt1.jpg");
+            this.imageList1.Images.SetKeyName(8, "yt2.jpg");
+            // 
+            // tab_plist
+            // 
+            this.tab_plist.Controls.Add(this.button21);
+            this.tab_plist.Controls.Add(this.button20);
+            this.tab_plist.Controls.Add(this.button19);
+            this.tab_plist.Controls.Add(this.button18);
+            this.tab_plist.Controls.Add(this.button17);
+            this.tab_plist.Controls.Add(this.button16);
+            this.tab_plist.Controls.Add(this.label15);
+            this.tab_plist.Controls.Add(this.label14);
+            this.tab_plist.Controls.Add(this.label13);
+            this.tab_plist.Controls.Add(this.label12);
+            this.tab_plist.Controls.Add(this.label11);
+            this.tab_plist.Controls.Add(this.txt_Browser1);
+            this.tab_plist.Controls.Add(this.txt_Youtube2);
+            this.tab_plist.Controls.Add(this.txt_Youtube1);
+            this.tab_plist.Controls.Add(this.txt_Browser2);
+            this.tab_plist.Controls.Add(this.dgv_Plist);
+            this.tab_plist.Location = new System.Drawing.Point(4, 22);
+            this.tab_plist.Name = "tab_plist";
+            this.tab_plist.Size = new System.Drawing.Size(665, 375);
+            this.tab_plist.TabIndex = 3;
+            this.tab_plist.Text = "Play List & Browsers";
+            this.tab_plist.UseVisualStyleBackColor = true;
+            // 
+            // button21
+            // 
+            this.button21.Location = new System.Drawing.Point(352, 10);
+            this.button21.Name = "button21";
+            this.button21.Size = new System.Drawing.Size(310, 24);
+            this.button21.TabIndex = 22;
+            this.button21.Text = "Load Data";
+            this.button21.UseVisualStyleBackColor = true;
+            this.button21.Click += new System.EventHandler(this.button21_Click);
+            // 
+            // button20
+            // 
+            this.button20.Location = new System.Drawing.Point(572, 118);
+            this.button20.Name = "button20";
+            this.button20.Size = new System.Drawing.Size(90, 20);
+            this.button20.TabIndex = 21;
+            this.button20.Text = "Update";
+            this.button20.UseVisualStyleBackColor = true;
+            // 
+            // button19
+            // 
+            this.button19.Location = new System.Drawing.Point(572, 91);
+            this.button19.Name = "button19";
+            this.button19.Size = new System.Drawing.Size(90, 21);
+            this.button19.TabIndex = 20;
+            this.button19.Text = "Update";
+            this.button19.UseVisualStyleBackColor = true;
+            // 
+            // button18
+            // 
+            this.button18.Location = new System.Drawing.Point(572, 65);
+            this.button18.Name = "button18";
+            this.button18.Size = new System.Drawing.Size(90, 21);
+            this.button18.TabIndex = 19;
+            this.button18.Text = "Update";
+            this.button18.UseVisualStyleBackColor = true;
+            // 
+            // button17
+            // 
+            this.button17.Location = new System.Drawing.Point(572, 40);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(90, 20);
+            this.button17.TabIndex = 18;
+            this.button17.Text = "Update";
+            this.button17.UseVisualStyleBackColor = true;
+            // 
+            // button16
+            // 
+            this.button16.Location = new System.Drawing.Point(525, 334);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(137, 27);
+            this.button16.TabIndex = 17;
+            this.button16.Text = "Update Play List";
+            this.button16.UseVisualStyleBackColor = true;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(27, 155);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(46, 13);
+            this.label15.TabIndex = 10;
+            this.label15.Text = "Play List";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(20, 121);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(56, 13);
+            this.label14.TabIndex = 9;
+            this.label14.Text = "Youtube 2";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(20, 95);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(56, 13);
+            this.label13.TabIndex = 8;
+            this.label13.Text = "Youtube 1";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(22, 69);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(54, 13);
+            this.label12.TabIndex = 7;
+            this.label12.Text = "Browser 2";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(22, 43);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(54, 13);
+            this.label11.TabIndex = 6;
+            this.label11.Text = "Browser 1";
+            // 
+            // txt_Browser1
+            // 
+            this.txt_Browser1.Location = new System.Drawing.Point(82, 40);
+            this.txt_Browser1.Name = "txt_Browser1";
+            this.txt_Browser1.Size = new System.Drawing.Size(487, 20);
+            this.txt_Browser1.TabIndex = 5;
+            // 
+            // txt_Youtube2
+            // 
+            this.txt_Youtube2.Location = new System.Drawing.Point(82, 118);
+            this.txt_Youtube2.Name = "txt_Youtube2";
+            this.txt_Youtube2.Size = new System.Drawing.Size(487, 20);
+            this.txt_Youtube2.TabIndex = 4;
+            // 
+            // txt_Youtube1
+            // 
+            this.txt_Youtube1.Location = new System.Drawing.Point(82, 92);
+            this.txt_Youtube1.Name = "txt_Youtube1";
+            this.txt_Youtube1.Size = new System.Drawing.Size(487, 20);
+            this.txt_Youtube1.TabIndex = 3;
+            // 
+            // txt_Browser2
+            // 
+            this.txt_Browser2.Location = new System.Drawing.Point(82, 66);
+            this.txt_Browser2.Name = "txt_Browser2";
+            this.txt_Browser2.Size = new System.Drawing.Size(487, 20);
+            this.txt_Browser2.TabIndex = 2;
+            // 
+            // dgv_Plist
+            // 
+            this.dgv_Plist.AllowDrop = true;
+            this.dgv_Plist.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_Plist.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewTextBoxColumn3});
+            this.dgv_Plist.Location = new System.Drawing.Point(82, 153);
+            this.dgv_Plist.Name = "dgv_Plist";
+            this.dgv_Plist.Size = new System.Drawing.Size(580, 175);
+            this.dgv_Plist.TabIndex = 1;
+            this.dgv_Plist.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellValueChanged);
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.HeaderText = "#";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewTextBoxColumn3.HeaderText = "Video";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            // 
+            // tab_logotext
+            // 
+            this.tab_logotext.Controls.Add(this.button22);
+            this.tab_logotext.Controls.Add(this.button15);
+            this.tab_logotext.Controls.Add(this.checkBox2);
+            this.tab_logotext.Controls.Add(this.checkBox1);
+            this.tab_logotext.Controls.Add(this.txt_textbar);
+            this.tab_logotext.Location = new System.Drawing.Point(4, 22);
+            this.tab_logotext.Name = "tab_logotext";
+            this.tab_logotext.Size = new System.Drawing.Size(665, 375);
+            this.tab_logotext.TabIndex = 2;
+            this.tab_logotext.Text = "Logo & Text bar";
+            this.tab_logotext.UseVisualStyleBackColor = true;
+            // 
+            // button15
+            // 
+            this.button15.Location = new System.Drawing.Point(530, 219);
+            this.button15.Name = "button15";
+            this.button15.Size = new System.Drawing.Size(131, 27);
+            this.button15.TabIndex = 16;
+            this.button15.Text = "Update Text";
+            this.button15.UseVisualStyleBackColor = true;
+            this.button15.Click += new System.EventHandler(this.button15_Click);
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Checked = true;
+            this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox2.Location = new System.Drawing.Point(21, 87);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(96, 17);
+            this.checkBox2.TabIndex = 15;
+            this.checkBox2.Text = "Show Text Bar";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.Location = new System.Drawing.Point(21, 64);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(83, 17);
+            this.checkBox1.TabIndex = 14;
+            this.checkBox1.Text = "Show Logo ";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // txt_textbar
+            // 
+            this.txt_textbar.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_textbar.Location = new System.Drawing.Point(21, 113);
+            this.txt_textbar.MaxLength = 350;
+            this.txt_textbar.Multiline = true;
+            this.txt_textbar.Name = "txt_textbar";
+            this.txt_textbar.Size = new System.Drawing.Size(640, 104);
+            this.txt_textbar.TabIndex = 13;
+            // 
+            // tab_adv
+            // 
+            this.tab_adv.Controls.Add(this.button5);
+            this.tab_adv.Controls.Add(this.pnl_ChangeText);
+            this.tab_adv.Controls.Add(this.button4);
+            this.tab_adv.Controls.Add(this.pnl_plist);
+            this.tab_adv.Controls.Add(this.button2);
+            this.tab_adv.Controls.Add(this.swich_scene_btn);
+            this.tab_adv.Controls.Add(this.label6);
+            this.tab_adv.Controls.Add(this.scene_list);
+            this.tab_adv.Controls.Add(this.source_list);
+            this.tab_adv.Location = new System.Drawing.Point(4, 22);
+            this.tab_adv.Name = "tab_adv";
+            this.tab_adv.Padding = new System.Windows.Forms.Padding(3);
+            this.tab_adv.Size = new System.Drawing.Size(665, 375);
+            this.tab_adv.TabIndex = 0;
+            this.tab_adv.Text = "Advanced";
+            this.tab_adv.UseVisualStyleBackColor = true;
+            // 
+            // button22
+            // 
+            this.button22.Location = new System.Drawing.Point(352, 10);
+            this.button22.Name = "button22";
+            this.button22.Size = new System.Drawing.Size(310, 24);
+            this.button22.TabIndex = 23;
+            this.button22.Text = "Load Data";
+            this.button22.UseVisualStyleBackColor = true;
+            this.button22.Click += new System.EventHandler(this.button22_Click);
+            // 
+            // button23
+            // 
+            this.button23.Location = new System.Drawing.Point(352, 9);
+            this.button23.Name = "button23";
+            this.button23.Size = new System.Drawing.Size(310, 24);
+            this.button23.TabIndex = 24;
+            this.button23.Text = "Load Scenes";
+            this.button23.UseVisualStyleBackColor = true;
+            this.button23.Click += new System.EventHandler(this.button23_Click);
             // 
             // LiveControlForm
             // 
@@ -704,6 +1101,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGray;
             this.ClientSize = new System.Drawing.Size(1284, 712);
+            this.Controls.Add(this.obs_grp_tabs);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.button9);
             this.Controls.Add(this.button8);
@@ -716,7 +1114,6 @@
             this.Controls.Add(this.data_str);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button6);
-            this.Controls.Add(this.obs_grp);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.button1);
@@ -731,8 +1128,6 @@
             this.Shown += new System.EventHandler(this.Form1_Shown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.obs_grp.ResumeLayout(false);
-            this.obs_grp.PerformLayout();
             this.pnl_plist.ResumeLayout(false);
             this.pnl_plist.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grd_pList)).EndInit();
@@ -743,6 +1138,16 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grd_Rec_Files)).EndInit();
+            this.menuRecVideos.ResumeLayout(false);
+            this.obs_grp_tabs.ResumeLayout(false);
+            this.tab_scn.ResumeLayout(false);
+            this.tab_plist.ResumeLayout(false);
+            this.tab_plist.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_Plist)).EndInit();
+            this.tab_logotext.ResumeLayout(false);
+            this.tab_logotext.PerformLayout();
+            this.tab_adv.ResumeLayout(false);
+            this.tab_adv.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -759,7 +1164,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox clientName_txt;
         private System.Windows.Forms.Button conn_btn;
-        private System.Windows.Forms.GroupBox obs_grp;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox port_txt;
         private System.Windows.Forms.Label label4;
@@ -781,9 +1185,6 @@
         private System.Windows.Forms.DataGridView obs_grid;
         private System.Windows.Forms.Button switch_OBS_btn;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn OBS_col;
-        private System.Windows.Forms.DataGridViewTextBoxColumn OBS_ready_col;
-        private System.Windows.Forms.DataGridViewImageColumn OBS_onair_col;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.RichTextBox richTextBox1;
@@ -809,6 +1210,43 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn vFile;
         private System.Windows.Forms.DataGridViewTextBoxColumn dur;
         private System.Windows.Forms.Button button14;
+        private System.Windows.Forms.ContextMenuStrip menuRecVideos;
+        private System.Windows.Forms.ToolStripMenuItem prevVideo;
+        private System.Windows.Forms.ToolStripMenuItem delVideo;
+        private System.Windows.Forms.TabControl obs_grp_tabs;
+        private System.Windows.Forms.TabPage tab_adv;
+        private System.Windows.Forms.TabPage tab_scn;
+        private System.Windows.Forms.ListView listv_Scenes;
+        private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.TabPage tab_logotext;
+        private System.Windows.Forms.TextBox txt_textbar;
+        private System.Windows.Forms.TabPage tab_plist;
+        private System.Windows.Forms.DataGridView dgv_Plist;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn OBS_col;
+        private System.Windows.Forms.DataGridViewTextBoxColumn OBS_ready_col;
+        private System.Windows.Forms.DataGridViewImageColumn OBS_onair_col;
+        private System.Windows.Forms.Button button15;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox txt_Browser1;
+        private System.Windows.Forms.TextBox txt_Youtube2;
+        private System.Windows.Forms.TextBox txt_Youtube1;
+        private System.Windows.Forms.TextBox txt_Browser2;
+        private System.Windows.Forms.Button button20;
+        private System.Windows.Forms.Button button19;
+        private System.Windows.Forms.Button button18;
+        private System.Windows.Forms.Button button17;
+        private System.Windows.Forms.Button button16;
+        private System.Windows.Forms.Button button21;
+        private System.Windows.Forms.Button button22;
+        private System.Windows.Forms.Button button23;
     }
 }
 

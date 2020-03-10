@@ -390,7 +390,7 @@ namespace OBSServ
                 }
                 catch (Exception ex)
                 {
-                    textBox1.Text += Environment.NewLine + "getCommandOutput Error : " +  ex;
+                    //textBox1.Text += Environment.NewLine + "getCommandOutput Error : " +  ex.Message;
                 }
             }
 
@@ -459,7 +459,7 @@ namespace OBSServ
                 }
                 catch (Exception ex)
                 {
-                    textBox1.Text += ex.Message;
+                    //textBox1.Text += ex.Message;
                 }
             }
             else if (comstr.Contains("GetStreamingStatus"))
