@@ -61,8 +61,12 @@ namespace LiveControl
             }
             catch(Exception ex)
             {
-                disconnetServer();
-                data_str.Text = "Not Connected!";
+                try
+                {
+                    disconnetServer();
+                    data_str.Text = "Not Connected!";
+                }
+                catch (Exception ex1) { }
             }
         }
 
@@ -163,7 +167,7 @@ namespace LiveControl
                 }*/
                 textBox1.Text = textBox1.Text + Environment.NewLine + " >> " + data_str.Text;
             }
-            Thread.Sleep(200);
+            //Thread.Sleep(200);
         }
 
         void loadRecFiles(string command)
@@ -351,7 +355,7 @@ namespace LiveControl
             if (obsserver.Count > 0)
             {
                 OBSGridUpdate();
-                Thread.Sleep(1000);
+                //Thread.Sleep(1000);
                 sendCommand("GetStreamingStatus");
             }
             else
@@ -493,7 +497,8 @@ namespace LiveControl
                 }
             }
             catch (Exception ex) { disconnetServer(); }
-            
+            //Thread.Sleep(300);
+
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -539,7 +544,7 @@ namespace LiveControl
         private void switchScene(string sceneName)
         {
             sendCommand(@"SetCurrentScene&"+ sceneName , true);
-            Thread.Sleep(500);
+            
             sendCommand("GetSceneList", true);
         }
 
@@ -815,7 +820,7 @@ namespace LiveControl
                     {
                         sendData("OBSPList^" + sname + "^" + (grd_pList.Rows.Count-1).ToString() + "^" + i.ToString() + "^" + encodeString(row.Cells["clVideo"].Value.ToString()));
                         i++;
-                        Thread.Sleep(200);
+                        //Thread.Sleep(200);
                     }
                         //pl += "{\"hidden\":false,\"selected\":false,\"value\":\"" + row.Cells["clVideo"].Value.ToString() + "\"},"; //"[{\"v\":\"" + row.Cells["clVideo"].Value.ToString() + "\"}],";
                 }
@@ -934,10 +939,11 @@ namespace LiveControl
             getSourceSettings("youtube1_url");
        
             getSourceSettings("browser1_url");
-        
+            Thread.Sleep(100);
             getSourceSettings("browser2_url");
+            Thread.Sleep(100);
             getSourceSettings("youtube2_url");
-
+            Thread.Sleep(100);
             //******** Get Play List
             getSourceSettings("PList");
         }

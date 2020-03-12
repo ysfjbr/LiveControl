@@ -581,7 +581,7 @@ namespace OBSServ
 
             if (!Connected)
                 connectServer();
-            Thread.Sleep(500);
+            //Thread.Sleep(500);
             //sendData("ch_Conn");
             connAttemps++;
         }
@@ -633,11 +633,11 @@ namespace OBSServ
                 conn_btn.Text = "Connect !";
                 listBox1.Items.Clear();
             }
-            catch(Exception ex) { textBox1.Text += " **** " + ex.Message; }
+            catch(Exception ex) { try { textBox1.Text += " **** " + ex.Message; } catch (Exception ex2) { } }
             try
             {
                 ctThread.Abort();
-            } catch (Exception ex) { textBox1.Text += " *ctThread *** " + ex.Message; }
+            } catch (Exception ex) { try { textBox1.Text += " *ctThread *** " + ex.Message; } catch (Exception ex2) { } }
         }
 
         private void data_str_Click(object sender, EventArgs e)

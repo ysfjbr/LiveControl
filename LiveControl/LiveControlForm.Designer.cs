@@ -29,16 +29,16 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("Bowser 1", 0);
+            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("Browser 2", 1);
+            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("Play List", 6);
+            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem("Live 1 - Browser 1", 2);
+            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem("Live 1 - Live 2", 3);
+            System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem("Live 1", 4);
+            System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem("Live 2", 5);
+            System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem("Youtube 1", 7);
+            System.Windows.Forms.ListViewItem listViewItem18 = new System.Windows.Forms.ListViewItem("Youtube 2", 8);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LiveControlForm));
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("Bowser 1", 0);
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Browser 2", 1);
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("Play List", 6);
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("Live 1 - Browser 1", 2);
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("Live 1 - Live 2", 3);
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("Live 1", 4);
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("Live 2", 5);
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("Youtube 1", 7);
-            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("Youtube 2", 8);
             this.button1 = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -87,7 +87,6 @@
             this.tim_loadsc = new System.Windows.Forms.Timer(this.components);
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
-            this.vlc1 = new AxAXVLC.AxVLCPlugin2();
             this.button12 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.button14 = new System.Windows.Forms.Button();
@@ -102,6 +101,7 @@
             this.delVideo = new System.Windows.Forms.ToolStripMenuItem();
             this.obs_grp_tabs = new System.Windows.Forms.TabControl();
             this.tab_scn = new System.Windows.Forms.TabPage();
+            this.button23 = new System.Windows.Forms.Button();
             this.listv_Scenes = new System.Windows.Forms.ListView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tab_plist = new System.Windows.Forms.TabPage();
@@ -124,19 +124,18 @@
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tab_logotext = new System.Windows.Forms.TabPage();
+            this.button22 = new System.Windows.Forms.Button();
             this.button15 = new System.Windows.Forms.Button();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.txt_textbar = new System.Windows.Forms.TextBox();
             this.tab_adv = new System.Windows.Forms.TabPage();
-            this.button22 = new System.Windows.Forms.Button();
-            this.button23 = new System.Windows.Forms.Button();
+            this.vlc1 = new AxAXVLC.AxVLCPlugin2();
             this.groupBox1.SuspendLayout();
             this.pnl_plist.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grd_pList)).BeginInit();
             this.pnl_ChangeText.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.obs_grid)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.vlc1)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grd_Rec_Files)).BeginInit();
             this.menuRecVideos.SuspendLayout();
@@ -146,6 +145,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Plist)).BeginInit();
             this.tab_logotext.SuspendLayout();
             this.tab_adv.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.vlc1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -181,7 +181,7 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.clientName_txt);
             this.groupBox1.Controls.Add(this.conn_btn);
-            this.groupBox1.Location = new System.Drawing.Point(1092, 28);
+            this.groupBox1.Location = new System.Drawing.Point(1091, 28);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(180, 434);
             this.groupBox1.TabIndex = 15;
@@ -483,7 +483,7 @@
             // textBox1
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(413, 590);
+            this.textBox1.Location = new System.Drawing.Point(412, 590);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(859, 65);
@@ -496,7 +496,7 @@
             this.data_str.BackColor = System.Drawing.SystemColors.ControlDark;
             this.data_str.Location = new System.Drawing.Point(0, 690);
             this.data_str.Name = "data_str";
-            this.data_str.Size = new System.Drawing.Size(1288, 23);
+            this.data_str.Size = new System.Drawing.Size(1287, 23);
             this.data_str.TabIndex = 28;
             // 
             // button10
@@ -625,15 +625,6 @@
             this.button9.UseVisualStyleBackColor = true;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
-            // vlc1
-            // 
-            this.vlc1.Enabled = true;
-            this.vlc1.Location = new System.Drawing.Point(15, 28);
-            this.vlc1.Name = "vlc1";
-            this.vlc1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("vlc1.OcxState")));
-            this.vlc1.Size = new System.Drawing.Size(392, 238);
-            this.vlc1.TabIndex = 2;
-            // 
             // button12
             // 
             this.button12.Location = new System.Drawing.Point(3, 3);
@@ -756,7 +747,7 @@
             this.obs_grp_tabs.Location = new System.Drawing.Point(413, 183);
             this.obs_grp_tabs.Name = "obs_grp_tabs";
             this.obs_grp_tabs.SelectedIndex = 0;
-            this.obs_grp_tabs.Size = new System.Drawing.Size(673, 401);
+            this.obs_grp_tabs.Size = new System.Drawing.Size(675, 401);
             this.obs_grp_tabs.TabIndex = 41;
             // 
             // tab_scn
@@ -766,42 +757,52 @@
             this.tab_scn.Location = new System.Drawing.Point(4, 22);
             this.tab_scn.Name = "tab_scn";
             this.tab_scn.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_scn.Size = new System.Drawing.Size(665, 375);
+            this.tab_scn.Size = new System.Drawing.Size(667, 375);
             this.tab_scn.TabIndex = 1;
             this.tab_scn.Text = "Scenes";
             this.tab_scn.UseVisualStyleBackColor = true;
+            // 
+            // button23
+            // 
+            this.button23.Location = new System.Drawing.Point(352, 9);
+            this.button23.Name = "button23";
+            this.button23.Size = new System.Drawing.Size(310, 24);
+            this.button23.TabIndex = 24;
+            this.button23.Text = "Load Scenes";
+            this.button23.UseVisualStyleBackColor = true;
+            this.button23.Click += new System.EventHandler(this.button23_Click);
             // 
             // listv_Scenes
             // 
             this.listv_Scenes.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.listv_Scenes.HideSelection = false;
-            listViewItem1.Checked = true;
-            listViewItem1.StateImageIndex = 1;
-            listViewItem1.Tag = "Browser1";
-            listViewItem2.Tag = "Browser2";
-            listViewItem3.Tag = "Playlist";
-            listViewItem4.Tag = "Live1-Browser2";
-            listViewItem5.Tag = "Live1-Live2";
-            listViewItem6.Tag = "Live1";
-            listViewItem7.Tag = "Live2";
-            listViewItem8.Tag = "Youtube1";
-            listViewItem9.Tag = "Youtube2";
+            listViewItem10.Checked = true;
+            listViewItem10.StateImageIndex = 1;
+            listViewItem10.Tag = "Browser1";
+            listViewItem11.Tag = "Browser2";
+            listViewItem12.Tag = "Playlist";
+            listViewItem13.Tag = "Live1-Browser2";
+            listViewItem14.Tag = "Live1-Live2";
+            listViewItem15.Tag = "Live1";
+            listViewItem16.Tag = "Live2";
+            listViewItem17.Tag = "Youtube1";
+            listViewItem18.Tag = "Youtube2";
             this.listv_Scenes.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4,
-            listViewItem5,
-            listViewItem6,
-            listViewItem7,
-            listViewItem8,
-            listViewItem9});
+            listViewItem10,
+            listViewItem11,
+            listViewItem12,
+            listViewItem13,
+            listViewItem14,
+            listViewItem15,
+            listViewItem16,
+            listViewItem17,
+            listViewItem18});
             this.listv_Scenes.LabelWrap = false;
             this.listv_Scenes.LargeImageList = this.imageList1;
-            this.listv_Scenes.Location = new System.Drawing.Point(3, 39);
+            this.listv_Scenes.Location = new System.Drawing.Point(0, 40);
             this.listv_Scenes.MultiSelect = false;
             this.listv_Scenes.Name = "listv_Scenes";
-            this.listv_Scenes.Size = new System.Drawing.Size(659, 333);
+            this.listv_Scenes.Size = new System.Drawing.Size(660, 333);
             this.listv_Scenes.TabIndex = 0;
             this.listv_Scenes.UseCompatibleStateImageBehavior = false;
             this.listv_Scenes.DoubleClick += new System.EventHandler(this.listv_Scenes_DoubleClick);
@@ -840,7 +841,7 @@
             this.tab_plist.Controls.Add(this.dgv_Plist);
             this.tab_plist.Location = new System.Drawing.Point(4, 22);
             this.tab_plist.Name = "tab_plist";
-            this.tab_plist.Size = new System.Drawing.Size(665, 375);
+            this.tab_plist.Size = new System.Drawing.Size(667, 375);
             this.tab_plist.TabIndex = 3;
             this.tab_plist.Text = "Play List & Browsers";
             this.tab_plist.UseVisualStyleBackColor = true;
@@ -1012,6 +1013,16 @@
             this.tab_logotext.Text = "Logo & Text bar";
             this.tab_logotext.UseVisualStyleBackColor = true;
             // 
+            // button22
+            // 
+            this.button22.Location = new System.Drawing.Point(352, 10);
+            this.button22.Name = "button22";
+            this.button22.Size = new System.Drawing.Size(310, 24);
+            this.button22.TabIndex = 23;
+            this.button22.Text = "Load Data";
+            this.button22.UseVisualStyleBackColor = true;
+            this.button22.Click += new System.EventHandler(this.button22_Click);
+            // 
             // button15
             // 
             this.button15.Location = new System.Drawing.Point(530, 219);
@@ -1075,32 +1086,21 @@
             this.tab_adv.Text = "Advanced";
             this.tab_adv.UseVisualStyleBackColor = true;
             // 
-            // button22
+            // vlc1
             // 
-            this.button22.Location = new System.Drawing.Point(352, 10);
-            this.button22.Name = "button22";
-            this.button22.Size = new System.Drawing.Size(310, 24);
-            this.button22.TabIndex = 23;
-            this.button22.Text = "Load Data";
-            this.button22.UseVisualStyleBackColor = true;
-            this.button22.Click += new System.EventHandler(this.button22_Click);
-            // 
-            // button23
-            // 
-            this.button23.Location = new System.Drawing.Point(352, 9);
-            this.button23.Name = "button23";
-            this.button23.Size = new System.Drawing.Size(310, 24);
-            this.button23.TabIndex = 24;
-            this.button23.Text = "Load Scenes";
-            this.button23.UseVisualStyleBackColor = true;
-            this.button23.Click += new System.EventHandler(this.button23_Click);
+            this.vlc1.Enabled = true;
+            this.vlc1.Location = new System.Drawing.Point(15, 28);
+            this.vlc1.Name = "vlc1";
+            this.vlc1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("vlc1.OcxState")));
+            this.vlc1.Size = new System.Drawing.Size(392, 238);
+            this.vlc1.TabIndex = 2;
             // 
             // LiveControlForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGray;
-            this.ClientSize = new System.Drawing.Size(1284, 712);
+            this.ClientSize = new System.Drawing.Size(1283, 712);
             this.Controls.Add(this.obs_grp_tabs);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.button9);
@@ -1134,7 +1134,6 @@
             this.pnl_ChangeText.ResumeLayout(false);
             this.pnl_ChangeText.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.obs_grid)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.vlc1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grd_Rec_Files)).EndInit();
@@ -1148,6 +1147,7 @@
             this.tab_logotext.PerformLayout();
             this.tab_adv.ResumeLayout(false);
             this.tab_adv.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.vlc1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

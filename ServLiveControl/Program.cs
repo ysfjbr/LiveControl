@@ -206,7 +206,7 @@ namespace ServLiveControl
             {
                 broadcast(str, clNo, false);
             }
-            Thread.Sleep(200);
+            //Thread.Sleep(200);
         }
 
         public static void broadcast(string msg, string uName, bool flag)
