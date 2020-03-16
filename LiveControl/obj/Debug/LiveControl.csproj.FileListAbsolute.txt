@@ -67,8 +67,9 @@ C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\obj\Debug\LiveControl.exe
 C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\obj\Debug\LiveControl.pdb
 C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\obj\Debug\LiveControl.csprojResolveAssemblyReference.cache
 C:\Users\ysf_j\source\repos\LiveControl\LiveControl\obj\Debug\LiveControl.csprojAssemblyReference.cache
-C:\Users\ysf_j\source\repos\LiveControl\LiveControl\bin\Debug\System.Net.Http.dll
-C:\Users\ysf_j\source\repos\LiveControl\LiveControl\bin\Debug\System.Net.Http.xml
 C:\Users\ysf_j\source\repos\LiveControl\LiveControl\obj\Debug\LiveControl.csproj.CopyComplete
 C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\bin\Debug\System.Net.Http.dll
 C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\bin\Debug\System.Net.Http.xml
+C:\Users\ysf_j\source\repos\LiveControl\LiveControl\bin\Debug\RestSharp.dll
+C:\Users\ysf_j\source\repos\LiveControl\LiveControl\bin\Debug\RestSharp.xml
+C:\Users\ysf_j\source\repos\LiveControl\LiveControl\bin\Debug\BouncyCastle.Crypto.dll

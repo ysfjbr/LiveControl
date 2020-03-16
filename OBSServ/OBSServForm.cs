@@ -15,7 +15,7 @@ using System.Web.Script.Serialization;
 using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
 using OBSWebsocketDotNet;
-
+using RestSharp;
 
 namespace OBSServ
 {
@@ -34,6 +34,7 @@ namespace OBSServ
         int connAttemps = 0;
         JToken ss_obj;
         Playlist[] plist;
+        string RestURL = "http://207.180.219.104:7271/";
 
         //Thread[] commandThread = new Thread[100];
         //int threadID = 0;
@@ -407,6 +408,7 @@ namespace OBSServ
             
             string outType = "other";
             string outRes = "";
+            string objName = "";
 
             if (comstr.Contains("ListSceneCollections"))
             {
@@ -416,6 +418,7 @@ namespace OBSServ
                     JavaScriptSerializer js = new JavaScriptSerializer();
                     Scenelist slist = js.Deserialize<Scenelist>(correctJSON(output));
                     outRes = js.Serialize(new SceneListNames(slist)).ToString();
+                    objName = outType;
                 }
                 catch (Exception ex)
                 {
@@ -431,6 +434,7 @@ namespace OBSServ
                     JavaScriptSerializer js = new JavaScriptSerializer();
                     Scenelist slist = js.Deserialize<Scenelist>(correctJSON(output));
                     outRes = js.Serialize(new SceneListNames(slist)).ToString();
+                    objName = outType;
                 }
                 catch (Exception ex)
                 {
@@ -456,6 +460,7 @@ namespace OBSServ
                     }
 
                     outRes = js.Serialize(source).ToString();
+                    objName = source.sourceName;
                 }
                 catch (Exception ex)
                 {
@@ -468,6 +473,7 @@ namespace OBSServ
                 {
                     outType = "StreamingStatus";
                     outRes = correctJSON(output);
+                    objName = outType;
                 }
                 catch (Exception ex)
                 {
@@ -478,9 +484,26 @@ namespace OBSServ
             {
                 outRes = output;
             }
-            
 
-            sendData("OBS^" + clName + "^" + outType + "^" + outRes);
+            updateSourceRest(objName, clName, outRes);
+            sendData("OBS^" + clName + "^" + outType + "^" + objName);
+        }
+
+        private void updateSourceRest(string obj, string ObsName, string tcontent)
+        {
+            string res = sendRest("source/update.php", new { sourceName = obj,  content = tcontent,  obsName = ObsName });
+            textBox1.Text += Environment.NewLine + res;
+        }
+
+        private string sendRest(string APIurl, object jsonBody)
+        {
+            RestClient client = new RestClient(RestURL);
+            RestRequest request = new RestRequest("api/"+ APIurl, Method.POST);
+            request.AddHeader("cache-control", "no-cache");
+            request.AddJsonBody(jsonBody);
+            //request.AddHeader("authorization", this.Token);
+            IRestResponse response = client.Execute(request);
+            return response.Content;
         }
 
         static string encodeString(string str)

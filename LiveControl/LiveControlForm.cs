@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
+using Org.BouncyCastle.Asn1.Ocsp;
+using RestSharp;
 
 namespace LiveControl
 {
@@ -22,6 +24,7 @@ namespace LiveControl
         string selectedOBS = "";
         int selectedOBSIndex = -1;
         string recPath = @"http://207.180.219.104/test/content/";
+        string RestURL = "http://207.180.219.104:7271/";
         string[,] recFileslist;
         ListViewItem[] deflvItems;
 
@@ -153,7 +156,8 @@ namespace LiveControl
                 Thread commandThread = new Thread(() => getJson(obsResult[3], obsResult[2], obsResult[1]));
                 commandThread.Start(); */
                 string[] obsResult = str.Split('^');
-                getJson(obsResult[3], obsResult[2], obsResult[1]);
+                getJson(obsResult[1], obsResult[2], obsResult[3]);
+                //getJson(obsResult[2], obsResult[1]);
                 textBox1.Text = textBox1.Text + Environment.NewLine + obsResult[1] + " >> " + obsResult[3];
             }
             else
@@ -204,66 +208,37 @@ namespace LiveControl
             catch (Exception ex) { textBox1.Text = textBox1.Text + Environment.NewLine + " loadRecFiles Error: " + ex.Message;  }
         }
 
-        private void getOBSOutput(string[] obsResult)
+        private string getSourceRest(string obj, string ObsName)
         {
-            richTextBox1.Text = obsResult[3];
-            getJson(obsResult[3], obsResult[2], obsResult[1]);
-            /*inputJson[obsResult[2]][int.Parse(obsResult[3])] = obsResult[5];
-
-            bool compCommand = true;
-            string cc = "";
-
-            for ( int i = 0;i <  int.Parse(obsResult[4]); i++ )
-            {
-                string s = inputJson[obsResult[2]][i];
-                
-                if (s == null || s == "")
-                    compCommand = false;
-                cc += s;
-                
-            }
-            
-            if (compCommand)
-                richTextBox1.Text = " >>> " + cc ;*/
-
-            //getJson(cc, obsResult[1]);
-
-            //richTextBox1.AppendText(obsResult[2]);
-            //MessageBox.Show(obsResult[2]);
-            //getJson(obsResult[2], obsResult[1]);
-            //textBox1.Text += " >>HI>>>" + obsResult[2] + "<<";
-            //textBox1.Text += " >>inputJson>>>" + inputJson + "<<";
-            /*if (obsResult[2].StartsWith("%START%"))
-            {
-                 richTextBox1.Text = obsResult[2].Substring(7);
-            }
-            else
-            {
-                richTextBox1.AppendText(obsResult[2]); 
-            }
-            if (obsResult[2].Contains("%END%"))
-            {
-                richTextBox1.AppendText(obsResult[2]);
-
-                getJson(richTextBox1.Text, obsResult[1]);
-            }*/
-
-            //textBox1.Text = " >333>>>> " + Environment.NewLine + inputJson + Environment.NewLine + " ********* " + Environment.NewLine;
+            string res = sendRest("source/read_one.php", new { sourceName = obj, obsName = ObsName });
+            return res;
         }
 
-        private void getJson(string str,string type, string obsName)
+        private string sendRest(string APIurl, object jsonBody)
+        {
+            RestClient client = new RestClient(RestURL);
+            RestRequest request = new RestRequest("api/" + APIurl, Method.POST);
+            request.AddHeader("cache-control", "no-cache");
+            request.AddJsonBody(jsonBody);
+            //request.AddHeader("authorization", this.Token);
+            IRestResponse response = client.Execute(request);
+            return response.Content;
+        }
+
+        private void getJson(string obsName , string type, string objName)
         {
             if (type == "SceneList")
-                getSceneList(str, obsName);
+                getSceneList(obsName);
             else if (type == "StreamingStatus")
-                getStreamingStatus(str, obsName);
+                getStreamingStatus(obsName);
             else if (type == "SourceSettings")
-                getSourceSettings(str, obsName);
+                getSourceSettings(obsName , objName);
         }
 
-        private bool getSceneList(string str, string obsName = "")
-        {
 
+        private bool getSceneList(string obsName = "")
+        {
+            string str = getSourceRest("SceneList", obsName);
             data_str.Text = correctJSON(str);
 
             bool res = false;
@@ -297,9 +272,10 @@ namespace LiveControl
             return str;
         }
 
-        private bool getStreamingStatus(string str, string obsName = "")
+        private bool getStreamingStatus(string obsName = "")
         {
             bool res = false;
+            string str = getSourceRest("StreamingStatus", obsName);
             data_str.Text = correctJSON(str);
             try
             {
@@ -320,9 +296,10 @@ namespace LiveControl
             return res;
         }
 
-        private bool getSourceSettings(string str, string obsName = "")
+        private bool getSourceSettings(string obsName, string objName)
         {
             bool res = false;
+            string str = getSourceRest(objName, obsName);
             data_str.Text = correctJSON(str);
             try
             {
@@ -657,6 +634,10 @@ namespace LiveControl
         private void button8_Click(object sender, EventArgs e)
         {
             vlc1.playlist.stop();
+            
+            //var fullUrl = client.BuildUri(request);
+
+
         }
 
         private void switch_OBS_btn_Click(object sender, EventArgs e)
