@@ -34,7 +34,7 @@ namespace OBSServ
         int connAttemps = 0;
         JToken ss_obj;
         Playlist[] plist;
-        string RestURL = "http://207.180.219.104:7271/";
+        string RestURL = "";// "http://207.180.219.104:7271/";
 
         //Thread[] commandThread = new Thread[100];
         //int threadID = 0;
@@ -382,12 +382,8 @@ namespace OBSServ
                         jObject.Add("sourceSettings", ss_obj);
                     }
 
-
                     output = _obs.SendRequest(comm[0], jObject).ToString();
-                    
-
-                    
-                    
+                    updateSourceRest(comm[1], clName, jObject.ToString());
                 }
                 catch (Exception ex)
                 {
@@ -489,16 +485,16 @@ namespace OBSServ
             sendData("OBS^" + clName + "^" + outType + "^" + objName);
         }
 
-        private void updateSourceRest(string obj, string ObsName, string tcontent)
+        private void updateSourceRest(string SourceName, string ObsName, string tcontent)
         {
-            string res = sendRest("source/update.php", new { sourceName = obj,  content = tcontent,  obsName = ObsName });
+            string res = sendRest("source/update.php", new { sourceName = SourceName,  content = tcontent,  obsName = ObsName });
             textBox1.Text += Environment.NewLine + res;
         }
 
         private string sendRest(string APIurl, object jsonBody)
         {
-            RestClient client = new RestClient(RestURL);
-            RestRequest request = new RestRequest("api/"+ APIurl, Method.POST);
+            RestClient client = new RestClient(@"http://"+ ip_txt.Text + @"/");
+            RestRequest request = new RestRequest(@"api/"+ APIurl, Method.POST);
             request.AddHeader("cache-control", "no-cache");
             request.AddJsonBody(jsonBody);
             //request.AddHeader("authorization", this.Token);

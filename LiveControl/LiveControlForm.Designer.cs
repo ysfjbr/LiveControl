@@ -29,21 +29,19 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("Bowser 1", 0);
-            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("Browser 2", 1);
-            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("Play List", 6);
-            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem("Live 1 - Browser 1", 2);
-            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem("Live 1 - Live 2", 3);
-            System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem("Live 1", 4);
-            System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem("Live 2", 5);
-            System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem("Youtube 1", 7);
-            System.Windows.Forms.ListViewItem listViewItem18 = new System.Windows.Forms.ListViewItem("Youtube 2", 8);
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("Bowser 1", 0);
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Browser 2", 1);
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("Play List", 6);
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("Live 1 - Browser 1", 2);
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("Live 1 - Live 2", 3);
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("Live 1", 4);
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("Live 2", 5);
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("Youtube 1", 7);
+            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("Youtube 2", 8);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LiveControlForm));
             this.button1 = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.port_txt = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
@@ -169,8 +167,6 @@
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.port_txt);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.button3);
@@ -188,27 +184,10 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Connect to Server";
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(18, 48);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(26, 13);
-            this.label5.TabIndex = 27;
-            this.label5.Text = "Port";
-            // 
-            // port_txt
-            // 
-            this.port_txt.Location = new System.Drawing.Point(77, 45);
-            this.port_txt.Name = "port_txt";
-            this.port_txt.Size = new System.Drawing.Size(89, 20);
-            this.port_txt.TabIndex = 1;
-            this.port_txt.Text = "8123";
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(18, 100);
+            this.label4.Location = new System.Drawing.Point(18, 74);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(53, 13);
             this.label4.TabIndex = 25;
@@ -236,7 +215,7 @@
             // 
             // pass_txt
             // 
-            this.pass_txt.Location = new System.Drawing.Point(77, 97);
+            this.pass_txt.Location = new System.Drawing.Point(77, 71);
             this.pass_txt.Name = "pass_txt";
             this.pass_txt.PasswordChar = '*';
             this.pass_txt.Size = new System.Drawing.Size(89, 20);
@@ -266,12 +245,12 @@
             this.ip_txt.Name = "ip_txt";
             this.ip_txt.Size = new System.Drawing.Size(89, 20);
             this.ip_txt.TabIndex = 0;
-            this.ip_txt.Text = "207.180.219.104";
+            this.ip_txt.Text = "62.171.160.28";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(18, 74);
+            this.label1.Location = new System.Drawing.Point(18, 48);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 19;
@@ -279,7 +258,7 @@
             // 
             // clientName_txt
             // 
-            this.clientName_txt.Location = new System.Drawing.Point(77, 71);
+            this.clientName_txt.Location = new System.Drawing.Point(77, 45);
             this.clientName_txt.Name = "clientName_txt";
             this.clientName_txt.Size = new System.Drawing.Size(89, 20);
             this.clientName_txt.TabIndex = 2;
@@ -776,27 +755,27 @@
             // 
             this.listv_Scenes.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.listv_Scenes.HideSelection = false;
-            listViewItem10.Checked = true;
-            listViewItem10.StateImageIndex = 1;
-            listViewItem10.Tag = "Browser1";
-            listViewItem11.Tag = "Browser2";
-            listViewItem12.Tag = "Playlist";
-            listViewItem13.Tag = "Live1-Browser2";
-            listViewItem14.Tag = "Live1-Live2";
-            listViewItem15.Tag = "Live1";
-            listViewItem16.Tag = "Live2";
-            listViewItem17.Tag = "Youtube1";
-            listViewItem18.Tag = "Youtube2";
+            listViewItem1.Checked = true;
+            listViewItem1.StateImageIndex = 1;
+            listViewItem1.Tag = "Browser1";
+            listViewItem2.Tag = "Browser2";
+            listViewItem3.Tag = "Playlist";
+            listViewItem4.Tag = "Live1-Browser2";
+            listViewItem5.Tag = "Live1-Live2";
+            listViewItem6.Tag = "Live1";
+            listViewItem7.Tag = "Live2";
+            listViewItem8.Tag = "Youtube1";
+            listViewItem9.Tag = "Youtube2";
             this.listv_Scenes.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem10,
-            listViewItem11,
-            listViewItem12,
-            listViewItem13,
-            listViewItem14,
-            listViewItem15,
-            listViewItem16,
-            listViewItem17,
-            listViewItem18});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4,
+            listViewItem5,
+            listViewItem6,
+            listViewItem7,
+            listViewItem8,
+            listViewItem9});
             this.listv_Scenes.LabelWrap = false;
             this.listv_Scenes.LargeImageList = this.imageList1;
             this.listv_Scenes.Location = new System.Drawing.Point(0, 40);
@@ -882,6 +861,7 @@
             this.button18.TabIndex = 19;
             this.button18.Text = "Update";
             this.button18.UseVisualStyleBackColor = true;
+            this.button18.Click += new System.EventHandler(this.button18_Click);
             // 
             // button17
             // 
@@ -1008,7 +988,7 @@
             this.tab_logotext.Controls.Add(this.txt_textbar);
             this.tab_logotext.Location = new System.Drawing.Point(4, 22);
             this.tab_logotext.Name = "tab_logotext";
-            this.tab_logotext.Size = new System.Drawing.Size(665, 375);
+            this.tab_logotext.Size = new System.Drawing.Size(667, 375);
             this.tab_logotext.TabIndex = 2;
             this.tab_logotext.Text = "Logo & Text bar";
             this.tab_logotext.UseVisualStyleBackColor = true;
@@ -1025,7 +1005,7 @@
             // 
             // button15
             // 
-            this.button15.Location = new System.Drawing.Point(530, 219);
+            this.button15.Location = new System.Drawing.Point(530, 345);
             this.button15.Name = "button15";
             this.button15.Size = new System.Drawing.Size(131, 27);
             this.button15.TabIndex = 16;
@@ -1064,7 +1044,7 @@
             this.txt_textbar.MaxLength = 350;
             this.txt_textbar.Multiline = true;
             this.txt_textbar.Name = "txt_textbar";
-            this.txt_textbar.Size = new System.Drawing.Size(640, 104);
+            this.txt_textbar.Size = new System.Drawing.Size(640, 226);
             this.txt_textbar.TabIndex = 13;
             // 
             // tab_adv
@@ -1081,7 +1061,7 @@
             this.tab_adv.Location = new System.Drawing.Point(4, 22);
             this.tab_adv.Name = "tab_adv";
             this.tab_adv.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_adv.Size = new System.Drawing.Size(665, 375);
+            this.tab_adv.Size = new System.Drawing.Size(667, 375);
             this.tab_adv.TabIndex = 0;
             this.tab_adv.Text = "Advanced";
             this.tab_adv.UseVisualStyleBackColor = true;
@@ -1164,8 +1144,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox clientName_txt;
         private System.Windows.Forms.Button conn_btn;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox port_txt;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox pass_txt;
         private System.Windows.Forms.Button button2;

@@ -23,8 +23,6 @@ namespace LiveControl
         Thread ctThread;
         string selectedOBS = "";
         int selectedOBSIndex = -1;
-        string recPath = @"http://207.180.219.104/test/content/";
-        string RestURL = "http://207.180.219.104:7271/";
         string[,] recFileslist;
         ListViewItem[] deflvItems;
 
@@ -214,10 +212,16 @@ namespace LiveControl
             return res;
         }
 
+        private string getOptionRest(string optionKey)
+        {
+            string res = sendRest("option/read_one.php", new { okey = optionKey });
+            return res;
+        }
+
         private string sendRest(string APIurl, object jsonBody)
         {
-            RestClient client = new RestClient(RestURL);
-            RestRequest request = new RestRequest("api/" + APIurl, Method.POST);
+            RestClient client = new RestClient(@"http://" + ip_txt.Text + @"/");
+            RestRequest request = new RestRequest(@"api/" + APIurl, Method.POST);
             request.AddHeader("cache-control", "no-cache");
             request.AddJsonBody(jsonBody);
             //request.AddHeader("authorization", this.Token);
@@ -380,7 +384,7 @@ namespace LiveControl
             {
                 clientSocket.Close();
                 clientSocket = new TcpClient();
-                clientSocket.Connect(ip_txt.Text, int.Parse(port_txt.Text));
+                clientSocket.Connect(ip_txt.Text, int.Parse(getOptionRest("tcpPort")));
                 serverStream = clientSocket.GetStream();
 
                 sendData("LC_" + clientName_txt.Text + "&" + pass_txt.Text, true);
@@ -431,7 +435,6 @@ namespace LiveControl
             try
             {
                 Properties.Settings.Default["ip"]           = ip_txt.Text;
-                Properties.Settings.Default["port"]         = port_txt.Text;
                 Properties.Settings.Default["clientName"]   = clientName_txt.Text;
                 Properties.Settings.Default["clientPass"]   = pass_txt.Text;
 
@@ -449,7 +452,6 @@ namespace LiveControl
                 if (Properties.Settings.Default["ip"].ToString() != "")
                 {
                     ip_txt.Text     = Properties.Settings.Default["ip"].ToString();
-                    port_txt.Text   = Properties.Settings.Default["port"].ToString();
                     clientName_txt.Text = Properties.Settings.Default["clientName"].ToString();
                     pass_txt.Text   = Properties.Settings.Default["clientPass"].ToString();
                 }
@@ -509,7 +511,7 @@ namespace LiveControl
         {
             vlc1.playlist.stop();
             vlc1.playlist.items.clear();
-            vlc1.playlist.add(@"http://207.180.219.104:7171/hls/final.m3u8");
+            vlc1.playlist.add(@"http://"+ ip_txt.Text +":"+ getOptionRest("httpPort_play") + getOptionRest("httpPath_play"));
             vlc1.playlist.play();
         }
 
@@ -521,7 +523,6 @@ namespace LiveControl
         private void switchScene(string sceneName)
         {
             sendCommand(@"SetCurrentScene&"+ sceneName , true);
-            
             sendCommand("GetSceneList", true);
         }
 
@@ -529,7 +530,7 @@ namespace LiveControl
         {
             vlc1.playlist.stop();
             vlc1.playlist.items.clear();
-            vlc1.playlist.add(@"rtmp://207.180.219.104:1936/stream/final");
+            vlc1.playlist.add(@"rtmp://"+ ip_txt.Text + ":" + getOptionRest("tcpPort") + getOptionRest("final_stream_url"));
             vlc1.playlist.play();
         }
 
@@ -634,10 +635,6 @@ namespace LiveControl
         private void button8_Click(object sender, EventArgs e)
         {
             vlc1.playlist.stop();
-            
-            //var fullUrl = client.BuildUri(request);
-
-
         }
 
         private void switch_OBS_btn_Click(object sender, EventArgs e)
@@ -824,6 +821,7 @@ namespace LiveControl
         {
             if (e.RowIndex != -1)
             {
+                string recPath = @"http://" + ip_txt.Text + getOptionRest("recPath_play");
                 string f = grd_Rec_Files.Rows[e.RowIndex].Cells["vFile"].Value.ToString();
 
                 vlc1.playlist.stop();
@@ -870,16 +868,10 @@ namespace LiveControl
 
         private void grd_pList_DragDrop(object sender, DragEventArgs e)
         {
+            string recPath = @"http://" + ip_txt.Text + getOptionRest("recPath_play");
             string cellvalue = e.Data.GetData(typeof(string)) as string;
             Point cursorLocation = this.PointToClient(new Point(e.X, e.Y));
             grd_pList.Rows.Add(grd_pList.Rows.Count.ToString(), recPath+cellvalue);
-
-            /*System.Windows.Forms.DataGridView.HitTestInfo hittest = grd_pList.HitTest(cursorLocation.X, cursorLocation.Y);
-            if (hittest.ColumnIndex != -1
-                && hittest.RowIndex != -1)
-            {  //CHANGE
-                grd_pList[hittest.ColumnIndex, hittest.RowIndex].Value = cellvalue;
-            }*/
         }
 
         private void grd_pList_DragEnter(object sender, DragEventArgs e)
@@ -891,6 +883,7 @@ namespace LiveControl
         {
             if (grd_Rec_Files.SelectedRows[0].Index != -1)
             {
+                string recPath = @"http://" + ip_txt.Text + getOptionRest("recPath_play");
                 string f = grd_Rec_Files.Rows[grd_Rec_Files.SelectedRows[0].Index].Cells["vFile"].Value.ToString();
 
                 vlc1.playlist.stop();
@@ -902,6 +895,7 @@ namespace LiveControl
 
         private void dataGridView2_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
+
         }
 
         private void listv_Scenes_DoubleClick(object sender, EventArgs e)
@@ -917,8 +911,18 @@ namespace LiveControl
 
         private void button21_Click(object sender, EventArgs e)
         {
+            selectedOBS = obs_grid.SelectedRows[0].Cells["OBS_col"].Value.ToString();
+            Source src = new Source();
+            try
+            {
+                txt_Youtube1.Text = decodeString(src.sourceFromJSON(getSourceRest("youtube1_url", selectedOBS)).sourceSettings.url);
+                txt_Youtube2.Text = decodeString(src.sourceFromJSON(getSourceRest("youtube2_url", selectedOBS)).sourceSettings.url);
+                txt_Browser1.Text = decodeString(src.sourceFromJSON(getSourceRest("browser1_url", selectedOBS)).sourceSettings.url);
+                txt_Browser2.Text = decodeString(src.sourceFromJSON(getSourceRest("browser2_url", selectedOBS)).sourceSettings.url);
+            }catch(Exception ex) { }
+            /*
             getSourceSettings("youtube1_url");
-       
+            Thread.Sleep(100);
             getSourceSettings("browser1_url");
             Thread.Sleep(100);
             getSourceSettings("browser2_url");
@@ -926,7 +930,7 @@ namespace LiveControl
             getSourceSettings("youtube2_url");
             Thread.Sleep(100);
             //******** Get Play List
-            getSourceSettings("PList");
+            getSourceSettings("PList");*/
         }
 
         private void button22_Click(object sender, EventArgs e)
@@ -938,6 +942,11 @@ namespace LiveControl
         private void button23_Click(object sender, EventArgs e)
         {
             sendCommand("GetSceneList", true);
+        }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+            sendData("OBSText^" + txt_Browser2.Text + "^" + encodeString(txt_sourcesettings.Text));
         }
     }
 }

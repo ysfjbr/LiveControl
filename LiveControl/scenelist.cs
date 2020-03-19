@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web.Script.Serialization;
 
 namespace LiveControl
 {
@@ -72,6 +73,15 @@ namespace LiveControl
 
     class Source
     {
+        public Source sourceFromJSON(string json)
+        {
+            try
+            {
+                JavaScriptSerializer js = new JavaScriptSerializer();
+                return js.Deserialize<Source>(json);
+            }
+            catch(Exception ex) { return null; }
+        }
         public string message_id { get; set; }
         public string sourceName { get; set; }
         public string sourceType { get; set; }
