@@ -406,7 +406,23 @@ namespace OBSServ
             string outRes = "";
             string objName = "";
 
-            if (comstr.Contains("ListSceneCollections"))
+            if (comstr.Contains("loadOBSData"))
+            {
+                try
+                {
+                    outType = "OBSData";
+                    JavaScriptSerializer js = new JavaScriptSerializer();
+                    Scenelist slist = js.Deserialize<Scenelist>(correctJSON(output));
+                    outRes = js.Serialize(new SceneListNames(slist)).ToString();
+                    objName = outType;
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+            
+            else if(comstr.Contains("ListSceneCollections"))
             {
                 try
                 {

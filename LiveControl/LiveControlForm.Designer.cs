@@ -197,7 +197,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(12, 175);
+            this.label3.Location = new System.Drawing.Point(14, 172);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(112, 15);
             this.label3.TabIndex = 26;
@@ -266,7 +266,7 @@
             // 
             // conn_btn
             // 
-            this.conn_btn.Location = new System.Drawing.Point(16, 123);
+            this.conn_btn.Location = new System.Drawing.Point(16, 97);
             this.conn_btn.Name = "conn_btn";
             this.conn_btn.Size = new System.Drawing.Size(150, 27);
             this.conn_btn.TabIndex = 4;
@@ -743,9 +743,9 @@
             // 
             // button23
             // 
-            this.button23.Location = new System.Drawing.Point(352, 9);
+            this.button23.Location = new System.Drawing.Point(485, 8);
             this.button23.Name = "button23";
-            this.button23.Size = new System.Drawing.Size(310, 24);
+            this.button23.Size = new System.Drawing.Size(175, 24);
             this.button23.TabIndex = 24;
             this.button23.Text = "Load Scenes";
             this.button23.UseVisualStyleBackColor = true;
@@ -932,6 +932,7 @@
             this.txt_Browser1.Name = "txt_Browser1";
             this.txt_Browser1.Size = new System.Drawing.Size(487, 20);
             this.txt_Browser1.TabIndex = 5;
+            this.txt_Browser1.Tag = "browser1_url";
             // 
             // txt_Youtube2
             // 
@@ -939,6 +940,7 @@
             this.txt_Youtube2.Name = "txt_Youtube2";
             this.txt_Youtube2.Size = new System.Drawing.Size(487, 20);
             this.txt_Youtube2.TabIndex = 4;
+            this.txt_Youtube2.Tag = "youtube2_url";
             // 
             // txt_Youtube1
             // 
@@ -946,6 +948,7 @@
             this.txt_Youtube1.Name = "txt_Youtube1";
             this.txt_Youtube1.Size = new System.Drawing.Size(487, 20);
             this.txt_Youtube1.TabIndex = 3;
+            this.txt_Youtube1.Tag = "youtube1_url";
             // 
             // txt_Browser2
             // 
@@ -953,6 +956,7 @@
             this.txt_Browser2.Name = "txt_Browser2";
             this.txt_Browser2.Size = new System.Drawing.Size(487, 20);
             this.txt_Browser2.TabIndex = 2;
+            this.txt_Browser2.Tag = "browser2_url";
             // 
             // dgv_Plist
             // 
@@ -965,6 +969,7 @@
             this.dgv_Plist.Name = "dgv_Plist";
             this.dgv_Plist.Size = new System.Drawing.Size(580, 175);
             this.dgv_Plist.TabIndex = 1;
+            this.dgv_Plist.Tag = "PList";
             this.dgv_Plist.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellValueChanged);
             // 
             // dataGridViewTextBoxColumn2
@@ -1072,7 +1077,7 @@
             this.vlc1.Location = new System.Drawing.Point(15, 28);
             this.vlc1.Name = "vlc1";
             this.vlc1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("vlc1.OcxState")));
-            this.vlc1.Size = new System.Drawing.Size(392, 238);
+            this.vlc1.Size = new System.Drawing.Size(392, 237);
             this.vlc1.TabIndex = 2;
             // 
             // LiveControlForm

@@ -70,7 +70,7 @@ namespace LiveControl
         public double cy { get; set; }
         public double volume { get; set; }
     }
-
+    /*
     class Source
     {
         public Source sourceFromJSON(string json)
@@ -81,6 +81,16 @@ namespace LiveControl
                 return js.Deserialize<Source>(json);
             }
             catch(Exception ex) { return null; }
+        }
+
+        public string sourceToJSON()
+        {
+            try
+            {
+                JavaScriptSerializer js = new JavaScriptSerializer();
+                return js.Serialize(this);
+            }
+            catch (Exception ex) { return null; }
         }
         public string message_id { get; set; }
         public string sourceName { get; set; }
@@ -104,7 +114,7 @@ namespace LiveControl
         public Playlist[] playlist { get; set; }
 
     }
-
+    */
     class SFont
     {
         public string face { get; set; }
@@ -113,11 +123,11 @@ namespace LiveControl
         public int size { get; set; }
 
     }
-
+    /*
     class Playlist
     {
         public bool hidden { get; set; }
         public bool selected { get; set; }
         public string value { get; set; }
-    }
+    }*/
 }
