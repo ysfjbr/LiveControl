@@ -1,0 +1,11 @@
+D:\zaher\ServLiveControl\ServLiveControl\ServLiveControl\bin\Debug\netcoreapp3.1\ServLiveControl.exe
+D:\zaher\ServLiveControl\ServLiveControl\ServLiveControl\bin\Debug\netcoreapp3.1\ServLiveControl.deps.json
+D:\zaher\ServLiveControl\ServLiveControl\ServLiveControl\bin\Debug\netcoreapp3.1\ServLiveControl.runtimeconfig.json
+D:\zaher\ServLiveControl\ServLiveControl\ServLiveControl\bin\Debug\netcoreapp3.1\ServLiveControl.runtimeconfig.dev.json
+D:\zaher\ServLiveControl\ServLiveControl\ServLiveControl\bin\Debug\netcoreapp3.1\ServLiveControl.dll
+D:\zaher\ServLiveControl\ServLiveControl\ServLiveControl\bin\Debug\netcoreapp3.1\ServLiveControl.pdb
+D:\zaher\ServLiveControl\ServLiveControl\ServLiveControl\obj\Debug\netcoreapp3.1\ServLiveControl.AssemblyInfoInputs.cache
+D:\zaher\ServLiveControl\ServLiveControl\ServLiveControl\obj\Debug\netcoreapp3.1\ServLiveControl.AssemblyInfo.cs
+D:\zaher\ServLiveControl\ServLiveControl\ServLiveControl\obj\Debug\netcoreapp3.1\ServLiveControl.dll
+D:\zaher\ServLiveControl\ServLiveControl\ServLiveControl\obj\Debug\netcoreapp3.1\ServLiveControl.pdb
+D:\zaher\ServLiveControl\ServLiveControl\ServLiveControl\obj\Debug\netcoreapp3.1\ServLiveControl.csprojAssemblyReference.cache
