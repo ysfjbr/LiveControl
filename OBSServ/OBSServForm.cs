@@ -166,7 +166,6 @@ namespace OBSServ
                 }
                 textBox1.Text = textBox1.Text + Environment.NewLine + " >> " + data_str.Text ;
             }
-                
         }
 
         private void chgText(string command)
