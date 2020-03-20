@@ -54,3 +54,5 @@ C:\Users\yjaber\Source\Repos\LiveControl2\OBSServ\bin\Debug\websocket-sharp.dll
 C:\Users\yjaber\Source\Repos\LiveControl2\OBSServ\bin\Debug\Newtonsoft.Json.xml
 C:\Users\ysf_j\source\repos\LiveControl\OBSServ\bin\Debug\RestSharp.dll
 C:\Users\ysf_j\source\repos\LiveControl\OBSServ\bin\Debug\RestSharp.xml
+C:\Users\yjaber\Source\Repos\LiveControl2\OBSServ\bin\Debug\RestSharp.dll
+C:\Users\yjaber\Source\Repos\LiveControl2\OBSServ\bin\Debug\RestSharp.xml

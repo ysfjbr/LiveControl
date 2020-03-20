@@ -138,7 +138,7 @@
             this.ip_txt.Name = "ip_txt";
             this.ip_txt.Size = new System.Drawing.Size(89, 20);
             this.ip_txt.TabIndex = 0;
-            this.ip_txt.Text = "207.180.219.104";
+            this.ip_txt.Text = "62.171.160.28";
             // 
             // label1
             // 

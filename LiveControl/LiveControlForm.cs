@@ -25,6 +25,7 @@ namespace LiveControl
         int selectedOBSIndex = -1;
         string[,] recFileslist;
         ListViewItem[] deflvItems;
+        
 
         //string[] inputJson;
         bool Connected = false;
@@ -32,11 +33,27 @@ namespace LiveControl
         Dictionary<string, string[]> inputJson = new Dictionary<string, string[]>();
         Dictionary<string, scenelist> slist= new Dictionary<string, scenelist>();
         Dictionary<string, StreamStatus> streamstatus = new Dictionary<string, StreamStatus>();
-        Dictionary<string, OBSserver> obsserver= new Dictionary<string, OBSserver>();
+        Dictionary<string, Obs> obsserver= new Dictionary<string, Obs>();
+        List<Control> controlWithTag = new List<Control>();
 
         public LiveControlForm()
         {
             InitializeComponent();
+
+            foreach (TabPage tp in obs_grp_tabs.TabPages)
+            {
+                foreach (Control c in tp.Controls)
+                {
+                    try
+                    {
+                        if (c.Tag.ToString() != "")
+                        {
+                            controlWithTag.Add(c);
+                        }
+                    }
+                    catch (Exception ex) { }
+                }
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -104,6 +121,7 @@ namespace LiveControl
                     string returndata = Encoding.ASCII.GetString(inStream);
                     readData = "" + returndata;
                     msg();
+                    Thread.Sleep(100);
                 }
             }
             catch (Exception ex)
@@ -155,7 +173,6 @@ namespace LiveControl
                 commandThread.Start(); */
                 string[] obsResult = str.Split('^');
                 getJson(obsResult[1], obsResult[2], obsResult[3]);
-                //getJson(obsResult[2], obsResult[1]);
                 textBox1.Text = textBox1.Text + Environment.NewLine + obsResult[1] + " >> " + obsResult[3];
             }
             else
@@ -242,6 +259,8 @@ namespace LiveControl
                 getStreamingStatus(obsName);
             else if (type == "SourceSettings")
                 getSourceSettings(obsName , objName);
+            else if (type == "OBSData")
+                loadOBSData();
         }
 
 
@@ -335,7 +354,8 @@ namespace LiveControl
                 listBox1.Items.Add(s);
                 if(s.StartsWith("OBS_"))
                 {
-                    obsserver[s.Split('_')[1]] = new OBSserver(s.Split('_')[1], true, false);
+                    obsserver[s.Split('_')[1]] = Obs.FromJson(getSourceRest("main", s.Split('_')[1])); 
+                    //obsserver[s.Split('_')[1]] = new Obs(s.Split('_')[1], true, false);
                 }
             }
             if (obsserver.Count > 0)
@@ -356,10 +376,9 @@ namespace LiveControl
                 obs_grid.Rows.Clear();
                 if (Connected)
                 {
-                    
                     foreach (var os in obsserver)
                     {
-                        obs_grid.Rows.Add(os.Value.getRow());
+                        obs_grid.Rows.Add(os.Key,true, os.Value.onAirImg());
                     }
                     obs_grp_tabs.Enabled = obs_grid.Rows.Count > 0;
                     switch_OBS_btn.Enabled = obs_grp_tabs.Enabled;
@@ -654,7 +673,7 @@ namespace LiveControl
             sendCommand("StartStreaming", true);
             Thread.Sleep(2000);
             Thread s = new Thread(updateStramStatus);
-            s.Start();
+            //s.Start();
         }
 
         private void button9_Click(object sender, EventArgs e)
@@ -665,19 +684,59 @@ namespace LiveControl
         private void obs_grid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             //loadOBSData();
-            sendCommand("loadOBSData", true);
+            //sendCommand("loadOBSData", true);
+            loadOBSData();
             selectedOBSIndex = obs_grid.SelectedRows[0].Index;
         }
 
-        private void loadOBSData()
+        private void loadOBSData(string obs="")
         {
             if (obs_grid.SelectedRows[0].Index != -1)
             {
-                selectedOBS = obs_grid.SelectedRows[0].Cells["OBS_col"].Value.ToString();
-                var obs = Obs.FromJson(getSourceRest("main", selectedOBS));
-                if (obs != null)
+                if (obs == "")
+                    obs = obs_grid.SelectedRows[0].Cells["OBS_col"].Value.ToString();
+
+
+                //obsserver[obs] = Obs.FromJson(getSourceRest("main", obs));
+                if (obsserver[obs] != null)
                 {
-                    MessageBox.Show(obs.Name);
+                    List<string> scenes = new List<string>();
+                    foreach (SceneOrder s in obsserver[obs].SceneOrder)
+                    {
+                        scenes.Add(s.Name);
+                    }
+
+                    listv_Scenes.Items.Clear();
+                    foreach (ListViewItem lv in deflvItems)
+                    {
+                        if (scenes.Contains(lv.Tag))
+                        {
+                            if (obsserver[obs].CurrentScene == (string)lv.Tag)
+                                lv.ForeColor = Color.Red;
+                            else
+                                lv.ForeColor = Color.Black;
+
+                            listv_Scenes.Items.Add(lv);
+                        }
+                    }
+
+                    foreach (Source source in obsserver[obs].Sources)
+                    {
+                        foreach(Control c in controlWithTag)
+                        {
+                            if (source.Name == c.Tag.ToString())
+                            {
+                                if (c.Name.Contains("txt_"))
+                                {
+                                    c.Text = source.Settings.Url.ToString();
+                                }
+                                 else if (c.Name.Contains("dgv_"))
+                                {
+                                    textBox1.Text += Environment.NewLine + source.Settings.Playlist.Count.ToString();
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -967,12 +1026,32 @@ namespace LiveControl
         private void button23_Click(object sender, EventArgs e)
         {
             //sendCommand("GetSceneList", true);
+            //sendCommand("loadOBSData", true);
+            loadOBSData();
+        }
 
+        private Source getSourcefromOBS(string sourceName, string OBSName = "")
+        {
+            if(OBSName == "")
+                OBSName = obs_grid.SelectedRows[0].Cells["OBS_col"].Value.ToString();
+
+            foreach (Source s in obsserver[selectedOBS].Sources)
+            {
+                if (s.Name == sourceName)
+                    return s;
+            }
+            return null;
         }
 
         private void button18_Click(object sender, EventArgs e)
         {
-            
+            Source source = getSourcefromOBS(txt_Browser2.Tag.ToString());
+            if (source != null)
+            {
+                source.Settings.Url = new Uri(txt_Browser2.Text);
+            }
+            updateSourceRest(txt_Browser2.Tag.ToString(), source.);
+
             //sendData("OBSText^" + txt_Browser2.Text + "^" + encodeString(txt_sourcesettings.Text));
             //Source s = new Source().sourceFromJSON(getSourceRest(txt_Browser2.Tag.ToString()));
             /*if(s == null)

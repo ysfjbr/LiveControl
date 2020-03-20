@@ -8,7 +8,7 @@ using System.Web.Script.Serialization;
 using System.Globalization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-
+using System.Drawing;
 
 namespace LiveControl
 {
@@ -70,6 +70,24 @@ namespace LiveControl
 
         [JsonProperty("transitions")]
         public List<object> Transitions { get; set; }
+
+
+        public bool Ready { get; set; }
+        public bool OnAir { get; set; }
+
+        public Image onAirImg()
+        {
+            Image img = null;
+            if (OnAir)
+            {
+                img = new Bitmap(Properties.Resources.onair);
+            }
+            else
+            {
+                img = new Bitmap(Properties.Resources.onair1);
+            }
+            return  img ;
+        }
     }
 
     public partial class AudioDevice1

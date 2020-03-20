@@ -27,7 +27,7 @@ namespace OBSServ
 
         NetworkStream serverStream = default(NetworkStream);
         string readData = null;
-        Thread ctThread;
+        //Thread ctThread;
         string clName = "";
         bool Connected = false;
         string comstr = null;
@@ -129,8 +129,9 @@ namespace OBSServ
             else if (str.StartsWith("OBSC_"))
             {
                 comstr = str.Substring(5);
-                Thread commThread = new Thread(exec_comm);
-                commThread.Start();
+                //Thread commThread = new Thread(exec_comm);
+                //commThread.Start();
+                exec_comm();
             }
             else if (str.StartsWith("OBS^"))
             {
@@ -141,8 +142,9 @@ namespace OBSServ
                     if (obsResult[2] == "TOOBS")
                     {
                         comstr = obsResult[3];
-                        Thread commThread = new Thread(exec_comm);
-                        commThread.Start();
+                        //Thread commThread = new Thread(exec_comm);
+                        //commThread.Start();
+                        exec_comm();
                     }
                 }
             }
@@ -185,8 +187,10 @@ namespace OBSServ
             ss_obj = JToken.FromObject(src.sourceSettings);
 
             comstr = "ChangeText&" + obsResult[1];
-            Thread commThread = new Thread(exec_comm);
-            commThread.Start();
+            //Thread commThread = new Thread(exec_comm);
+            //commThread.Start();
+
+            exec_comm(); 
 
             /*
             comstr = "/command=GetSourceSettings,sourceName=\"" + obsResult[1] + "\"";
@@ -254,8 +258,8 @@ namespace OBSServ
                     ss_obj = JToken.FromObject(src.sourceSettings);
 
                     comstr = "ChangePList&" + obsResult[1];
-                    Thread commThread = new Thread(exec_comm);
-                    commThread.Start();
+                    //Thread commThread = new Thread(exec_comm);
+                    //commThread.Start();
 
                     /*JavaScriptSerializer js = new JavaScriptSerializer();
                     SourceSettings ss = new SourceSettings();
@@ -404,16 +408,12 @@ namespace OBSServ
             string outType = "other";
             string outRes = "";
             string objName = "";
-
             if (comstr.Contains("loadOBSData"))
             {
                 try
                 {
+                    updateOBSData();
                     outType = "OBSData";
-                    JavaScriptSerializer js = new JavaScriptSerializer();
-                    Scenelist slist = js.Deserialize<Scenelist>(correctJSON(output));
-                    outRes = js.Serialize(new SceneListNames(slist)).ToString();
-                    objName = outType;
                 }
                 catch (Exception ex)
                 {
@@ -496,14 +496,17 @@ namespace OBSServ
                 outRes = output;
             }
 
-            updateSourceRest(objName, clName, outRes);
+            if (outType != "OBSData")
+            {
+                updateSourceRest(objName, clName, outRes);
+            }
             sendData("OBS^" + clName + "^" + outType + "^" + objName);
         }
 
         private void updateSourceRest(string SourceName, string ObsName, string tcontent)
         {
             string res = sendRest("source/update.php", new { sourceName = SourceName,  content = tcontent,  obsName = ObsName });
-            textBox1.Text += Environment.NewLine + res;
+           // textBox1.Text += Environment.NewLine + res;
         }
 
         private string sendRest(string APIurl, object jsonBody)
@@ -575,8 +578,9 @@ namespace OBSServ
 
                 sendData("OBS_" + clientName_txt.Text + "&" + pass_txt.Text, true);
 
-                ctThread = new Thread(getMessage);
+                Thread ctThread = new Thread(getMessage);
                 ctThread.Start();
+                //getMessage();
                 clName = clientName_txt.Text;
                 //command_timer.Enabled = false;
                 Connected = true;
@@ -670,7 +674,7 @@ namespace OBSServ
             catch(Exception ex) { try { textBox1.Text += " **** " + ex.Message; } catch (Exception ex2) { } }
             try
             {
-                ctThread.Abort();
+                //ctThread.Abort();
             } catch (Exception ex) { try { textBox1.Text += " *ctThread *** " + ex.Message; } catch (Exception ex2) { } }
         }
 
@@ -688,6 +692,7 @@ namespace OBSServ
 
         private void button2_Click(object sender, EventArgs e)
         {
+            
             try
             {
               /*  _obs.Connect("ws://127.0.0.1:" + obs_port_txt.Text);
@@ -718,11 +723,29 @@ namespace OBSServ
             //textBox1.Text = exec_comm("/command=GetSceneList");
         }
 
+        private string getOptionRest(string optionKey)
+        {
+            string res = sendRest("option/read_one.php", new { okey = optionKey });
+            return res;
+        }
+        
+        private void updateOBSData()
+        {
+            
+            string obs_Data_file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)) + @"\obs-studio\basic\scenes\main.json";
+            string OBSData = File.ReadAllText(obs_Data_file);
+            
+            updateSourceRest("main", clName, OBSData);
+
+        }
+
         private void downloadSceneColl()
         {
             string[] files = new string[] { "frame.png", "textbar.png", "logo.png" , "back1.jpg" };
             string obs_scene_coll_url = "http://207.180.219.104/test/content/";
             WebClient vss = new WebClient();
+
+            string OBSData = getOptionRest("OBSData");
 
             string obs_scene_coll_json_folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)) + @"\obs-studio\basic\scenes\";
             string obs_scene_coll_cont_folder = @"c:\obs_content\";
@@ -731,7 +754,8 @@ namespace OBSServ
 
             if (!File.Exists(jsonfile))
             {
-                vss.DownloadFile(new Uri(obs_scene_coll_url + "main.json"), jsonfile);
+                File.WriteAllText(jsonfile, OBSData);
+                //vss.DownloadFile(new Uri(obs_scene_coll_url + "main.json"), jsonfile);
                 terminateOBS();
             }
 
