@@ -172,6 +172,8 @@
     <None Include="Resources\onair1.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\logo.png" />
+    <None Include="Resources\logo177.png" />
     <Content Include="tv.ico" />
   </ItemGroup>
   <ItemGroup>

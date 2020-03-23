@@ -320,11 +320,11 @@ namespace OBSServ
                     {
                         if (obsPath_txt.Text != "" && File.Exists(obsPath_txt.Text))
                         {
-                            var p = new Process();
+                            /*var p = new Process();
                             p.StartInfo.WorkingDirectory = Path.GetDirectoryName(obsPath_txt.Text);
                             p.StartInfo.FileName = obsPath_txt.Text;
                             p.Start();
-                            obs_run = true;
+                            obs_run = true;*/
                             //Thread.Sleep(300);
                         }
                     }

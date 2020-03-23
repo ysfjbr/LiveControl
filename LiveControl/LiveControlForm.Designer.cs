@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("Bowser 1", 0);
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Browser 2", 1);
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("Play List", 6);
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("Live 1 - Browser 1", 2);
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("Live 1 - Live 2", 3);
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("Live 1", 4);
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("Live 2", 5);
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("Youtube 1", 7);
-            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("Youtube 2", 8);
+            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("Bowser 1", 0);
+            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("Browser 2", 1);
+            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("Play List", 6);
+            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem("Live 1 - Browser 1", 2);
+            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem("Live 1 - Live 2", 3);
+            System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem("Live 1", 4);
+            System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem("Live 2", 5);
+            System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem("Youtube 1", 7);
+            System.Windows.Forms.ListViewItem listViewItem18 = new System.Windows.Forms.ListViewItem("Youtube 2", 8);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LiveControlForm));
             this.button1 = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
@@ -78,7 +78,6 @@
             this.OBS_ready_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OBS_onair_col = new System.Windows.Forms.DataGridViewImageColumn();
             this.label7 = new System.Windows.Forms.Label();
-            this.switch_OBS_btn = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.button7 = new System.Windows.Forms.Button();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
@@ -112,10 +111,10 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.txt_Browser1 = new System.Windows.Forms.TextBox();
-            this.txt_Youtube2 = new System.Windows.Forms.TextBox();
-            this.txt_Youtube1 = new System.Windows.Forms.TextBox();
-            this.txt_Browser2 = new System.Windows.Forms.TextBox();
+            this.url_Browser1 = new System.Windows.Forms.TextBox();
+            this.url_Youtube2 = new System.Windows.Forms.TextBox();
+            this.url_Youtube1 = new System.Windows.Forms.TextBox();
+            this.url_Browser2 = new System.Windows.Forms.TextBox();
             this.dgv_Plist = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.videoURL = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -126,6 +125,9 @@
             this.txt_textbar = new System.Windows.Forms.TextBox();
             this.tab_adv = new System.Windows.Forms.TabPage();
             this.vlc1 = new AxAXVLC.AxVLCPlugin2();
+            this.label5 = new System.Windows.Forms.Label();
+            this.switch_OBS_btn = new System.Windows.Forms.Button();
+            this.label16 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.pnl_plist.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grd_pList)).BeginInit();
@@ -151,6 +153,7 @@
             this.button1.TabIndex = 3;
             this.button1.Text = "Send";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // textBox2
@@ -160,6 +163,7 @@
             this.textBox2.Size = new System.Drawing.Size(392, 20);
             this.textBox2.TabIndex = 6;
             this.textBox2.Text = "OBSC_/command";
+            this.textBox2.Visible = false;
             // 
             // groupBox1
             // 
@@ -462,7 +466,7 @@
             this.textBox1.Location = new System.Drawing.Point(412, 590);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(859, 65);
+            this.textBox1.Size = new System.Drawing.Size(859, 97);
             this.textBox1.TabIndex = 27;
             // 
             // data_str
@@ -536,21 +540,6 @@
             this.label7.Size = new System.Drawing.Size(114, 13);
             this.label7.TabIndex = 33;
             this.label7.Text = "Available OBS Servers";
-            // 
-            // switch_OBS_btn
-            // 
-            this.switch_OBS_btn.Enabled = false;
-            this.switch_OBS_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.switch_OBS_btn.Image = global::LiveControl.Properties.Resources.onair;
-            this.switch_OBS_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.switch_OBS_btn.Location = new System.Drawing.Point(413, 139);
-            this.switch_OBS_btn.Name = "switch_OBS_btn";
-            this.switch_OBS_btn.Size = new System.Drawing.Size(278, 38);
-            this.switch_OBS_btn.TabIndex = 32;
-            this.switch_OBS_btn.Text = "Start Streamming from this OBS";
-            this.switch_OBS_btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.switch_OBS_btn.UseVisualStyleBackColor = true;
-            this.switch_OBS_btn.Click += new System.EventHandler(this.switch_OBS_btn_Click);
             // 
             // timer1
             // 
@@ -742,27 +731,27 @@
             this.listv_Scenes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listv_Scenes.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.listv_Scenes.HideSelection = false;
-            listViewItem1.Checked = true;
-            listViewItem1.StateImageIndex = 1;
-            listViewItem1.Tag = "Browser1";
-            listViewItem2.Tag = "Browser2";
-            listViewItem3.Tag = "Playlist";
-            listViewItem4.Tag = "Live1-Browser2";
-            listViewItem5.Tag = "Live1-Live2";
-            listViewItem6.Tag = "Live1";
-            listViewItem7.Tag = "Live2";
-            listViewItem8.Tag = "Youtube1";
-            listViewItem9.Tag = "Youtube2";
+            listViewItem10.Checked = true;
+            listViewItem10.StateImageIndex = 1;
+            listViewItem10.Tag = "Browser1";
+            listViewItem11.Tag = "Browser2";
+            listViewItem12.Tag = "Playlist";
+            listViewItem13.Tag = "Live1-Browser1";
+            listViewItem14.Tag = "Live1-Live2";
+            listViewItem15.Tag = "Live1";
+            listViewItem16.Tag = "Live2";
+            listViewItem17.Tag = "Youtube1";
+            listViewItem18.Tag = "Youtube2";
             this.listv_Scenes.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4,
-            listViewItem5,
-            listViewItem6,
-            listViewItem7,
-            listViewItem8,
-            listViewItem9});
+            listViewItem10,
+            listViewItem11,
+            listViewItem12,
+            listViewItem13,
+            listViewItem14,
+            listViewItem15,
+            listViewItem16,
+            listViewItem17,
+            listViewItem18});
             this.listv_Scenes.LabelWrap = false;
             this.listv_Scenes.LargeImageList = this.imageList1;
             this.listv_Scenes.Location = new System.Drawing.Point(3, 3);
@@ -799,10 +788,10 @@
             this.tab_plist.Controls.Add(this.label13);
             this.tab_plist.Controls.Add(this.label12);
             this.tab_plist.Controls.Add(this.label11);
-            this.tab_plist.Controls.Add(this.txt_Browser1);
-            this.tab_plist.Controls.Add(this.txt_Youtube2);
-            this.tab_plist.Controls.Add(this.txt_Youtube1);
-            this.tab_plist.Controls.Add(this.txt_Browser2);
+            this.tab_plist.Controls.Add(this.url_Browser1);
+            this.tab_plist.Controls.Add(this.url_Youtube2);
+            this.tab_plist.Controls.Add(this.url_Youtube1);
+            this.tab_plist.Controls.Add(this.url_Browser2);
             this.tab_plist.Controls.Add(this.dgv_Plist);
             this.tab_plist.Location = new System.Drawing.Point(4, 22);
             this.tab_plist.Name = "tab_plist";
@@ -906,37 +895,37 @@
             this.label11.TabIndex = 6;
             this.label11.Text = "Browser 1";
             // 
-            // txt_Browser1
+            // url_Browser1
             // 
-            this.txt_Browser1.Location = new System.Drawing.Point(82, 12);
-            this.txt_Browser1.Name = "txt_Browser1";
-            this.txt_Browser1.Size = new System.Drawing.Size(487, 20);
-            this.txt_Browser1.TabIndex = 5;
-            this.txt_Browser1.Tag = "browser1_url";
+            this.url_Browser1.Location = new System.Drawing.Point(82, 12);
+            this.url_Browser1.Name = "url_Browser1";
+            this.url_Browser1.Size = new System.Drawing.Size(487, 20);
+            this.url_Browser1.TabIndex = 5;
+            this.url_Browser1.Tag = "browser1_url";
             // 
-            // txt_Youtube2
+            // url_Youtube2
             // 
-            this.txt_Youtube2.Location = new System.Drawing.Point(82, 90);
-            this.txt_Youtube2.Name = "txt_Youtube2";
-            this.txt_Youtube2.Size = new System.Drawing.Size(487, 20);
-            this.txt_Youtube2.TabIndex = 4;
-            this.txt_Youtube2.Tag = "youtube2_url";
+            this.url_Youtube2.Location = new System.Drawing.Point(82, 90);
+            this.url_Youtube2.Name = "url_Youtube2";
+            this.url_Youtube2.Size = new System.Drawing.Size(487, 20);
+            this.url_Youtube2.TabIndex = 4;
+            this.url_Youtube2.Tag = "youtube2_url";
             // 
-            // txt_Youtube1
+            // url_Youtube1
             // 
-            this.txt_Youtube1.Location = new System.Drawing.Point(82, 64);
-            this.txt_Youtube1.Name = "txt_Youtube1";
-            this.txt_Youtube1.Size = new System.Drawing.Size(487, 20);
-            this.txt_Youtube1.TabIndex = 3;
-            this.txt_Youtube1.Tag = "youtube1_url";
+            this.url_Youtube1.Location = new System.Drawing.Point(82, 64);
+            this.url_Youtube1.Name = "url_Youtube1";
+            this.url_Youtube1.Size = new System.Drawing.Size(487, 20);
+            this.url_Youtube1.TabIndex = 3;
+            this.url_Youtube1.Tag = "youtube1_url";
             // 
-            // txt_Browser2
+            // url_Browser2
             // 
-            this.txt_Browser2.Location = new System.Drawing.Point(82, 38);
-            this.txt_Browser2.Name = "txt_Browser2";
-            this.txt_Browser2.Size = new System.Drawing.Size(487, 20);
-            this.txt_Browser2.TabIndex = 2;
-            this.txt_Browser2.Tag = "browser2_url";
+            this.url_Browser2.Location = new System.Drawing.Point(82, 38);
+            this.url_Browser2.Name = "url_Browser2";
+            this.url_Browser2.Size = new System.Drawing.Size(487, 20);
+            this.url_Browser2.TabIndex = 2;
+            this.url_Browser2.Tag = "browser2_url";
             // 
             // dgv_Plist
             // 
@@ -1018,7 +1007,7 @@
             // 
             this.txt_textbar.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txt_textbar.Location = new System.Drawing.Point(21, 64);
-            this.txt_textbar.MaxLength = 350;
+            this.txt_textbar.MaxLength = 0;
             this.txt_textbar.Multiline = true;
             this.txt_textbar.Name = "txt_textbar";
             this.txt_textbar.Size = new System.Drawing.Size(640, 275);
@@ -1053,12 +1042,49 @@
             this.vlc1.Size = new System.Drawing.Size(392, 237);
             this.vlc1.TabIndex = 2;
             // 
+            // label5
+            // 
+            this.label5.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.label5.Image = global::LiveControl.Properties.Resources.logo177;
+            this.label5.Location = new System.Drawing.Point(1094, 465);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(177, 64);
+            this.label5.TabIndex = 42;
+            this.label5.Click += new System.EventHandler(this.label5_Click);
+            // 
+            // switch_OBS_btn
+            // 
+            this.switch_OBS_btn.Enabled = false;
+            this.switch_OBS_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.switch_OBS_btn.Image = global::LiveControl.Properties.Resources.onair;
+            this.switch_OBS_btn.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.switch_OBS_btn.Location = new System.Drawing.Point(413, 139);
+            this.switch_OBS_btn.Name = "switch_OBS_btn";
+            this.switch_OBS_btn.Size = new System.Drawing.Size(278, 38);
+            this.switch_OBS_btn.TabIndex = 32;
+            this.switch_OBS_btn.Text = "Start Streamming from this OBS";
+            this.switch_OBS_btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.switch_OBS_btn.UseVisualStyleBackColor = true;
+            this.switch_OBS_btn.Click += new System.EventHandler(this.switch_OBS_btn_Click);
+            // 
+            // label16
+            // 
+            this.label16.Font = new System.Drawing.Font("Adobe Fan Heiti Std B", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.Location = new System.Drawing.Point(1094, 536);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(177, 48);
+            this.label16.TabIndex = 43;
+            this.label16.Text = "BETA Version 1.0.0 \r\n\r\nAll Rights Reserved © 2020";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
             // LiveControlForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGray;
             this.ClientSize = new System.Drawing.Size(1283, 712);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.obs_grp_tabs);
             this.Controls.Add(this.panel1);
@@ -1190,10 +1216,10 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox txt_Browser1;
-        private System.Windows.Forms.TextBox txt_Youtube2;
-        private System.Windows.Forms.TextBox txt_Youtube1;
-        private System.Windows.Forms.TextBox txt_Browser2;
+        private System.Windows.Forms.TextBox url_Browser1;
+        private System.Windows.Forms.TextBox url_Youtube2;
+        private System.Windows.Forms.TextBox url_Youtube1;
+        private System.Windows.Forms.TextBox url_Browser2;
         private System.Windows.Forms.Button button20;
         private System.Windows.Forms.Button button19;
         private System.Windows.Forms.Button button18;
@@ -1201,6 +1227,8 @@
         private System.Windows.Forms.Button button16;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn videoURL;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label16;
     }
 }
 

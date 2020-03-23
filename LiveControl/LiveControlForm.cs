@@ -761,6 +761,14 @@ namespace LiveControl
                                 {
                                     try
                                     {
+                                        c.Text = ts.Text.ToString();
+                                    }
+                                    catch (Exception ex) { }
+                                }
+                                else if (c.Name.Contains("url_"))
+                                {
+                                    try
+                                    {
                                         c.Text = ts.Url.ToString();
                                     }
                                     catch (Exception ex) { }
@@ -1041,7 +1049,9 @@ namespace LiveControl
 
         private void button15_Click(object sender, EventArgs e)
         {
-            sendData("OBSText^textbar_text^" + encodeString(txt_textbar.Text));
+            //sendData("OBSText^textbar_text^" + encodeString(txt_textbar.Text));
+            updateSourceRest(txt_textbar.Tag.ToString(), "{\"text\":\"" + txt_textbar.Text + "\"}");
+            sendCommand(@"SetSourceSettings&" + txt_textbar.Tag.ToString(), true);
         }
 
         private Source getSourcefromOBS(string sourceName, string obs = "")
@@ -1069,8 +1079,8 @@ namespace LiveControl
 
         private void button18_Click(object sender, EventArgs e)
         {
-                updateSourceRest(txt_Browser2.Tag.ToString(), "{\"url\":\"" + txt_Browser2.Text + "\"}");
-                sendCommand(@"SetSourceSettings&" + txt_Browser2.Tag.ToString(), true);
+                updateSourceRest(url_Browser2.Tag.ToString(), "{\"url\":\"" + url_Browser2.Text + "\"}");
+                sendCommand(@"SetSourceSettings&" + url_Browser2.Tag.ToString(), true);
             
             //sendData("OBSText^" + txt_Browser2.Text + "^" + encodeString(txt_sourcesettings.Text));
             //Source s = new Source().sourceFromJSON(getSourceRest(txt_Browser2.Tag.ToString()));
@@ -1097,39 +1107,39 @@ namespace LiveControl
 
         private void button17_Click(object sender, EventArgs e)
         {
-            updateSourceRest(txt_Browser1.Tag.ToString(), "{\"url\":\"" + txt_Browser1.Text + "\"}");
-            sendCommand(@"SetSourceSettings&" + txt_Browser1.Tag.ToString(), true);
+            updateSourceRest(url_Browser1.Tag.ToString(), "{\"url\":\"" + url_Browser1.Text + "\"}");
+            sendCommand(@"SetSourceSettings&" + url_Browser1.Tag.ToString(), true);
         }
 
         private void button19_Click(object sender, EventArgs e)
         {
             YoutubeVideo yt = new YoutubeVideo();
-            yt = yt.Parse(txt_Youtube1.Text);
+            yt = yt.Parse(url_Youtube1.Text);
             if(yt == null)
             {
-                updateSourceRest(txt_Youtube1.Tag.ToString(), "{\"url\":\"" + txt_Youtube1.Text + "\"}");
+                updateSourceRest(url_Youtube1.Tag.ToString(), "{\"url\":\"" + url_Youtube1.Text + "\"}");
             }
             else
             {
-                updateSourceRest(txt_Youtube1.Tag.ToString(), "{\"url\":\"" + yt.getEmbedVideo() + "\"}");
+                updateSourceRest(url_Youtube1.Tag.ToString(), "{\"url\":\"" + yt.getEmbedVideo() + "\"}");
             }
             
-            sendCommand(@"SetSourceSettings&" + txt_Youtube1.Tag.ToString(), true);
+            sendCommand(@"SetSourceSettings&" + url_Youtube1.Tag.ToString(), true);
         }
 
         private void button20_Click(object sender, EventArgs e)
         {
             YoutubeVideo yt = new YoutubeVideo();
-            yt = yt.Parse(txt_Youtube2.Text);
+            yt = yt.Parse(url_Youtube2.Text);
             if (yt == null)
             {
-                updateSourceRest(txt_Youtube2.Tag.ToString(), "{\"url\":\"" + txt_Youtube2.Text + "\"}");
+                updateSourceRest(url_Youtube2.Tag.ToString(), "{\"url\":\"" + url_Youtube2.Text + "\"}");
             }
             else
             {
-                updateSourceRest(txt_Youtube2.Tag.ToString(), "{\"url\":\"" + yt.getEmbedVideo() + "\"}");
+                updateSourceRest(url_Youtube2.Tag.ToString(), "{\"url\":\"" + yt.getEmbedVideo() + "\"}");
             }
-            sendCommand(@"SetSourceSettings&" + txt_Youtube2.Tag.ToString(), true);
+            sendCommand(@"SetSourceSettings&" + url_Youtube2.Tag.ToString(), true);
         }
 
         private void button16_Click(object sender, EventArgs e)
@@ -1163,6 +1173,11 @@ namespace LiveControl
         private void dgv_Plist_DragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Copy;
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://academy-uk.net/");
         }
     }
 }
