@@ -36,7 +36,7 @@ namespace LiveControl
                 //MessageBox.Show(content.Result);
                 JavaScriptSerializer js = new JavaScriptSerializer();
                 YoutubeVideo yt = js.Deserialize<YoutubeVideo>(content.Result);
-                
+                yt.VideoID  = VideoID;
                 if(yt.items[0].status.embeddable)
                     return yt;
                 else
@@ -61,6 +61,12 @@ namespace LiveControl
                 return -1;
             }
         }
+
+        public string getEmbedVideo()
+        {
+            return @"https://www.youtube.com/embed/"+ VideoID + "?&autoplay=1&controls=0&loop=1&rel=0&showinfo=0&color=white&iv_load_policy=3&playlist=" + VideoID;
+        }
+
         public string VideoID { get; set; }
         public string kind { get; set; }
         public string etag { get; set; }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestSharp;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,7 +21,7 @@ namespace ServLiveControl
 
         public static string commandFile, commandArgs;
         public static Thread runCommThread;
-        public static string recPath = "/var/www/html/test/content/";
+        public static string recPath = "/var/www/html/rec/content/";
 
         static void Main(string[] args)
         {
@@ -107,7 +108,7 @@ namespace ServLiveControl
             //rtmp://207.180.219.104:1936/stream/final
             string ftime = DateTime.Now.ToString("yyyyMMdd_Hmmss");
 
-            commandArgs = "-y -i rtmp://207.180.219.104:1936/stream/final -vcodec copy -acodec copy /var/www/html/test/content/"+ ftime + ".mp4";
+            commandArgs = "-y -i rtmp://62.171.160.28:1935/live/final -vcodec copy -acodec copy /var/www/html/rec/content/" + ftime + ".mp4";
             runCommThread = new Thread(startRecCommand);
             runCommThread.Start();
         }
@@ -157,7 +158,7 @@ namespace ServLiveControl
         {
             try
             {
-                foreach (string line in File.ReadLines("/var/www/netcoreapp3.1/ps.txt", Encoding.UTF8))
+                foreach (string line in File.ReadLines("/var/www/serv.cs/ps.txt", Encoding.UTF8))
                 {
                     usersps.Add(line);
                 }
@@ -184,7 +185,7 @@ namespace ServLiveControl
             {
                 broadcast("CON__" + getclientsListString(clientsList), clNo, false);
             }
-            else if(str.StartsWith("ch_Rec"))
+            else if (str.StartsWith("ch_Rec"))
             {
                 get_recorded_files();
             }
@@ -250,7 +251,7 @@ namespace ServLiveControl
         public static void get_recorded_files()
         {
             List<string> fs = new List<string>();
-
+            List<string> recs = new List<string>();
             DirectoryInfo info = new DirectoryInfo(recPath);
             FileInfo[] files = info.GetFiles().OrderByDescending(p => p.CreationTime).ToArray();
             foreach (FileInfo file in files)
@@ -261,15 +262,35 @@ namespace ServLiveControl
                 }
             }
             int i = 0;
-            foreach(string f in fs)
+            foreach (string f in fs)
             {
                 string args = @" -v error -show_entries format=duration \-of default=noprint_wrappers=1:nokey=1 " + f;
                 string dur = runCommand("ffprobe", args);
-                broadcast("RFS__"+ fs.Count+"^" + i.ToString() + "^" +  Path.GetFileName(f) + "^" + dur, "Server", false);
-                
-                Thread.Sleep(100);
+                //broadcast("RFS__"+ fs.Count+"^" + i.ToString() + "^" +  Path.GetFileName(f) + "^" + dur, "Server", false);
+                recs.Add("{\"file\":\""+Path.GetFileName(f) + "\",\"length\":\"" + dur + "\"}");
+                //Thread.Sleep(100);
                 i++;
             }
+            updateSourceRest("Recorded_Videos", "["+ string.Join(",", recs)+ "]");
+            broadcast("RFS__", "Server", false);
+        }
+
+        private static void updateSourceRest(string SourceName, string tcontent, string ObsName = "")
+        {
+            ObsName = (ObsName == "") ? "Server" : ObsName;
+            string res = sendRest("source/update.php", new { sourceName = SourceName, content = tcontent, obsName = ObsName });
+            Console.WriteLine("Server: " + res);
+        }
+
+        private static string sendRest(string APIurl, object jsonBody)
+        {
+            RestClient client = new RestClient(@"http://localhost/");
+            RestRequest request = new RestRequest(@"api/" + APIurl, Method.POST);
+            request.AddHeader("cache-control", "no-cache");
+            request.AddJsonBody(jsonBody);
+            //request.AddHeader("authorization", this.Token);
+            IRestResponse response = client.Execute(request);
+            return response.Content;
         }
     }
 
@@ -321,7 +342,6 @@ namespace ServLiveControl
                     //rCount = Convert.ToString(requestCount);
                     //doCommand(dataFromClient);
                     Program.doCommand(dataFromClient, clNo);
-
                 }
                 catch (Exception ex)
                 {

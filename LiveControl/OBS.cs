@@ -430,7 +430,7 @@ namespace LiveControl
         public string Text { get; set; }
 
         [JsonProperty("url", NullValueHandling = NullValueHandling.Ignore)]
-        public Uri Url { get; set; }
+        public string Url { get; set; }
 
         [JsonProperty("custom_size", NullValueHandling = NullValueHandling.Ignore)]
         public bool? CustomSize { get; set; }
@@ -559,7 +559,21 @@ namespace LiveControl
         public bool Selected { get; set; }
 
         [JsonProperty("value")]
-        public Uri Value { get; set; }
+        public string Value { get; set; }
+    }
+
+    public partial class RecVideo
+    {
+        [JsonProperty("file")]
+        public string File { get; set; }
+
+        [JsonProperty("length")]
+        public string Length { get; set; }
+    }
+
+    public partial class RecVideo
+    {
+        public static RecVideo[] FromJson(string json) => JsonConvert.DeserializeObject<RecVideo[]>(json, Converter.Settings);
     }
 
     public enum ScaleFilter { Disable };
@@ -567,11 +581,14 @@ namespace LiveControl
     public partial class Obs
     {
         public static Obs FromJson(string json) => JsonConvert.DeserializeObject<Obs>(json, Converter.Settings);
+        public static SourceSettings SSFromJson(string json) => JsonConvert.DeserializeObject<SourceSettings>(json, Converter.Settings);
     }
 
     public static class Serialize
     {
         public static string ToJson(this Obs self) => JsonConvert.SerializeObject(self, Converter.Settings);
+        public static string ToJson(this SourceSettings self) => JsonConvert.SerializeObject(self, Converter.Settings);
+        public static string ToJson(this RecVideo[] self) => JsonConvert.SerializeObject(self, Converter.Settings);
     }
 
     internal static class Converter

@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 using Org.BouncyCastle.Asn1.Ocsp;
 using RestSharp;
 
@@ -160,7 +161,7 @@ namespace LiveControl
             }
             else if (str.StartsWith("RFS__"))
             {
-                loadRecFiles(str.Substring(5));
+                loadRecFiles();
             }
             else if (str.StartsWith("OBS^"))
             {
@@ -189,9 +190,9 @@ namespace LiveControl
             //Thread.Sleep(200);
         }
 
-        void loadRecFiles(string command)
+        void loadRecFiles()
         {
-            string[] obsResult = command.Split('^');
+            /*string[] obsResult = command.Split('^');
             int vnum = int.Parse(obsResult[0]);
             int vi = int.Parse(obsResult[1]);
 
@@ -220,7 +221,22 @@ namespace LiveControl
                     }
                 }
             }
-            catch (Exception ex) { textBox1.Text = textBox1.Text + Environment.NewLine + " loadRecFiles Error: " + ex.Message;  }
+            catch (Exception ex) { textBox1.Text = textBox1.Text + Environment.NewLine + " loadRecFiles Error: " + ex.Message;  }*/
+            RecVideo[] rec_videos = RecVideo.FromJson(getSourceRest("Recorded_Videos", "Server"));
+            //textBox1.Text = textBox1.Text + Environment.NewLine + " rec :" + rse.Count().ToString();
+
+            grd_Rec_Files.Rows.Clear();
+            for (int i = 0; i < rec_videos.GetLength(0); i++)
+            {
+                string dur = "";
+                try
+                {
+                    dur = new TimeSpan(0, 0, 0, (int)(double.Parse(rec_videos[i].Length.Replace(".", "")) / 1000000)).ToString();
+
+                }
+                catch (Exception ex2) { }
+                grd_Rec_Files.Rows.Add((i + 1).ToString(), rec_videos[i].File, dur);
+            }
         }
 
         private string getSourceRest(string obj, string ObsName="")
@@ -253,12 +269,15 @@ namespace LiveControl
 
         private void getJson(string obsName , string type, string objName)
         {
-            if (type == "SceneList")
+            /*if (type == "SceneList")
                 getSceneList(obsName);
-            else if (type == "StreamingStatus")
+            else */
+            /*if (type == "StreamingStatus")
                 getStreamingStatus(obsName);
             else if (type == "SourceSettings")
-                getSourceSettings(obsName , objName);
+                getSourceSettings(obsName , objName);*/
+            if (type == "StreamingStatus")
+                getStreamingStatus(obsName);
             else if (type == "OBSData")
                 loadOBSData();
         }
@@ -354,7 +373,14 @@ namespace LiveControl
                 listBox1.Items.Add(s);
                 if(s.StartsWith("OBS_"))
                 {
-                    obsserver[s.Split('_')[1]] = Obs.FromJson(getSourceRest("main", s.Split('_')[1])); 
+                    try
+                    {
+                        obsserver[s.Split('_')[1]] = Obs.FromJson(getSourceRest("main", s.Split('_')[1]));
+                    }catch(Exception ex)
+                    {
+                        obsserver[s.Split('_')[1]] = null;
+                        //sendCommand("loadOBSData", true);
+                    }
                     //obsserver[s.Split('_')[1]] = new Obs(s.Split('_')[1], true, false);
                 }
             }
@@ -421,6 +447,7 @@ namespace LiveControl
                 data_str.BackColor = Color.Green;
                 conn_btn.Text = "Disonnect !";
                 saveSettings();
+                loadRecFiles();
             }
             catch (Exception ex)
             {
@@ -554,7 +581,7 @@ namespace LiveControl
         private void switchScene(string sceneName)
         {
             sendCommand(@"SetCurrentScene&"+ sceneName , true);
-            sendCommand("GetSceneList", true);
+            //sendCommand("GetSceneList", true);
         }
 
         private void button10_Click(object sender, EventArgs e)
@@ -647,6 +674,8 @@ namespace LiveControl
         {
             OBSGridUpdate();
             sendCommand("GetStreamingStatus", false);
+            Thread.Sleep(200);
+            sendCommand("loadOBSData", true);
         }
 
         private void LiveControlForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -685,7 +714,7 @@ namespace LiveControl
         {
             //loadOBSData();
             //sendCommand("loadOBSData", true);
-            loadOBSData();
+            //loadOBSData();
             selectedOBSIndex = obs_grid.SelectedRows[0].Index;
         }
 
@@ -696,7 +725,6 @@ namespace LiveControl
                 if (obs == "")
                     obs = obs_grid.SelectedRows[0].Cells["OBS_col"].Value.ToString();
 
-
                 //obsserver[obs] = Obs.FromJson(getSourceRest("main", obs));
                 if (obsserver[obs] != null)
                 {
@@ -705,12 +733,13 @@ namespace LiveControl
                     {
                         scenes.Add(s.Name);
                     }
-
+                    obsserver[obs].CurrentScene = getSourceRest("CurrentScene", obs);
                     listv_Scenes.Items.Clear();
                     foreach (ListViewItem lv in deflvItems)
                     {
                         if (scenes.Contains(lv.Tag))
                         {
+
                             if (obsserver[obs].CurrentScene == (string)lv.Tag)
                                 lv.ForeColor = Color.Red;
                             else
@@ -722,17 +751,38 @@ namespace LiveControl
 
                     foreach (Source source in obsserver[obs].Sources)
                     {
-                        foreach(Control c in controlWithTag)
+                        
+                        foreach (Control c in controlWithTag)
                         {
                             if (source.Name == c.Tag.ToString())
                             {
+                                    SourceSettings ts = Obs.SSFromJson(getSourceRest(source.Name));
                                 if (c.Name.Contains("txt_"))
                                 {
-                                    c.Text = source.Settings.Url.ToString();
+                                    try
+                                    {
+                                        c.Text = ts.Url.ToString();
+                                    }
+                                    catch (Exception ex) { }
                                 }
-                                 else if (c.Name.Contains("dgv_"))
+                                else if (c.Name.Contains("dgv_"))
                                 {
-                                    textBox1.Text += Environment.NewLine + source.Settings.Playlist.Count.ToString();
+                                    try
+                                    {
+                                        DataGridView dgv = (DataGridView)c;
+                                        dgv.Rows.Clear();
+                                        int cnt = 1;
+                                        foreach (Playlist pl in ts.Playlist)
+                                        {
+                                            dgv.Rows.Add(cnt.ToString(),pl.Value);
+                                            cnt++;
+                                        }
+                                        
+                                        //textBox1.Text += Environment.NewLine + c.GetType();
+                                        //textBox1.Text += Environment.NewLine + ts.Playlist.Count.ToString();
+                                    }
+                                    catch (Exception ex) { }
+                                    //textBox1.Text += Environment.NewLine + ts.Playlist.Count.ToString();
                                 }
                             }
                         }
@@ -869,7 +919,7 @@ namespace LiveControl
             }
         }
 
-        private void button11_Click_1(object sender, EventArgs e)
+        private void button11_Click_1(object sender, EventArgs e) 
         {
             if (source_list.SelectedIndex != -1)
             {
@@ -899,6 +949,7 @@ namespace LiveControl
         private void button13_Click(object sender, EventArgs e)
         {
             sendData("ch_Rec");
+            //loadRecFiles();
         }
 
         private void grd_Rec_Files_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -993,65 +1044,34 @@ namespace LiveControl
             sendData("OBSText^textbar_text^" + encodeString(txt_textbar.Text));
         }
 
-        private void button21_Click(object sender, EventArgs e)
+        private Source getSourcefromOBS(string sourceName, string obs = "")
         {
-            selectedOBS = obs_grid.SelectedRows[0].Cells["OBS_col"].Value.ToString();
-            Source src = new Source();
-            try
+            if (obs_grid.SelectedRows[0].Index != -1)
             {
-                /*txt_Youtube1.Text = decodeString(src.sourceFromJSON(getSourceRest("youtube1_url", selectedOBS)).sourceSettings.url);
-                txt_Youtube2.Text = decodeString(src.sourceFromJSON(getSourceRest("youtube2_url", selectedOBS)).sourceSettings.url);
-                txt_Browser1.Text = decodeString(src.sourceFromJSON(getSourceRest("browser1_url", selectedOBS)).sourceSettings.url);
-                txt_Browser2.Text = decodeString(src.sourceFromJSON(getSourceRest("browser2_url", selectedOBS)).sourceSettings.url);*/
-            }catch(Exception ex) { }
-            /*
-            getSourceSettings("youtube1_url");
-            Thread.Sleep(100);
-            getSourceSettings("browser1_url");
-            Thread.Sleep(100);
-            getSourceSettings("browser2_url");
-            Thread.Sleep(100);
-            getSourceSettings("youtube2_url");
-            Thread.Sleep(100);
-            //******** Get Play List
-            getSourceSettings("PList");*/
-        }
+                if (obs == "")
+                    obs = obs_grid.SelectedRows[0].Cells["OBS_col"].Value.ToString();
 
-        private void button22_Click(object sender, EventArgs e)
-        {
-            //******** Get Text of Textbar
-            getSourceSettings("textbar_text");
-        }
-
-        private void button23_Click(object sender, EventArgs e)
-        {
-            //sendCommand("GetSceneList", true);
-            //sendCommand("loadOBSData", true);
-            loadOBSData();
-        }
-
-        private Source getSourcefromOBS(string sourceName, string OBSName = "")
-        {
-            if(OBSName == "")
-                OBSName = obs_grid.SelectedRows[0].Cells["OBS_col"].Value.ToString();
-
-            foreach (Source s in obsserver[selectedOBS].Sources)
-            {
-                if (s.Name == sourceName)
-                    return s;
+                //obsserver[obs] = Obs.FromJson(getSourceRest("main", obs));
+                if (obsserver[obs] != null)
+                {
+                    foreach (Source s in obsserver[obs].Sources)
+                    {
+                        //textBox1.Text += Environment.NewLine + sourceName + " --- " + s.Name;
+                        if (s.Name == sourceName)
+                            return s;
+                    }
+                }
             }
+
+            
             return null;
         }
 
         private void button18_Click(object sender, EventArgs e)
         {
-            Source source = getSourcefromOBS(txt_Browser2.Tag.ToString());
-            if (source != null)
-            {
-                source.Settings.Url = new Uri(txt_Browser2.Text);
-            }
-            updateSourceRest(txt_Browser2.Tag.ToString(), source.);
-
+                updateSourceRest(txt_Browser2.Tag.ToString(), "{\"url\":\"" + txt_Browser2.Text + "\"}");
+                sendCommand(@"SetSourceSettings&" + txt_Browser2.Tag.ToString(), true);
+            
             //sendData("OBSText^" + txt_Browser2.Text + "^" + encodeString(txt_sourcesettings.Text));
             //Source s = new Source().sourceFromJSON(getSourceRest(txt_Browser2.Tag.ToString()));
             /*if(s == null)
@@ -1073,6 +1093,76 @@ namespace LiveControl
 
             string res = sendRest("source/update.php", new { sourceName = SourceName, content = tcontent, obsName = ObsName });
             textBox1.Text += Environment.NewLine + res;
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            updateSourceRest(txt_Browser1.Tag.ToString(), "{\"url\":\"" + txt_Browser1.Text + "\"}");
+            sendCommand(@"SetSourceSettings&" + txt_Browser1.Tag.ToString(), true);
+        }
+
+        private void button19_Click(object sender, EventArgs e)
+        {
+            YoutubeVideo yt = new YoutubeVideo();
+            yt = yt.Parse(txt_Youtube1.Text);
+            if(yt == null)
+            {
+                updateSourceRest(txt_Youtube1.Tag.ToString(), "{\"url\":\"" + txt_Youtube1.Text + "\"}");
+            }
+            else
+            {
+                updateSourceRest(txt_Youtube1.Tag.ToString(), "{\"url\":\"" + yt.getEmbedVideo() + "\"}");
+            }
+            
+            sendCommand(@"SetSourceSettings&" + txt_Youtube1.Tag.ToString(), true);
+        }
+
+        private void button20_Click(object sender, EventArgs e)
+        {
+            YoutubeVideo yt = new YoutubeVideo();
+            yt = yt.Parse(txt_Youtube2.Text);
+            if (yt == null)
+            {
+                updateSourceRest(txt_Youtube2.Tag.ToString(), "{\"url\":\"" + txt_Youtube2.Text + "\"}");
+            }
+            else
+            {
+                updateSourceRest(txt_Youtube2.Tag.ToString(), "{\"url\":\"" + yt.getEmbedVideo() + "\"}");
+            }
+            sendCommand(@"SetSourceSettings&" + txt_Youtube2.Tag.ToString(), true);
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            List<string> plv = new List<string>();
+            foreach(DataGridViewRow dgr in dgv_Plist.Rows)
+            {
+                try
+                {
+                    plv.Add("{\"hidden\":false,\"selected\":false,\"value\":\"" + dgr.Cells["videoURL"].Value.ToString() + "\"}");
+                }catch(Exception ex) { }
+            }
+            
+            updateSourceRest(dgv_Plist.Tag.ToString(), "{\"playlist\":[" + string.Join(",",plv) + "]}");
+            sendCommand(@"SetSourceSettings&" + dgv_Plist.Tag.ToString(), true);
+        }
+
+        private void LiveControlForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            disconnetServer();
+        }
+
+        private void dgv_Plist_DragDrop(object sender, DragEventArgs e)
+        {
+            string recPath = @"http://" + ip_txt.Text + getOptionRest("recPath_play");
+            string cellvalue = e.Data.GetData(typeof(string)) as string;
+            Point cursorLocation = this.PointToClient(new Point(e.X, e.Y));
+            dgv_Plist.Rows.Add(dgv_Plist.Rows.Count.ToString(), recPath + cellvalue);
+        }
+
+        private void dgv_Plist_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Copy;
         }
     }
 }

@@ -99,11 +99,9 @@
             this.delVideo = new System.Windows.Forms.ToolStripMenuItem();
             this.obs_grp_tabs = new System.Windows.Forms.TabControl();
             this.tab_scn = new System.Windows.Forms.TabPage();
-            this.button23 = new System.Windows.Forms.Button();
             this.listv_Scenes = new System.Windows.Forms.ListView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tab_plist = new System.Windows.Forms.TabPage();
-            this.button21 = new System.Windows.Forms.Button();
             this.button20 = new System.Windows.Forms.Button();
             this.button19 = new System.Windows.Forms.Button();
             this.button18 = new System.Windows.Forms.Button();
@@ -120,9 +118,8 @@
             this.txt_Browser2 = new System.Windows.Forms.TextBox();
             this.dgv_Plist = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.videoURL = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tab_logotext = new System.Windows.Forms.TabPage();
-            this.button22 = new System.Windows.Forms.Button();
             this.button15 = new System.Windows.Forms.Button();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -339,7 +336,7 @@
             this.pnl_ChangeText.Controls.Add(this.txt_sourcesettings);
             this.pnl_ChangeText.Controls.Add(this.btn_sendTextChanges);
             this.pnl_ChangeText.Controls.Add(this.label8);
-            this.pnl_ChangeText.Location = new System.Drawing.Point(301, 49);
+            this.pnl_ChangeText.Location = new System.Drawing.Point(376, 50);
             this.pnl_ChangeText.Name = "pnl_ChangeText";
             this.pnl_ChangeText.Size = new System.Drawing.Size(367, 237);
             this.pnl_ChangeText.TabIndex = 15;
@@ -731,7 +728,6 @@
             // 
             // tab_scn
             // 
-            this.tab_scn.Controls.Add(this.button23);
             this.tab_scn.Controls.Add(this.listv_Scenes);
             this.tab_scn.Location = new System.Drawing.Point(4, 22);
             this.tab_scn.Name = "tab_scn";
@@ -741,18 +737,9 @@
             this.tab_scn.Text = "Scenes";
             this.tab_scn.UseVisualStyleBackColor = true;
             // 
-            // button23
-            // 
-            this.button23.Location = new System.Drawing.Point(485, 8);
-            this.button23.Name = "button23";
-            this.button23.Size = new System.Drawing.Size(175, 24);
-            this.button23.TabIndex = 24;
-            this.button23.Text = "Load Scenes";
-            this.button23.UseVisualStyleBackColor = true;
-            this.button23.Click += new System.EventHandler(this.button23_Click);
-            // 
             // listv_Scenes
             // 
+            this.listv_Scenes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listv_Scenes.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.listv_Scenes.HideSelection = false;
             listViewItem1.Checked = true;
@@ -778,10 +765,10 @@
             listViewItem9});
             this.listv_Scenes.LabelWrap = false;
             this.listv_Scenes.LargeImageList = this.imageList1;
-            this.listv_Scenes.Location = new System.Drawing.Point(0, 40);
+            this.listv_Scenes.Location = new System.Drawing.Point(3, 3);
             this.listv_Scenes.MultiSelect = false;
             this.listv_Scenes.Name = "listv_Scenes";
-            this.listv_Scenes.Size = new System.Drawing.Size(660, 333);
+            this.listv_Scenes.Size = new System.Drawing.Size(661, 369);
             this.listv_Scenes.TabIndex = 0;
             this.listv_Scenes.UseCompatibleStateImageBehavior = false;
             this.listv_Scenes.DoubleClick += new System.EventHandler(this.listv_Scenes_DoubleClick);
@@ -802,7 +789,6 @@
             // 
             // tab_plist
             // 
-            this.tab_plist.Controls.Add(this.button21);
             this.tab_plist.Controls.Add(this.button20);
             this.tab_plist.Controls.Add(this.button19);
             this.tab_plist.Controls.Add(this.button18);
@@ -825,37 +811,29 @@
             this.tab_plist.Text = "Play List & Browsers";
             this.tab_plist.UseVisualStyleBackColor = true;
             // 
-            // button21
-            // 
-            this.button21.Location = new System.Drawing.Point(352, 10);
-            this.button21.Name = "button21";
-            this.button21.Size = new System.Drawing.Size(310, 24);
-            this.button21.TabIndex = 22;
-            this.button21.Text = "Load Data";
-            this.button21.UseVisualStyleBackColor = true;
-            this.button21.Click += new System.EventHandler(this.button21_Click);
-            // 
             // button20
             // 
-            this.button20.Location = new System.Drawing.Point(572, 118);
+            this.button20.Location = new System.Drawing.Point(572, 90);
             this.button20.Name = "button20";
             this.button20.Size = new System.Drawing.Size(90, 20);
             this.button20.TabIndex = 21;
             this.button20.Text = "Update";
             this.button20.UseVisualStyleBackColor = true;
+            this.button20.Click += new System.EventHandler(this.button20_Click);
             // 
             // button19
             // 
-            this.button19.Location = new System.Drawing.Point(572, 91);
+            this.button19.Location = new System.Drawing.Point(572, 63);
             this.button19.Name = "button19";
             this.button19.Size = new System.Drawing.Size(90, 21);
             this.button19.TabIndex = 20;
             this.button19.Text = "Update";
             this.button19.UseVisualStyleBackColor = true;
+            this.button19.Click += new System.EventHandler(this.button19_Click);
             // 
             // button18
             // 
-            this.button18.Location = new System.Drawing.Point(572, 65);
+            this.button18.Location = new System.Drawing.Point(572, 37);
             this.button18.Name = "button18";
             this.button18.Size = new System.Drawing.Size(90, 21);
             this.button18.TabIndex = 19;
@@ -865,12 +843,13 @@
             // 
             // button17
             // 
-            this.button17.Location = new System.Drawing.Point(572, 40);
+            this.button17.Location = new System.Drawing.Point(572, 12);
             this.button17.Name = "button17";
             this.button17.Size = new System.Drawing.Size(90, 20);
             this.button17.TabIndex = 18;
             this.button17.Text = "Update";
             this.button17.UseVisualStyleBackColor = true;
+            this.button17.Click += new System.EventHandler(this.button17_Click);
             // 
             // button16
             // 
@@ -880,11 +859,12 @@
             this.button16.TabIndex = 17;
             this.button16.Text = "Update Play List";
             this.button16.UseVisualStyleBackColor = true;
+            this.button16.Click += new System.EventHandler(this.button16_Click);
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(27, 155);
+            this.label15.Location = new System.Drawing.Point(30, 120);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(46, 13);
             this.label15.TabIndex = 10;
@@ -893,7 +873,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(20, 121);
+            this.label14.Location = new System.Drawing.Point(20, 93);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(56, 13);
             this.label14.TabIndex = 9;
@@ -902,7 +882,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(20, 95);
+            this.label13.Location = new System.Drawing.Point(20, 67);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(56, 13);
             this.label13.TabIndex = 8;
@@ -911,7 +891,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(22, 69);
+            this.label12.Location = new System.Drawing.Point(22, 41);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(54, 13);
             this.label12.TabIndex = 7;
@@ -920,7 +900,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(22, 43);
+            this.label11.Location = new System.Drawing.Point(22, 15);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(54, 13);
             this.label11.TabIndex = 6;
@@ -928,7 +908,7 @@
             // 
             // txt_Browser1
             // 
-            this.txt_Browser1.Location = new System.Drawing.Point(82, 40);
+            this.txt_Browser1.Location = new System.Drawing.Point(82, 12);
             this.txt_Browser1.Name = "txt_Browser1";
             this.txt_Browser1.Size = new System.Drawing.Size(487, 20);
             this.txt_Browser1.TabIndex = 5;
@@ -936,7 +916,7 @@
             // 
             // txt_Youtube2
             // 
-            this.txt_Youtube2.Location = new System.Drawing.Point(82, 118);
+            this.txt_Youtube2.Location = new System.Drawing.Point(82, 90);
             this.txt_Youtube2.Name = "txt_Youtube2";
             this.txt_Youtube2.Size = new System.Drawing.Size(487, 20);
             this.txt_Youtube2.TabIndex = 4;
@@ -944,7 +924,7 @@
             // 
             // txt_Youtube1
             // 
-            this.txt_Youtube1.Location = new System.Drawing.Point(82, 92);
+            this.txt_Youtube1.Location = new System.Drawing.Point(82, 64);
             this.txt_Youtube1.Name = "txt_Youtube1";
             this.txt_Youtube1.Size = new System.Drawing.Size(487, 20);
             this.txt_Youtube1.TabIndex = 3;
@@ -952,7 +932,7 @@
             // 
             // txt_Browser2
             // 
-            this.txt_Browser2.Location = new System.Drawing.Point(82, 66);
+            this.txt_Browser2.Location = new System.Drawing.Point(82, 38);
             this.txt_Browser2.Name = "txt_Browser2";
             this.txt_Browser2.Size = new System.Drawing.Size(487, 20);
             this.txt_Browser2.TabIndex = 2;
@@ -964,13 +944,16 @@
             this.dgv_Plist.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_Plist.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3});
-            this.dgv_Plist.Location = new System.Drawing.Point(82, 153);
+            this.videoURL});
+            this.dgv_Plist.Location = new System.Drawing.Point(82, 116);
             this.dgv_Plist.Name = "dgv_Plist";
-            this.dgv_Plist.Size = new System.Drawing.Size(580, 175);
+            this.dgv_Plist.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgv_Plist.Size = new System.Drawing.Size(580, 212);
             this.dgv_Plist.TabIndex = 1;
             this.dgv_Plist.Tag = "PList";
             this.dgv_Plist.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellValueChanged);
+            this.dgv_Plist.DragDrop += new System.Windows.Forms.DragEventHandler(this.dgv_Plist_DragDrop);
+            this.dgv_Plist.DragEnter += new System.Windows.Forms.DragEventHandler(this.dgv_Plist_DragEnter);
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -978,15 +961,14 @@
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.Width = 50;
             // 
-            // dataGridViewTextBoxColumn3
+            // videoURL
             // 
-            this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewTextBoxColumn3.HeaderText = "Video";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.videoURL.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.videoURL.HeaderText = "Video";
+            this.videoURL.Name = "videoURL";
             // 
             // tab_logotext
             // 
-            this.tab_logotext.Controls.Add(this.button22);
             this.tab_logotext.Controls.Add(this.button15);
             this.tab_logotext.Controls.Add(this.checkBox2);
             this.tab_logotext.Controls.Add(this.checkBox1);
@@ -997,16 +979,6 @@
             this.tab_logotext.TabIndex = 2;
             this.tab_logotext.Text = "Logo & Text bar";
             this.tab_logotext.UseVisualStyleBackColor = true;
-            // 
-            // button22
-            // 
-            this.button22.Location = new System.Drawing.Point(352, 10);
-            this.button22.Name = "button22";
-            this.button22.Size = new System.Drawing.Size(310, 24);
-            this.button22.TabIndex = 23;
-            this.button22.Text = "Load Data";
-            this.button22.UseVisualStyleBackColor = true;
-            this.button22.Click += new System.EventHandler(this.button22_Click);
             // 
             // button15
             // 
@@ -1023,7 +995,7 @@
             this.checkBox2.AutoSize = true;
             this.checkBox2.Checked = true;
             this.checkBox2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox2.Location = new System.Drawing.Point(21, 87);
+            this.checkBox2.Location = new System.Drawing.Point(21, 41);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(96, 17);
             this.checkBox2.TabIndex = 15;
@@ -1035,7 +1007,7 @@
             this.checkBox1.AutoSize = true;
             this.checkBox1.Checked = true;
             this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(21, 64);
+            this.checkBox1.Location = new System.Drawing.Point(21, 18);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(83, 17);
             this.checkBox1.TabIndex = 14;
@@ -1045,12 +1017,13 @@
             // txt_textbar
             // 
             this.txt_textbar.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_textbar.Location = new System.Drawing.Point(21, 113);
+            this.txt_textbar.Location = new System.Drawing.Point(21, 64);
             this.txt_textbar.MaxLength = 350;
             this.txt_textbar.Multiline = true;
             this.txt_textbar.Name = "txt_textbar";
-            this.txt_textbar.Size = new System.Drawing.Size(640, 226);
+            this.txt_textbar.Size = new System.Drawing.Size(640, 275);
             this.txt_textbar.TabIndex = 13;
+            this.txt_textbar.Tag = "textbar_text";
             // 
             // tab_adv
             // 
@@ -1086,6 +1059,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGray;
             this.ClientSize = new System.Drawing.Size(1283, 712);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.obs_grp_tabs);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.button9);
@@ -1097,7 +1071,6 @@
             this.Controls.Add(this.obs_grid);
             this.Controls.Add(this.button10);
             this.Controls.Add(this.data_str);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.textBox2);
@@ -1108,6 +1081,7 @@
             this.MaximizeBox = false;
             this.Name = "LiveControlForm";
             this.Text = "Live Control";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LiveControlForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LiveControlForm_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Shown += new System.EventHandler(this.Form1_Shown);
@@ -1205,8 +1179,6 @@
         private System.Windows.Forms.TextBox txt_textbar;
         private System.Windows.Forms.TabPage tab_plist;
         private System.Windows.Forms.DataGridView dgv_Plist;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn OBS_col;
         private System.Windows.Forms.DataGridViewTextBoxColumn OBS_ready_col;
         private System.Windows.Forms.DataGridViewImageColumn OBS_onair_col;
@@ -1227,9 +1199,8 @@
         private System.Windows.Forms.Button button18;
         private System.Windows.Forms.Button button17;
         private System.Windows.Forms.Button button16;
-        private System.Windows.Forms.Button button21;
-        private System.Windows.Forms.Button button22;
-        private System.Windows.Forms.Button button23;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn videoURL;
     }
 }
 

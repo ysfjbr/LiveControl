@@ -9,3 +9,14 @@ D:\zaher\ServLiveControl\ServLiveControl\ServLiveControl\obj\Debug\netcoreapp3.1
 D:\zaher\ServLiveControl\ServLiveControl\ServLiveControl\obj\Debug\netcoreapp3.1\ServLiveControl.dll
 D:\zaher\ServLiveControl\ServLiveControl\ServLiveControl\obj\Debug\netcoreapp3.1\ServLiveControl.pdb
 D:\zaher\ServLiveControl\ServLiveControl\ServLiveControl\obj\Debug\netcoreapp3.1\ServLiveControl.csprojAssemblyReference.cache
+C:\Users\ysf_j\source\repos\LiveControl\ServLiveControl\bin\Debug\netcoreapp3.1\ServLiveControl.exe
+C:\Users\ysf_j\source\repos\LiveControl\ServLiveControl\bin\Debug\netcoreapp3.1\ServLiveControl.deps.json
+C:\Users\ysf_j\source\repos\LiveControl\ServLiveControl\bin\Debug\netcoreapp3.1\ServLiveControl.runtimeconfig.json
+C:\Users\ysf_j\source\repos\LiveControl\ServLiveControl\bin\Debug\netcoreapp3.1\ServLiveControl.runtimeconfig.dev.json
+C:\Users\ysf_j\source\repos\LiveControl\ServLiveControl\bin\Debug\netcoreapp3.1\ServLiveControl.dll
+C:\Users\ysf_j\source\repos\LiveControl\ServLiveControl\bin\Debug\netcoreapp3.1\ServLiveControl.pdb
+C:\Users\ysf_j\source\repos\LiveControl\ServLiveControl\obj\Debug\netcoreapp3.1\ServLiveControl.csprojAssemblyReference.cache
+C:\Users\ysf_j\source\repos\LiveControl\ServLiveControl\obj\Debug\netcoreapp3.1\ServLiveControl.AssemblyInfoInputs.cache
+C:\Users\ysf_j\source\repos\LiveControl\ServLiveControl\obj\Debug\netcoreapp3.1\ServLiveControl.AssemblyInfo.cs
+C:\Users\ysf_j\source\repos\LiveControl\ServLiveControl\obj\Debug\netcoreapp3.1\ServLiveControl.dll
+C:\Users\ysf_j\source\repos\LiveControl\ServLiveControl\obj\Debug\netcoreapp3.1\ServLiveControl.pdb

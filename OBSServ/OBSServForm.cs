@@ -129,9 +129,9 @@ namespace OBSServ
             else if (str.StartsWith("OBSC_"))
             {
                 comstr = str.Substring(5);
-                //Thread commThread = new Thread(exec_comm);
-                //commThread.Start();
-                exec_comm();
+                Thread commThread = new Thread(exec_comm);
+                commThread.Start();
+                //exec_comm();
             }
             else if (str.StartsWith("OBS^"))
             {
@@ -142,9 +142,9 @@ namespace OBSServ
                     if (obsResult[2] == "TOOBS")
                     {
                         comstr = obsResult[3];
-                        //Thread commThread = new Thread(exec_comm);
-                        //commThread.Start();
-                        exec_comm();
+                        Thread commThread = new Thread(exec_comm);
+                        commThread.Start();
+                        //exec_comm();
                     }
                 }
             }
@@ -367,16 +367,20 @@ namespace OBSServ
                     JObject jObject = new JObject();
 
                     if (comm[0] == "SetCurrentScene")
+                    {
                         jObject.Add("scene-name", comm[1]);
+                        updateSourceRest("CurrentScene", clName, comm[1]);
+                    }
 
                     if (comm[0] == "GetSourceSettings")
                         jObject.Add("sourceName", comm[1]);
 
-                    if (comm[0] == "ChangeText")
+                    if (comm[0] == "SetSourceSettings")
                     {
                         comm[0] = "SetSourceSettings";
                         jObject.Add("sourceName", comm[1]);
-                        jObject.Add("sourceSettings", ss_obj );
+                        JavaScriptSerializer js = new JavaScriptSerializer();
+                        jObject.Add("sourceSettings", JToken.FromObject(js.Deserialize<object>(getSourceRest(comm[1]))));
                     }
                     if (comm[0] == "ChangePList")
                     {
@@ -386,11 +390,14 @@ namespace OBSServ
                     }
 
                     output = _obs.SendRequest(comm[0], jObject).ToString();
-                    updateSourceRest(comm[1], clName, jObject.ToString());
+                    textBox1.Text += Environment.NewLine + "output : " + output;
+                    //updateOBSData();
+                    sendCommandOutput(clName, "loadOBSData", "");
+                    //updateSourceRest(comm[1], clName, jObject.ToString());
                 }
                 catch (Exception ex)
                 {
-                    //textBox1.Text += Environment.NewLine + "getCommandOutput Error : " +  ex.Message;
+                    textBox1.Text += Environment.NewLine + "getCommandOutput Error : " +  ex.Message;
                 }
             }
 
@@ -485,6 +492,7 @@ namespace OBSServ
                     outType = "StreamingStatus";
                     outRes = correctJSON(output);
                     objName = outType;
+                    //updateSourceRest(objName, clName, outRes);
                 }
                 catch (Exception ex)
                 {
@@ -503,10 +511,16 @@ namespace OBSServ
             sendData("OBS^" + clName + "^" + outType + "^" + objName);
         }
 
+        private string getSourceRest(string obj, string ObsName = "")
+        {
+            string res = sendRest("source/read_one.php", new { sourceName = obj, obsName = clName });
+            return res;
+        }
+
         private void updateSourceRest(string SourceName, string ObsName, string tcontent)
         {
             string res = sendRest("source/update.php", new { sourceName = SourceName,  content = tcontent,  obsName = ObsName });
-           // textBox1.Text += Environment.NewLine + res;
+            textBox1.Text += Environment.NewLine + res;
         }
 
         private string sendRest(string APIurl, object jsonBody)
@@ -688,12 +702,15 @@ namespace OBSServ
             saveSettings();
         }
 
-        
-
         private void button2_Click(object sender, EventArgs e)
         {
+            _obs.Connect("ws://127.0.0.1:" + obs_port_txt.Text);
+
             
-            try
+            
+            //textBox1.Text += Environment.NewLine + "output : " + output;
+            
+            /*try
             {
               /*  _obs.Connect("ws://127.0.0.1:" + obs_port_txt.Text);
                 _obs.EventReceived += recData;
@@ -707,7 +724,7 @@ namespace OBSServ
                 
                 
                 textBox1.Text = src.sourceSettings.text;*/
-            }
+           /* }
             catch(Exception ex)
             {
 
@@ -731,12 +748,27 @@ namespace OBSServ
         
         private void updateOBSData()
         {
-            
             string obs_Data_file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)) + @"\obs-studio\basic\scenes\main.json";
             string OBSData = File.ReadAllText(obs_Data_file);
-            
+            //textBox1.Text = textBox1.Text + Environment.NewLine + " OBSData : " + OBSData;
             updateSourceRest("main", clName, OBSData);
 
+            string output = _obs.SendRequest("GetSourcesList").ToString();
+            //textBox1.Text += Environment.NewLine + "output : " + output;
+            SourceList sl = SourceList.FromJson(output);
+            foreach (SLSource sls in sl.Sources)
+            {
+                JObject jObject = new JObject();
+                jObject.Add("sourceName", sls.Name);
+                //jObject.Add("sourceSettings", JToken.FromObject(new { url =  "asdasd"}));
+                // getSourceRest(comm[1])
+
+                output = _obs.SendRequest("GetSourceSettings", jObject).ToString();
+                //textBox1.Text += Environment.NewLine + "output : " +sls.Name +" * "+ output;
+                SlsSettings s = SlsSettings.FromJson(output);
+                updateSourceRest(sls.Name, clName, Serialize.ToJson(s.SourceSettings));
+                //textBox1.Text += Environment.NewLine + "output : " + Serialize.ToJson(s.SourceSettings);
+            }
         }
 
         private void downloadSceneColl()
