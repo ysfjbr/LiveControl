@@ -78,3 +78,8 @@ C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\bin\Debug\Newtonsoft.Json.
 C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\bin\Debug\RestSharp.dll
 C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\bin\Debug\Newtonsoft.Json.xml
 C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\bin\Debug\RestSharp.xml
+C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\bin\Debug\LiveControl.exe.manifest
+C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\bin\Debug\LiveControl.application
+C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\obj\Debug\LiveControl.TrustInfo.xml
+C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\obj\Debug\LiveControl.exe.manifest
+C:\Users\yjaber\Source\Repos\LiveControl2\LiveControl\obj\Debug\LiveControl.application

@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <PublishUrlHistory>sftp://207.180.219.104:22/var/www/html/test/|ftp://207.180.219.104:22/var/www/html/test/|ftp://207.180.219.104/var/www/html/test/|D:\zaher\app\|publish\</PublishUrlHistory>
-    <InstallUrlHistory>http://207.180.219.104/test/</InstallUrlHistory>
+    <PublishUrlHistory>E:\FUAD\zam\zaher\app\|sftp://62.171.160.28:22/var/www/html/app/|sftp://62.171.160.28:21/var/www/html/app/|sftp://62.171.160.28/var/www/html/app/|ftps://62.171.160.28:21/var/www/html/app/</PublishUrlHistory>
+    <InstallUrlHistory>http://62.171.160.28/app/|http://62.171.160.28/app/app.exe/|http://207.180.219.104/test/</InstallUrlHistory>
     <SupportUrlHistory />
     <UpdateUrlHistory />
     <BootstrapperUrlHistory />
